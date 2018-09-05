@@ -12,17 +12,25 @@ ICON은 JSON-RPC방식으로 통신합니다. Tbears는, 로컬에서 localhostJ
 현재, Git에 공개가 되어있으며, 사용을 원하는 개발자는 언제든 다운로드 받아 사용 가능하다. 
 <https://github.com/icon-project/t-bears.git>
 
-1. 설치하기
-
-```
-command examples
-```
-> 박스 안에 있는 command examples를 따라 터미널에서 실행
+1. 설치하기(macOS)
+파이썬 3 설치 추가 / pip용 과 깃 클론 따로 분리
+* 공통
 
 * Home Brew(macOS용 패키지 관리자)를 설치합니다.
 
 ```
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+* LevelDB, libsecp256k1를 설치합니다.
+```
+brew install leveldb
+brew install autoconf automake libtool pkg-config
+```
+
+* RabbitMQ를 설치합니다.
+```
+brew install rabbitmq
+brew services start rabbitmq
 ```
 
 * wget, git을 설치합니다.
@@ -31,23 +39,26 @@ brew install wget // wget 설치
 brew install git // git 설치
 ```
 
-* 설치가 완료되면, tbears Git repository에 존재하는 코드를 ```Documents/t-bears```위치에  clone 합니다.
-
+* anaconda3를 설치합니다.
 ```
-mkdir ~/Documents/t-bears & git clone https://github.com/icon-project/t-bears.git ~/Documents/t-bears
-```
-* LevelDB, libsecp256k1를 설치합니다.
-```
-brew install leveldb
-brew install autoconf automake libtool pkg-config
+wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-MacOSX-x86_64.sh
+bash ./Anaconda3-5.2.0-MacOSX-x86_64.sh
 ```
 
+#### T-Bears 설치 (git clone을 통한 설치)
+* git 설치가 완료되면, tbears Git repository에 존재하는 코드를 `t-bears` 디렉토리로 clone 합니다.
 
-* RabbitMQ를 설치합니다.
 ```
-brew install rabbitmq
-brew services start rabbitmq
+git clone https://github.com/icon-project/t-bears.git t-bears
+cd t-bears
+
+virtualenv -p python3 venv  
+source venv/bin/activate    
+(venv) ./build.sh
+(venv) pip install ./dist/tbears-1.0.4-py3-none-any.whl
 ```
+
+#### T-Bears 설치 (pip install tbears를 통한 설치)
 * work directory 생성 -> virtualenv 설치(python3 venv 대체 가능) -> tbears 설치
 ```
 mkdir work
@@ -61,7 +72,7 @@ source ./bin/activate
 ```
 
 
-5. Tbears 활용하기
+5. T-Bears 활용하기
 ---
 * server 명령어
 
@@ -151,7 +162,7 @@ expected result :
 
 * SCORE 명령어
 
-```tbears init``` : SCORE 개발환경을 조성합니다. [project].py 와 package.json 파일을 [project] 디렉토리 안에 생성합니다. SCORE class의 클래스명은 [socreClass]를 따라 생성됩니다.
+```tbears init``` : SCORE 프로젝트를 생성합니다. [project].py 와 package.json 파일을 [project] 디렉토리 안에 생성합니다. SCORE class의 클래스명은 [socreClass]를 따라 생성됩니다.
 ```tbears_server_config.json``` 파일과 ```tbears_cli_config.json``` 이 없을 시 현재 디렉토리에 함께 생성됩니다.
 ```
 tbears init [-h] project scoreClass
@@ -192,13 +203,13 @@ expected result :
 ```
 설명:
 
->```__init__.py``` : 프로젝트 디렉토리가 python package로 인식되도록 만드는 파일입니다.
+>`__init__.py` : 프로젝트 디렉토리가 python package로 인식되도록 만드는 파일입니다.
 
->```package.json``` : SCORE가 load 되었을 때 필요한 정보(main_file, main_class)를 가지고 있습니다.
+>`package.json` : SCORE가 load 되었을 때 필요한 정보(main_file, main_class)를 가지고 있습니다.
 
->```myproject.py``` : SCORE의 메인 파일입니다. ABCToken 클래스가 선언되어 있습니다.
+>`myproject.py` : SCORE의 메인 파일입니다. ABCToken 클래스가 선언되어 있습니다.
 
-```tbears samples``` : 두개의 SCORE 샘플인 "standard_crowd_sale" 와 "standard_token"를 생성합니다.
+`tbears samples` : 두개의 SCORE 샘플인 "standard_crowd_sale" 와 "standard_token"를 생성합니다.
 ```
 tbears samples [-h]
 
@@ -223,7 +234,7 @@ expected result:
             __init__.py       package.json      standard_token.py tests
 ```
 
-```tbears deploy``` : SCORE를 배포합니다. 로컬 T-Bears 서비스 또는 ICON 네트워크에 배포할 수 있습니다.
+`tbears deploy` : SCORE를 배포합니다. 로컬 T-Bears 서비스 또는 ICON 네트워크에 배포할 수 있습니다.
 
 ```
 tbears deploy [-h] [-u URI] [-t {tbears,zip}] [-m {install,update}] [-f FROM] [-o TO] [-k KEYSTORE] [-n NID] [-c CONFIG] [-p PASSWORD]
@@ -253,33 +264,33 @@ examples :
 
 >-p PASSWORD, --password PASSWORD : keystore 파일의 비밀번호를 의미합니다.
 
-```tbears sendtx```
+`tbears sendtx`
 
-```tbears call```
+`tbears call`
 
-```tbears scoreapi```
+`tbears scoreapi`
 
 ---
 
 * ICX, 트랜잭션, 블록과 관련된 명렁어
 
-```tbears transfer```
+`tbears transfer`
 
-```tbears balance```
+`tbears balance`
 
-```tbears totalsupply```
+`tbears totalsupply`
 
-```tbears txresult```
+`tbears txresult`
 
-```tbears txbyhash```
+`tbears txbyhash`
 
-```tbears lastblock```
+`tbears lastblock`
 
-```tbears blockbyheight```
+`tbears blockbyheight`
 
-```tbears blockbyhash```
+`tbears blockbyhash`
 
-```tbears console```
+`tbears console`
 
 ---
 * 설정 파일
