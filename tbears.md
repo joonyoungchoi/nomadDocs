@@ -15,9 +15,9 @@ ICON은 JSON-RPC방식으로 통신합니다. Tbears는, 로컬에서 localhostJ
 1. 설치하기
 
 ```
-examples
+command examples
 ```
-> 박스 안에 있는 examples를 따라 터미널에서 실행
+> 박스 안에 있는 command examples를 따라 터미널에서 실행
 
 * Home Brew(macOS용 패키지 관리자)를 설치합니다.
 
@@ -69,15 +69,15 @@ source ./bin/activate
 ```
 tbears start [-h] [-a ADDRESS] [-p PORT] [-c CONFIG]
 
-examples : tbears start // 모든 옵션을 디폴트로 설정
+examples : tbears start            // 모든 옵션을 디폴트로 설정
 ```
 옵션 :
 
 >-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
 
->-a ADDRESS, --address ADDRESS : 디폴트 값으로 ```127.0.0.1``` 을 가지며, T-Bears 서비스가 Listen하는 IP주소를 의미합니다.
+>-a HOSTADDRESS, --address HOSTADDRESS : 디폴트 값으로 ```127.0.0.1``` 을 가지며, T-Bears 서비스를 host하는 IP주소를 의미합니다.
 
->-p PORT, --port PORT : 디폴트 값으로 ```9000``` 을 가지며, T-Bears 서비스가 Listen하는 포트번호를 의미합니다.
+>-p PORT, --port PORT : 디폴트 값으로 ```9000``` 을 가지며, T-Bears 서비스를 host하는 포트번호를 의미합니다.
 
 >-c CONFIG, --config CONFIG : 디폴트 값으로 ```./tbears_server_config.json``` 를 가지며, 서비스 시작시 사용할 설정 파일의 위치를 의미합니다.
 
@@ -91,7 +91,7 @@ examples : tbears stop
 
 >-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
 
-```tbears clear``` : T-Bears 서비스에 배포된 모든 SCORE를 제거합니다.
+```tbears clear``` : T-Bears 서비스에 배포된 모든 SCORE를 제거합니다. T-Bears 서비스가 중단된 상태에서만 실행 가능합니다.
 ```
 tbears clear [-h]
 ```
@@ -101,54 +101,189 @@ tbears clear [-h]
 ---
 * utility 명령어
 
-tbears keystore
+```tbears keystore``` : keystore 파일을 해당 path에 생성합니다. secp256k1 라이브러리를 사용하여 개인키와 공개키를 생성합니다.
+```
+tbears keystore [-h] [-p PASSWORD] path
 
-tbears genconf
+examples : 
+1) tbears keystore key         // 현재 디렉토리에 key라는 파일명으로 생성
+
+2) mkdir keys                  // keys 디렉토리 생성
+   tbears keys ./keys/key      // keys 디렉토리에 key라는 파일명으로 생성
+
+3) tbears keystore -p passw0rd~! key // 현재 디렉토리에 비밀번호(passw0rd~!)를 설정하여 key라는 파일명으로 생성
+``` 
+필수 요소:
+>path : keystore 파일을 해당 path(ex : ./파일명)에 생성합니다.
+
+옵션 :
+
+>-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
+
+>-p PASSWORD : keystore의 비밀번호를 설정합니다.
+```
+expected result : 
+1), 2)
+    input your keystore password: (비밀번호 설정)
+
+    Made keystore file successfully
+
+3) 
+    Made keystore file successfully
+```
+
+
+```tbears genconf``` : T-Bears의 설정 파일들을 생성합니다. (tbears_cli_config.json, tbears_cli_config.json)
+```
+tbears genconf [-h]
+
+examples : tbears genconf
+```
+옵션 :
+
+>-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
+```
+expected result :
+    Made tbears_cli_config.json, tbears_server_config.json successfully
+```
 
 ---
 
 * SCORE 명령어
 
-tbears init
+```tbears init``` : SCORE 개발환경을 조성합니다. [project].py 와 package.json 파일을 [project] 디렉토리 안에 생성합니다. SCORE class의 클래스명은 [socreClass]를 따라 생성됩니다.
+```tbears_server_config.json``` 파일과 ```tbears_cli_config.json``` 이 없을 시 현재 디렉토리에 함께 생성됩니다.
+```
+tbears init [-h] project scoreClass
 
-tbears samples
+examples : 
+1) tbears init myproject ABCToken
+2) ls myproject                      // myproject 디렉토리 생성 및 파일 확인
+3) cat ./myproject/myproject.py      // myproject.py 의 클래스명 확인
+```
+옵션 :
 
-tbears deploy
+>-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
 
-tbears sendtx
+```
+expected result :
+1) 
+    Initialized tbears successfully
 
-tbears call
+2)  
+    __init__.py  myproject.py package.json tests 
 
-tbears scoreapi
+3) 
+    class ABCToken(IconScoreBase):           // class명 ABCToken으로 생성됨.
+
+        def __init__(self, db: IconScoreDatabase) -> None:
+            super().__init__(db)
+
+        def on_install(self) -> None:
+            super().on_install()
+
+        def on_update(self) -> None:
+            super().on_update()
+
+        @external(readonly=True)
+        def hello(self) -> str:
+            print(f'Hello, world!')
+            return "Hello"
+```
+설명:
+
+>```__init__.py``` : 프로젝트 디렉토리가 python package로 인식되도록 만드는 파일입니다.
+
+>```package.json``` : SCORE가 load 되었을 때 필요한 정보(main_file, main_class)를 가지고 있습니다.
+
+>```myproject.py``` : SCORE의 메인 파일입니다. ABCToken 클래스가 선언되어 있습니다.
+
+```tbears samples``` : 두개의 SCORE 샘플인 "standard_crowd_sale" 와 "standard_token"를 생성합니다.
+```
+tbears samples [-h]
+
+examples : 
+1) tbears samples           // SCORE 샘플 생성
+2) ls standard*             // 생성 결과 확인
+```
+옵션 :
+
+>-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
+
+```
+expected result: 
+    1) 
+        Made samples successfully
+
+    2) 
+        standard_crowd_sale:
+            __init__.py            package.json           standard_crowd_sale.py tests
+
+        standard_token:
+            __init__.py       package.json      standard_token.py tests
+```
+
+```tbears deploy``` : SCORE를 배포합니다. 로컬 T-Bears 서비스 또는 ICON 네트워크에 배포할 수 있습니다.
+
+```
+tbears deploy [-h] [-u URI] [-t {tbears,zip}] [-m {install,update}] [-f FROM] [-o TO] [-k KEYSTORE] [-n NID] [-c CONFIG] [-p PASSWORD]
+
+examples : 
+
+```
+옵션 :
+
+>-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
+
+>-u URI, --node-uri URI : 디폴트 값으로 "http://127.0.0.1:9000/api/v3" 를 가지며, 노드의 URI를 의미합니다.
+
+>-t {tbears,zip}, --type {tbears,zip} : 디폴트 값으로 "tbears" 를 가지며, 배포하는 SCORE의 타입을 의미합니다.
+
+>-m {install,update}, --mode {install,update} : 디폴트 값으로 "install" 을 가지며, 배포 모드를 의미합니다.
+
+>-f FROM, --from FROM : SCORE 소유자의 주소를 의미합니다. (예 : SCORE owner address)
+
+>-o TO, --to TO : 보내는 주소를 의미합니다. (예 : SCORE address)
+
+>-k KEYSTORE, --key-store KEYSTORE : Keystore 파일 위치를 의미하며, "from" 주소와 트랜잭션 사인을 생성하는데 사용됩니다.
+
+>-n NID, --nid NID : 네트워크 아이디를 의미합니다.
+
+>-c CONFIG, --config CONFIG : 디폴트 값으로 "./tbears_cli_config.json"을 가지며, 배포 설정파일을 의미합니다.
+
+>-p PASSWORD, --password PASSWORD : keystore 파일의 비밀번호를 의미합니다.
+
+```tbears sendtx```
+
+```tbears call```
+
+```tbears scoreapi```
 
 ---
 
 * ICX, 트랜잭션, 블록과 관련된 명렁어
 
-tbears transfer
+```tbears transfer```
 
-tbears balance
+```tbears balance```
 
-tbears totalsupply
+```tbears totalsupply```
 
-tbears txresult
+```tbears txresult```
 
-tbears txbyhash
+```tbears txbyhash```
 
-tbears lastblock
+```tbears lastblock```
 
-tbears blockbyheight
+```tbears blockbyheight```
 
-tbears blockbyhash
+```tbears blockbyhash```
 
-tbears console
+```tbears console```
 
 ---
-configuration file
+* 설정 파일
 
-tbears_server_config.json
+```tbears_server_config.json```
 
-tbears_cli_config.json
-
-init, start, stop, deploy, clear, samples, genconf, transfer, txresult, balance, totalsupply, scoreapi, txbyhash, lastblock, blockbyheight, blockbyhash, keystore, sendtx and call.
-
+```tbears_cli_config.json```
