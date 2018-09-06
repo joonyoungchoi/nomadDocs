@@ -148,6 +148,11 @@ cat call.json
 }
 
 tbears call call.json
+response : {
+        "jsonrpc": "2.0",
+        "result": "hello",
+        "id": 1
+    }
 
 2) samples를 통해 생성한 SCORE의 'name' 메소드 호출
 cat call.json
@@ -172,6 +177,11 @@ cat call.json
 }
 
 tbears call call.json
+response : {
+    "jsonrpc": "2.0",
+    "result": "SampleToken",
+    "id": 1
+}
 ```
 
 * 4.4 트랜잭션 보내기
