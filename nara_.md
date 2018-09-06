@@ -19,7 +19,7 @@ Icon Dev Guide
 ## 순서
 1. T-bears를 사용해서 아이콘 로컬네트워크 구축하기
 2. aws에서 아이콘 네트워크 구축하기
-3. [개발환경 구축하기]("# 개발환경 구축하기")
+3. [개발환경 구축하기](# 개발환경 구축하기)
 	* [파이썬](## 파이썬 개발 환경 구축하기)
 		* [파이썬설치](#### 파이썬 설치) 
 		* [Git설치](#### Git 설치) 
@@ -507,14 +507,14 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 		3. 메세지를 전송하는 트랜젝션
 		4. SCORE를 Deploy 하는 트랜젝션
 
-각기 트랜젝션은 서버에 json 형식으로 전송이 되며, 서버는 해당 트랜젝션을 받아 블록에 트랜젝션 해시값을 기입함 으로서, 사용자가 전송한 트랜젝션이 블록에 기입됩니다. 이번엔 
+각기 트랜젝션은 서버에 json 형식으로 전송이 되며, 서버는 해당 트랜젝션을 받아 블록에 트랜젝션 해시값을 기입함 으로서, 사용자가 전송한 트랜젝션이 블록에 기입됩니다. 
 
 	1. 지갑만들기에서 만든 지갑을 불러와서 다른 지갑으로 ICX를 보내보고 결과 확인하기
 	2. 지갑만들기에서 만든 지갑을 불러와서 다른 지갑으로 토큰을 보내보고 결과 확인하기
 	3. 메세지를 트랜젝션에 넣고 전송해 보기
 	4. 만들어진 SCORE를 Deploy 해 보기
 
-의 4가지 트랜젝션을 발생시켜 보겠습니다. 
+위의 4가지 트랜젝션은 **Transaction 메세지 생성** 부분만이 다릅니다. 아래의 **1. 지갑만들기에서 만든 지갑을 불러와서 다른 지갑으로 ICX를 보내보고 결과 확인하기** 의 실습 코드에서 전체적인 내용을 살펴 보고, **Transaction 메세지 생성** 부분만을 변경함 으로서, 다른 트랜젝션을 보내는 내용을 기록하겠습니다. 
 
 <br></br>
 
@@ -608,10 +608,155 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 	    			.timestamp(new BigInteger(Long.toString(timestamp)))
 	    			.nonce(nonce)  // 
 	    			.build();
+	    			
+	Transaction 결과 확인
+	트랜잭션 정보가 맞는지 확인하기 위한 signedTransaction을 생성하고, 트랜잭션으로 hash값을 확인합니다. 
+
+			SignedTransaction signedTransaction =new SignedTransaction(transaction, keyStoreLoad ); 
+			String hash = iconService.sendTransaction(signedTransaction).execute();
+			//트랜잭션 발생후 hash값 저장 
+			
+
+	 	    			
+	   
 * ##### 파이썬 SDK로 실행
+
+	필요 모듈을 import 해 줍니다. 
+
+		from iconsdk.icon_service import IconService
+		from iconsdk.providers.http_provider import HTTPProvider
+		from iconsdk.wallet.wallet import KeyWallet
+		from iconsdk.builder.transaction_builder import TransactionBuilder
+		from iconsdk.signed_transaction import SignedTransaction
 	
+	아이콘 네트워크 주소를 지정하여 아이콘 서비스 인스턴스를 생성합니다. 
+	
+		icon_service = IconService(HTTPProvider("http://localhost:9000/api/v3"))
 
+	ICX를 송금할 지갑의 프라이빗 키를 통해 지갑을 로드할 것 이므로, 지갑의 프라이빗 키를 선언하고, 지갑을 로드합니다. 
+	
+		key=UserPrivateKey
+		Loaded_wallet = KeyWallet.load(key)
+	
+	**Transaction 메세지 생성**
+	
+	TransactionBuilder를 통해 트랜젝션을 빌드합니다. 
+	
+		transaction = TransactionBuilder()\
+			.from_(Loaded_wallet.get_address())\ 	## 보내는 지갑 주소
+		   	.to("")\ 								## 받는 지갑 주소
+		   	.value(150000000)\						##보내는 ICX
+		   	.step_limit(1000000)\					## steplimit 설정
+		   	.nid(3)\								## NetworkID
+		   	.nonce(100)\							## 옵션값입니다. 
+		   	.build()	 	
+		   	
+	빌드된 transaction 객체를 사인하여 전송합니다. 
+		
+			signed_transaction = SignedTransaction(transaction, Loaded_wallet)
+			
+	전송된 트랜젝션의 결과확인 		
+	
+			tx_hash = icon_service.send_transaction(signed_transaction)
 
+## 2. SCORE의 함수를 호출하고, 결과를 받습니다.  
+
+* ##### 자바 SDK로 실행
+	**Transaction 메세지 생성**
+	파라미터를 call 에 삽입하여, 결과를 불러옵니다. 
+	SCORE마다 지정한 함수를 실행하여, 결과를 받아올 수 있습니다. 
+		
+		RpcObject params = new RpcObject.Builder()
+				.put("_owner", new RpcValue(fromAddress))
+				.build();
+	
+		IcxCall<RpcItem> call = new IcxCall.Builder()
+				.from(fromAddress)  
+				.to(scoreAddress)
+				.method("balanceOf")			##  메소드가 balanceOf이면, SCORE의 잔액을 조회합니다. 
+				.params(params)
+				.build();
+	
+	SCORE를 향하여 트랜젝션을 보내고, 결과를 받아옵니다. 
+	
+		RpcItem result = iconService.call(call).execute(); 
+
+		
+
+* ##### 파이썬 SDK로 실행
+	**Transaction 메세지 생성**
+	자바와 동일하게 transaction을 빌드합니다.
+	SCORE을 실행하고, 결과를 리턴받습니다.  
+	
+		transaction = CallTransactionBuilder()\
+		    .from_(Loaded_wallet.get_address())\
+		    .to(SCORE_주소)\
+		    .step_limit(1000000)\
+		    .nid(3)\
+		    .nonce(100)\
+		    .method("balance_of")\
+		    .params(params)\
+		    .build()
+		    
+
+##	3. 메세지를 트랜젝션에 넣고 전송해 보기
+* ##### 자바 SDK로 실행
+	**Transaction 메세지 생성**
+	메세지를 transaction에 넣어 전송할 수 있습니다. 
+	
+		        String message = "Hello World";
+
+        Transaction transaction = TransactionBuilder.of(networkId)
+                .from(fromAddress)
+                .to(toAddress)
+                .stepLimit(stepLimit)
+                .timestamp(new BigInteger(Long.toString(timestamp)))
+                .nonce(nonce)
+                .message(message)
+                .build();
+	
+	
+	
+* ##### 파이썬 SDK로 실행
+	**Transaction 메세지 생성**
+
+			transaction = MessageTransactionBuilder()\
+			    .from_(Loaded_wallet.get_address())\
+			    .to(SCORE_주소)\
+			    .step_limit(1000000)\
+			    .nid(3)\
+			    .nonce(100)\
+			    .message("test")\
+			    .build()
+
+##	4. 만들어진 SCORE를 Deploy 해 보기
+* ##### 자바 SDK로 실행
+	**Transaction 메세지 생성**
+	로컬에서 사용자가 만들어낸 SCORE 실행파일(파이썬)을 아이콘 네트워크에 Deploy(배포) 합니다. 
+	content 파라미터에는 파일을 로드하여 삽입해 줍니다. 트랜젝션의 용량제한이 있으므로(2018/09/06기준 현재 최대 512kb) 용량을 잘 지키고, 스마트 컨트렉트 코드 작성 규칙을 지키지 않으면, 아이콘 네트쿼크에 치명적인 영향을 끼치므로, 규칙에 따라서 작성하여야 합니다.  
+	
+		Transaction transaction = TransactionBuilder.of(networkId)
+		    .from(wallet.getAddress())
+		    .to(scoreAddress)
+		    .stepLimit(new BigInteger("5000000"))
+		    .nonce(new BigInteger("1000000"))
+		    .deploy("application/zip", content)
+		    .params(params)
+		    .build();
+
+* ##### 파이썬 SDK로 실행
+	**Transaction 메세지 생성**
+	
+		transaction = DeployTransactionBuilder()\
+		    .from_(Loaded_wallet.get_address())\
+		    .to(SCORE_주소)\
+		    .step_limit(1000000)\
+		    .nid(3)\
+		    .nonce(100)\
+		    .content_type("application/zip")\
+		    .content(content)\
+		    .params(params)\
+		    .build()
 
 
 <br></br>
