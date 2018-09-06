@@ -84,33 +84,82 @@ source ./bin/activate
 ---
 ### 3. PythonSDK 활용하여 응답 받아보기
 ---
-### 4. T-Bears 활용하기
+### 4. T-Bears 활용하기 (1.0.4 version)
 
-* 4.1 서비스 시작하기
+###  *4.1 서비스*
+
+*4.1.1 서비스 시작*
+
 ```
-tbears start         // T-Bears 서비스 시작
-tbears stop          // T-Bears 서비스 중단
-tbears clear         // T-Bears 서비스에 배포된 SCORE 삭제
+tbears start
+```
+출력 :
+```
+Started tbears service successfully
+```
+*4.1.2 서비스 중단*
+
+```
+tbears stop          
+```
+출력 : 
+```
+Stopped tbears service successfully
+```
+*4.1.3 서비스에 배포된 SCORE 삭제*
+
+```
+tbears clear         
+```
+출력 :
+```
+Cleared SCORE deployed on tbears successfully
 ```
 
-* 4.2.1 init으로 생성한 SCORE 프로젝트 배포하기
+### *4.2 SCORE 배포하기*
+
+*4.2.1 init으로 생성한 SCORE 프로젝트 배포하기*
+
+init 명령어를 통해 SCORE 프로젝트를 생성합니다.
 ```
 tbears genconf (optional : 미실행시 init단계에서 설정파일을 생성합니다.)
 tbears init myproject ABCToken
-
-tbears deploy myproject
-(tbears deploy의 경우 tbears start를 통해 T-Bears 서비스가 가동 중인 상태에서만 가능합니다.)
-
+```
+출력되는 메시지를 통해 프로젝트가 성공적으로 생성됨을 확인할 수 있습니다.
+```
+Initialized tbears successfully
 ```
 
-* 4.2.2 samples로 생성한 SCORE 배포하기
+생성된 프로젝트를 T-Bears 서비스에 배포합니다. (tbears deploy의 경우 tbears start를 통해 T-Bears 서비스가 가동 중인 상태에서만 가능합니다.)
+```
+tbears deploy myproject
+```
+출력 : 
+```
+Send deploy request successfully.
+If you want to check SCORE deployed successfully, execute txresult command
+transaction hash: 0x1468dd5deab399e309732728d37786eab8ad1f5a09ac9b85c92be0cc884eed72
+```
+
+*4.2.2 samples로 생성한 SCORE 배포하기*
+
+`tbears samples` 명령을 통해 샘플을 생성합니다.
 ```
 tbears samples
+```
+출력되는 메시지를 통해 샘플이 생성됨을 확인할 수 있습니다.
+```
+Made samples successfully
+```
 
+생성된 standard_token 디렉토리로 이동하여 설정파일을 생성합니다.
+```
 cd standard_token
 tbears genconf (명령어 실행 후 생성된 설정 파일 중 tbears_cli_config.json을 수정합니다.)
+```
 
-cat tbears_cli_config.json
+수정한 `tbears_cli_config.json`의 내용은 다음과 같습니다.
+```
 {
     "uri": "http://127.0.0.1:9000/api/v3",
     "nid": "0x3",
@@ -126,13 +175,22 @@ cat tbears_cli_config.json
     "txresult": {},
     "transfer": {}
 }
+```
+생성된 프로젝트를 T-Bears 서비스에 배포합니다.('-c' 옵션을 통해 수정한 설정파일을 적용합니다.)
+```
 tbears deploy -c ./tbears_cli_config.json .
 ```
-
-* 4.3 배포한 SCORE의 메소드 호출하기
+출력:
 ```
-1) init을 통해 생성한 SCORE의 'hello' 메소드 호출
-cat call.json
+Send deploy request successfully.
+If you want to check SCORE deployed successfully, execute txresult command
+transaction hash: 0x7047a50fcad1cffb3390d161cbbd34915dab0ef0f7159b10683ae32159f8fbde
+```
+### *4.3 배포한 SCORE의 메소드 호출하기*
+*4.3.1 init을 통해 생성한 SCORE의 'hello' 메소드 호출*
+
+`tbears call`의 필수 요소인 json파일(call.json)을 다음과 같이 작성합니다
+```
 {
   "jsonrpc": "2.0",
   "method": "icx_call",
@@ -146,16 +204,23 @@ cat call.json
   },
   "id": 1
 }
-
+```
+SCORE의 `hello` 메소드를 호출합니다.
+```
 tbears call call.json
+```
+출력 :
+```
 response : {
         "jsonrpc": "2.0",
         "result": "hello",
         "id": 1
     }
+```
+*4.3.2 samples를 통해 생성한 SCORE("standard_token.py")의 'name' 메소드 호출*
 
-2) samples를 통해 생성한 SCORE의 'name' 메소드 호출
-cat call.json
+`tbears call`의 필수 요소인 json파일(call.json)을 다음과 같이 작성합니다
+```
 {
   "jsonrpc": "2.0",
   "method": "icx_call",
@@ -175,8 +240,14 @@ cat call.json
   },
   "id": 1
 }
+```
+SCORE의 `name` 메소드를 호출합니다.
 
+```
 tbears call call.json
+```
+출력 :
+```
 response : {
     "jsonrpc": "2.0",
     "result": "SampleToken",
@@ -184,18 +255,109 @@ response : {
 }
 ```
 
-* 4.4 트랜잭션 보내기
+### *4.4 트랜잭션*
+*4.4.1 트랜잭션 요청*
+
+`tbears sendtx`의 필수 요소인 json파일(send.json)을 다음과 같이 작성합니다
 ```
-tbears sendtx
-tbears txresult
-tbears txbyhash
+{
+  "jsonrpc": "2.0",
+  "method": "icx_sendTransaction",
+  "params": {
+    "version": "0x3",
+    "from": "hxe7af5fcfd8dfc67530a01a0e403882687528dfcb",
+    "value": "0x0",
+    "stepLimit": "0x3000000",
+    "timestamp": "0x573117f1d6568",
+    "nid": "0x3",
+    "nonce": "0x1",
+    "to": "hxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "dataType": "call",
+    "data": {
+      "method": "setValue",
+      "params": {
+        "value": "0x123"
+      }
+    }
+  },
+  "id": 1
+}
+```
+트랜잭션 서명에 필요한 keystore 파일을 생성합니다.
+```
+tbears keystore key
+```
+출력 :
+```
+input your keystore password:
+Made keystore file successfully
+```
+트랜잭션을 요청합니다.('-k' 옵션을 통해 생성한 keystore 파일을 적용합니다.)
 
 ```
-
-* 4.5 ICX 보내기
+tbears sendtx -k key send.json
 ```
-tbears transfer
-tbears balance
+출력 :
+```
+input your keystore password:
+Send transaction request successfully.
+transaction hash: 0xd8801c6b0f8c63642859fe3dbd2d4ee030149d76258abc1764335b397cc073e3
+```
+*4.4.2 트랜잭션 결과 확인*
+
+`txresult`를 통해 요청한 트랜잭션의 결과를 확인합니다.
+```
+tbears txresult 0xd8801c6b0f8c63642859fe3dbd2d4ee030149d76258abc1764335b397cc073e3
+```
+출력 : 
+```
+Transaction result: {
+    "jsonrpc": "2.0",
+    "result": {
+        "txHash": "0xd8801c6b0f8c63642859fe3dbd2d4ee030149d76258abc1764335b397cc073e3",
+        "blockHeight": "0x12e",
+        "blockHash": "0x291d3f995475811402e2db9cf44f577d2571ef0d2c225d49829f522f6d0ef28b",
+        "txIndex": "0x0",
+        "to": "hxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "stepUsed": "0xf4a10",
+        "stepPrice": "0x0",
+        "cumulativeStepUsed": "0xf4a10",
+        "eventLogs": [],
+        "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "status": "0x1"
+    },
+    "id": 1
+}
+```
+
+### *4.5 ICX*
+*4.5.1 ICX 보내기*
+
+먼저 `cat key`를 실행하여 address를 확인한다
+```
+{"address": "hx62d878f8c21fbbd61fcbb5f5a1a6ff3c86996ffb", "crypto": {"cipher": "aes-128-ctr", "cipherparams": {"iv": "bda6f1ff9f0bebf5fa6f0d8e435cc5a0"}, "ciphertext": "a4b6ae5e6a8a478214bbd13300983167b1500d5bff80e14b6d173407ba20f392", "kdf": "scrypt", "kdfparams": {"dklen": 32, "n": 16384, "r": 1, "p": 8, "salt": "0d85bcf3cf41f6114626a4cbbb202838"}, "mac": "8eaccb70cbaa74cce0f40b9ef38e2e7c0969f0b8a285bf5d28be901c1b482e7e"}, "id": "cc69678b-21df-4cae-91b4-1cc71fd149fa", "version": 3, "coinType": "icx"}%
+```
+제네시스 블록에서 key에서 확인한 주소로 1icx를 보낸다
+```
+tbears transfer -f hx0000000000000000000000000000000000000000 hx62d878f8c21fbbd61fcbb5f5a1a6ff3c86996ffb 1e18
+```
+출력 :
+```
+Send transfer request successfully.
+transaction hash: 0x33f4c69eabf45ab62f216e7498e01b3c684324543fa92b8b9a3c288d340813c8
+```
+
+*4.5.2 ICX 잔고 확인하기* 
+
+`tbears balance`를 통해 해당 주소의 잔고를 확인할 수 있다.
+```
+tbears balance hx62d878f8c21fbbd61fcbb5f5a1a6ff3c86996ffb
+```
+출력 :
+
+```
+balance in hex: 0xde0b6b3a7640000
+balance in decimal: 1000000000000000000
 ```
 
 ---
@@ -540,101 +702,392 @@ expected result :
 
 * ICX, 트랜잭션, 블록과 관련된 명렁어
 
-`tbears transfer`
+`tbears transfer` : ICX 코인을 전송합니다.
+```
+tbears transfer [-h] [-f FROM] [-k KEYSTORE] [-n NID] [-u URI] [-c CONFIG] to value
 
-`tbears balance`
+examples :
+    tbears transfer -f hx0000000000000000000000000000000000000000 hx62d878f8c21fbbd61fcbb5f5a1a6ff3c86996ffb 1e18
+```
+필수 요소 : 
 
-`tbears totalsupply`
+>to : icx를 받을 주소를 의미합니다.
 
-`tbears txresult`
+>value : 'to' 주소로 보내지는 icx의 Amount를 의미합니다.
 
-`tbears txbyhash`
+옵션 :
 
-`tbears lastblock`
+>-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
 
-`tbears blockbyheight`
+>-f FROM, --from FROM : icx를 보내는 주소를 의미합니다.
 
-`tbears blockbyhash`
+>-k KEYSTORE, --key-store KEYSTORE : Sender의 keystore file을 의미합니다.
 
-`tbears console`
+>-n NID, --nid NID : 디폴트 값으로 "0x3"을 가지며, 네트워크 ID를 의미합니다.
+
+>--u URI, --node-uri URI : 디폴트 값으로 "http://127.0.0.1:9000/api/v3" 를 가지며, 노드의 URI를 의미합니다.
+
+>-c CONFIG, --config CONFIG : 디폴트 값으로 "./tbears_cli_config.json"을 가지며, "keyStore", "uri" 와 "from"의 값을 정의하는 파일을 의미합니다.
+```
+expected result :
+    Send transfer request successfully.
+    transaction hash:        
+    0x8849b8f601d4a12654d0af3236b1fb9f976edc6e57fda2c5cc8f0dc52ebbfcfb
+```
+
+`tbears balance` : 해당 address의 ICX 잔고를 나타냅니다.
+```
+tbears balance [-h] [-u URI] [-c CONFIG] address
+
+examples :
+    tbears balance hx0000000000000000000000000000000000000000
+```
+필수 요소 :
+
+>address : ICX 잔고를 확인할 주소를 의미합니다.
+
+옵션 :
+
+>-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
+
+>--u URI, --node-uri URI : 디폴트 값으로 "http://127.0.0.1:9000/api/v3" 를 가지며, 노드의 URI를 의미합니다.
+
+>-c CONFIG, --config CONFIG : 디폴트 값으로 "./tbears_cli_config.json"을 가지며, "uri"의 값을 정의하는 파일을 의미합니다.
+```
+expected result :
+    balance in hex: 0x2961fff8ca4a62327800000
+    balance in decimal: 800460000000000000000000000
+```
+
+`tbears totalsupply` : ICX의 총 공급량을 나타냅니다.
+```
+tbears totalsupply [-h] [-u URI] [-c CONFIG]
+
+examples :
+    tbears totalsupply
+```
+옵션 :
+
+>-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
+
+>--u URI, --node-uri URI : 디폴트 값으로 "http://127.0.0.1:9000/api/v3" 를 가지며, 노드의 URI를 의미합니다.
+
+>-c CONFIG, --config CONFIG : 디폴트 값으로 "./tbears_cli_config.json"을 가지며, "uri"의 값을 정의하는 파일을 의미합니다.
+```
+expected result :
+    Total supply of ICX in hex: 0x2961fff8ca4a62327800000
+    Total supply of ICX in decimal: 800460000000000000000000000
+```
+
+`tbears txresult` : 트랜잭션 해시값을 통해 트랜잭션의 결과를 출력합니다.
+```
+tbears txresult [-h] [-u URI] [-c CONFIG] hash
+
+examples :
+    tbears txresult 0x227fb3e6fdc89de8d24e019b1ddc88538633c4202102297da204444d393249c2
+```
+필수 요소 :
+
+>hash : 요청하는 트랜잭션의 hash값을 의미합니다.
+
+옵션 :
+
+>-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
+
+>--u URI, --node-uri URI : 디폴트 값으로 "http://127.0.0.1:9000/api/v3" 를 가지며, 노드의 URI를 의미합니다.
+
+>-c CONFIG, --config CONFIG : 디폴트 값으로 "./tbears_cli_config.json"을 가지며, "uri"의 값을 정의하는 파일을 의미합니다. 
+
+```
+expected result :
+    Transaction result: {
+        "jsonrpc": "2.0",
+        "result": {
+            "txHash": "0x227fb3e6fdc89de8d24e019b1ddc88538633c4202102297da204444d393249c2",
+            "blockHeight": "0x2",
+            "blockHash": "28e6e4710c56e053920b95df0058317a4ac641b16d17d64db7f958e8a5650391",
+            "txIndex": "0x0",
+            "to": "cx0000000000000000000000000000000000000000",
+            "scoreAddress": "cx6bd390bd855f086e3e9d525b46bfe24511431532",
+            "stepUsed": "0xe2a4",
+            "stepPrice": "0x0",
+            "cumulativeStepUsed": "0xe2a4",
+            "eventLogs": [],
+            "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "status": "0x1"
+        },
+        "id": 1
+    }
+```
+
+`tbears txbyhash` : 트랜잭션 해시값을 통해 해당 트랜잭션을 출력합니다.
+```
+tbears txbyhash [-h] [-u URI] [-c CONFIG] hash
+
+examples :
+    tbears txbyhash 0x95be9f0247bc3b7ed07fe07c53613c580642ef991c574c85db45dbac9e8366df
+
+```
+필수 요소 :
+
+>hash : 요청하는 트랜잭션의 hash값을 의미합니다.
+
+옵션 :
+
+>-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
+
+>--u URI, --node-uri URI : 디폴트 값으로 "http://127.0.0.1:9000/api/v3" 를 가지며, 노드의 URI를 의미합니다.
+
+>-c CONFIG, --config CONFIG : 디폴트 값으로 "./tbears_cli_config.json"을 가지며, "uri"의 값을 정의하는 파일을 의미합니다. 
+```
+expected result :
+    Transaction: {
+        "jsonrpc": "2.0",
+        "result": {
+            "version": "0x3",
+            "from": "hxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "value": "0x0",
+            "stepLimit": "0x3000000",
+            "timestamp": "0x572e8fd95db26",
+            "nid": "0x3",
+            "nonce": "0x1",
+            "to": "cx0000000000000000000000000000000000000000",
+            "data": {
+                "contentType": "application/zip",
+                "content": "0x32b34cfa39993fa093e",
+                "params": {}
+            },
+            "dataType": "deploy",
+            "signature": "sig",
+            "txIndex": "0x0",
+            "blockHeight": "0x2",
+            "blockHash": "0x28e6e4710c56e053920b95df0058317a4ac641b16d17d64db7f958e8a5650391"
+        },
+        "id": 1
+    }
+```
+
+`tbears lastblock` : 마지막 블록의 정보를 나타냅니다.
+```
+tbears lastblock [-h] [-u URI] [-c CONFIG]
+
+examples : 
+    tbears lastblock 
+```
+옵션 :
+
+>-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
+
+>--u URI, --node-uri URI : 디폴트 값으로 "http://127.0.0.1:9000/api/v3" 를 가지며, 노드의 URI를 의미합니다.
+
+>-c CONFIG, --config CONFIG : 디폴트 값으로 "./tbears_cli_config.json"을 가지며, "uri"의 값을 정의하는 파일을 의미합니다. 
+```
+expected result :
+    block info : {
+        "jsonrpc": "2.0",
+        "result": {
+            "version": "tbears",
+            "prev_block_hash": "815c0fd7a0dd4594bb19ee39030c1bd91c200878f1f456fe8dd7ff4e0a19b839",
+            "merkle_tree_root_hash": "tbears_does_not_support_merkel_tree",
+            "time_stamp": 1533719896011654,
+            "confirmed_transaction_list": [
+                {
+                    "version": "0x3",
+                    "from": "hxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "value": "0x0",
+                    "stepLimit": "0x3000000",
+                    "timestamp": "0x572e8fd95db26",
+                    "nid": "0x3",
+                    "nonce": "0x1",
+                    "to": "cx0000000000000000000000000000000000000000",
+                    "data": {
+                        "contentType": "application/zip",
+                        "content": "0x32b34cfa39993fa093e",
+                        "params": {}
+                    },
+                    "dataType": "deploy",
+                    "signature": "sig"
+                }
+            ],
+            "block_hash": "28e6e4710c56e053920b95df0058317a4ac641b16d17d64db7f958e8a5650391",
+            "height": 2,
+            "peer_id": "fb5f43dc-9aeb-11e8-a31b-acde48001122",
+            "signature": "tbears_does_not_support_signature"
+        },
+        "id": 1
+    }
+```
+
+`tbears blockbyheight` : 주어진 blockheight를 통해 해당 블록의 정보를 나타냅니다.
+```
+tbears blockbyheight [-h] [-u URI] [-c CONFIG] height
+
+examples :
+    tbears blockbyheight 0x1
+```
+필수 요소 :
+
+> height : 요청하는 블록의 height 값을 의미합니다
+
+옵션 :
+
+>-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
+
+>--u URI, --node-uri URI : 디폴트 값으로 "http://127.0.0.1:9000/api/v3" 를 가지며, 노드의 URI를 의미합니다.
+
+>-c CONFIG, --config CONFIG : 디폴트 값으로 "./tbears_cli_config.json"을 가지며, "uri"의 값을 정의하는 파일을 의미합니다. 
+```
+expected result :
+    block info : {
+        "jsonrpc": "2.0",
+        "result": {
+            "version": "tbears",
+            "prev_block_hash": "859083707985809a8b52982b9d8d86bfe48c0020a478b3a99d7eeb3c74c38e7c",
+            "merkle_tree_root_hash": "tbears_does_not_support_merkel_tree",
+            "time_stamp": 1533719753948440,
+            "confirmed_transaction_list": [
+                {
+                    "version": "0x3",
+                    "from": "hxef73db5d0ad02eb1fadb37d0041be96bfa56d4e6",
+                    "value": "0x8ac7230489e80000",
+                    "stepLimit": "0x2000",
+                    "timestamp": "0x572e8f51e4481",
+                    "nid": "0x3",
+                    "nonce": "0x1",
+                    "to": "hxbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+                    "signature": "f2B3r27u7peL3I9uBnKA8yn82odqlMECU+UBkRiZTJIwWFo57AmlUjKhoK8OZBBRdaWWmLF+JTZNs70yF8+zIwA="
+                }
+            ],
+            "block_hash": "815c0fd7a0dd4594bb19ee39030c1bd91c200878f1f456fe8dd7ff4e0a19b839",
+            "height": 1,
+            "peer_id": "a6b22354-9aeb-11e8-a0ae-acde48001122",
+            "signature": "tbears_does_not_support_signature"
+        },
+        "id": 1
+    }
+```
+
+`tbears blockbyhash` : 블록해시값을 통해 해당 블록의 정보를 나타냅니다.
+```
+tbears blockbyhash [-h] [-u URI] [-c CONFIG] hash
+
+examples :
+    tbears blockbyhash 0xce00facd0ac3832e1e6e623d8f4b9344782da881e55abb48d1494fde9e465f78
+
+```
+필수 요소 :
+
+> hash : 요청하는 블록의 hash 값을 의미합니다
+
+옵션 :
+
+>-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
+
+>--u URI, --node-uri URI : 디폴트 값으로 "http://127.0.0.1:9000/api/v3" 를 가지며, 노드의 URI를 의미합니다.
+
+>-c CONFIG, --config CONFIG : 디폴트 값으로 "./tbears_cli_config.json"을 가지며, "uri"의 값을 정의하는 파일을 의미합니다. 
+```
+expected result :
+    block info : {
+        "jsonrpc": "2.0",
+        "result": {
+            "version": "tbears",
+            "prev_block_hash": "859083707985809a8b52982b9d8d86bfe48c0020a478b3a99d7eeb3c74c38e7c",
+            "merkle_tree_root_hash": "tbears_does_not_support_merkel_tree",
+            "time_stamp": 1533719753948440,
+            "confirmed_transaction_list": [
+                {
+                    "version": "0x3",
+                    "from": "hxef73db5d0ad02eb1fadb37d0041be96bfa56d4e6",
+                    "value": "0x8ac7230489e80000",
+                    "stepLimit": "0x2000",
+                    "timestamp": "0x572e8f51e4481",
+                    "nid": "0x3",
+                    "nonce": "0x1",
+                    "to": "hxbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+                    "signature": "f2B3r27u7peL3I9uBnKA8yn82odqlMECU+UBkRiZTJIwWFo57AmlUjKhoK8OZBBRdaWWmLF+JTZNs70yF8+zIwA="
+                }
+            ],
+            "block_hash": "815c0fd7a0dd4594bb19ee39030c1bd91c200878f1f456fe8dd7ff4e0a19b839",
+            "height": 1,
+            "peer_id": "a6b22354-9aeb-11e8-a0ae-acde48001122",
+            "signature": "tbears_does_not_support_signature"
+        },
+        "id": 1
+    }
+```
+
+`tbears console` : IPython을 사용하여 T-Bears 서비스의 interactive 모드로 진입합니다. 앞서 설명한 명령어들을 tbears를 생략하고 실행할 수 있게 되며 몇가지 추가적인 기능들을 제공합니다. 자세한 내용은 [https://github.com/icon-project/t-bears](https://github.com/icon-project/t-bears)에서 확인할 수 있다.
 
 ---
 * 설정 파일
 
-`tbears_server_config.json` : 
-When starting T-Bears (tbears start), "tbears_server_config.json" is used to configure the parameters and initial settings.
+`tbears_server_config.json` : T-Bears 서비스를 시작할때 초기 설정과 파라미터를 "tbears_server_config.json" 통해 설정합니다.
 ```
-{
-    "hostAddress": "0.0.0.0",
-    "port": 9000,
-    "scoreRootPath": "./.score",
-    "stateDbRootPath": "./.statedb",
-    "log": {
-        "logger": "tbears",
-        "level": "info",
-        "filePath": "./tbears.log",
-        "colorLog": true,
-        "outputType": "console|file",
-        "rotate": {
-            "type": "bytes",
-            "maxBytes": 10485760,
-            "backupCount": 10
-        }
-    },
-    "service": {
-        "fee": false,
-        "audit": false,
-        "deployerWhiteList": false
-    },
-    "genesis": {
-        "nid": "0x3",
-        "accounts": [
-            {
-                "name": "genesis",
-                "address": "hx0000000000000000000000000000000000000000",
-                "balance": "0x2961fff8ca4a62327800000"
-            },
-            {
-                "name": "fee_treasury",
-                "address": "hx1000000000000000000000000000000000000000",
-                "balance": "0x0"
+examples : 
+    {
+        "hostAddress": "0.0.0.0",
+        "port": 9000,
+        "scoreRootPath": "./.score",
+        "stateDbRootPath": "./.statedb",
+        "log": {
+            "logger": "tbears",
+            "level": "info",
+            "filePath": "./tbears.log",
+            "colorLog": true,
+            "outputType": "console|file",
+            "rotate": {
+                "type": "bytes",
+                "maxBytes": 10485760,
+                "backupCount": 10
             }
-        ]
-    },
-    "channel": "loopchain_default",
-    "amqpKey": "7100",
-    "amqpTarget": "127.0.0.1",
-    "blockConfirmInterval": 10,
-    "blockConfirmEmpty": true
-}
+        },
+        "service": {
+            "fee": false,
+            "audit": false,
+            "deployerWhiteList": false
+        },
+        "genesis": {
+            "nid": "0x3",
+            "accounts": [
+                {
+                    "name": "genesis",
+                    "address": "hx0000000000000000000000000000000000000000",
+                    "balance": "0x2961fff8ca4a62327800000"
+                },
+                {
+                    "name": "fee_treasury",
+                    "address": "hx1000000000000000000000000000000000000000",
+                    "balance": "0x0"
+                }
+            ]
+        },
+        "channel": "loopchain_default",
+        "amqpKey": "7100",
+        "amqpTarget": "127.0.0.1",
+        "blockConfirmInterval": 10,
+        "blockConfirmEmpty": true
+    }
 ```
-설명 :
 
-
-
-`tbears_cli_config.json` :
-For every T-Bears CLI commands except start, stop, samples, clear, init and keystore, this file is used to configure the default parameters and initial settings.
-
-In this configuration file, you can define default options values for some CLI commnds. For example, SCORE's  on_install() or  on_update() method is called on deployment. In this config file, you can set the deploy "mode" and the parameters ("scoreParams") of on_install() or on_update() as shown in the following example.
+`tbears_cli_config.json` : start, stop, samples, clear, init, keystore를 제외한 모든 T-Bears CLI 명령어를 수행할 때 디폴트 파라미터와 초기 설정을 위해 사용된다.
 ```
-{
-    "uri": "http://127.0.0.1:9000/api/v3",
-    "nid": "0x3",
-    "keyStore": null,
-    "from": "hxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "to": "cx0000000000000000000000000000000000000000",
-    "stepLimit": "0x3000000",
-    "deploy": {
-        "mode": "install",
-        "scoreParams": {}
-    },
-    "txresult": {},
-    "transfer": {}
-}
+examples : 
+    {
+        "uri": "http://127.0.0.1:9000/api/v3",
+        "nid": "0x3",
+        "keyStore": null,
+        "from": "hxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "to": "cx0000000000000000000000000000000000000000",
+        "stepLimit": "0x3000000",
+        "deploy": {
+            "mode": "install",
+            "scoreParams": {}
+        },
+        "txresult": {},
+        "transfer": {}
+    }
 ```
-설명 :
-
-옵션 :
 
 
 
