@@ -1609,7 +1609,7 @@ Keystore파일을 저장할 경우, 비밀번호를 통해서 Keystore파일 내
 
 
 **wallet store (지갑저장)**	
-#####keyStore 파일이 저장될 경로를 지정하고 위에서 선언한 key의 password로 지갑을 저장합니다. 
+##### keyStore 파일이 저장될 경로를 지정하고 위에서 선언한 key의 password로 지갑을 저장합니다. 
 keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아이콘 크롬 확장프로그램 [지갑](<https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel>)에서는, 숫자, 문자, 특수문자를 모두 포함하여 9자 이상입니다. 현재 SDK상에서는 규약이 강제되어있지 않습니다. 보안성을 위해서는 아이콘 크롬 확장 프로그램에서와 같은 강제성이 부여되는것이 좋습니다.
  
 지갑을 저장하기 위해서는, 지갑 인스턴스를 불러들어야 합니다. 
