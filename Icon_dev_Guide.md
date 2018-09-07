@@ -17,35 +17,37 @@ Icon Dev Guide
 
 
 ## 순서
-1. 설치하기
-2. [SDK 사용하기위한 환경설정](#개발환경 구축하기). 
-	* [파이썬](## 파이썬 개발 환경 구축하기). 
-		* [파이썬설치](#### 파이썬 설치).  
-		* [Git설치](#### Git 설치).    
-		* [파이썬SDK 설치하기](### 파이썬 SDK 설치하기). 
-		* [1. Git의 코드를 다운로드하여 설치하는 방법](#### 1. Git의 코드를 다운로드하여 설치하는 방법). 
-		* [2. pip install 을 활용한 방법](#### 2. pip install 을 활용한 방법). 
+1. T-bears, SCORE 설치하기
 
-	* [자바](## 자바 개발 환경 구축하기). 
-		* [자바설치](#### Java 설치).  
-		* [이클립스설치](#### Eclipse 설치).  
-		* [Git설치](#### Git 설치 ). 
+2. T-bears 활용하기
 
-		* [1. Git의 코드를 다운로드하여 설치하는 방법](#### 1. Git의 코드를 다운로드하여 설치하는 방법). 
+3. SDK 개발환경 구축하기
+	* 파이썬 
+		* 파이썬이 설치되어있지 않다면?  
+		* Git이 설치되어있지 않다면?
+		* 파이썬SDK 설치하기
+		* 1. Git의 코드를 다운로드하여 설치하는 방법
+		* 2. pip install 을 활용한 방법
 
-		* [2. Maven dependency setting](#### 2. Maven dependency setting). 
+	* 자바
+		* 자바가 설치되어있지 않다면?
+		* IDE가 설치되어있지 않다면?(이클립스)  
+		* Git이 설치되어있지 않다면?
+		* 자바SDK 설치하기
+		* 1. Git의 코드를 다운로드하여 설치하는 방법
 
-			* [Maven dependency 적용 확인](#### Maven dependency 적용 확인). 
+		* 2. Maven dependency setting
 
-		* [3. Gradle dependency setting](#### 3. Gradle dependency setting). 
-			* [Gradle dependency 적용 확인](#### Gradle dependency 적용 확인). 
+			* Maven dependency 적용 확인
+
+		* 3. Gradle dependency setting
+			* Gradle dependency 적용 확인
 			
 3. SDK 활용하기
 	* 지갑사용하기
 	* 네트워크와 연결하기
 	* 트랜젝션 만들어보기
 
-4. T-bears, SCORE 사용해보기
 
 <br></br>
 
