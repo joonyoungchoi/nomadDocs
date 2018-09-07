@@ -35,29 +35,26 @@ Icon Dev Guide
 		* Git이 설치되어있지 않다면?
 		* 자바SDK 설치하기
 		* 1. Git의 코드를 다운로드하여 설치하는 방법
-
 		* 2. Maven dependency setting
-
 			* Maven dependency 적용 확인
-
 		* 3. Gradle dependency setting
 			* Gradle dependency 적용 확인
 			
 3. SDK 활용하기
 	* 지갑사용하기
-		#### wallet create (지갑생성)
-		#### wallet load (지갑로드)
-		#### wallet store (지갑저장)
+		*  wallet create (지갑생성)
+		* wallet load (지갑로드)
+		* wallet store (지갑저장)
 		
 	
 	* 네트워크와 연결하기
 	
 	
 	* 트랜젝션 만들어보기
-		#### ICX를 전송하는 트랜젝션
-		#### 토큰을 전송하는 트랜젝션
-		#### 메세지를 전송하는 트랜젝션
-		#### SCORE를 Deploy 하는 트랜젝션
+		* ICX를 전송하는 트랜젝션
+		* 토큰을 전송하는 트랜젝션
+		* 메세지를 전송하는 트랜젝션
+		* SCORE를 Deploy 하는 트랜젝션
 
 
 <br></br>
