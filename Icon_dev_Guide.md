@@ -92,7 +92,7 @@ Icon Dev Guide
 <br></br>
 
 ---
-### T-Bears 설치하기 (macOS)
+# 1. T-Bears 설치하기 (macOS)
 T-Bears를 설치하는 방법에는 두가지가 있으며 다음과 같습니다.
 ```
 1. Git의 코드를 다운로드하여 설치하기
@@ -163,7 +163,7 @@ source ./bin/activate
 (work) pip install tbears
 ```
 ---
-### T-Bears, SCORE 활용하기
+# 2. T-Bears, SCORE 활용하기
 T-bears는 아이콘-더 루프팀의 개발자용 CLI 로컬 테스트 개발툴입니다.
 ICON은 JSON-RPC방식으로 통신합니다. Tbears는, 로컬에서 localhostJSON-RPC 응답을 지원하는 개발툴이다. 
 현재, Git에 공개가 되어있으며, 사용을 원하는 개발자는 언제든 다운로드 받아 사용 가능하다. 
@@ -172,7 +172,8 @@ ICON은 JSON-RPC방식으로 통신합니다. Tbears는, 로컬에서 localhostJ
 ### T-Bears 활용하기 (1.0.4 version)
 >T-Bears 활용하여 실행할 간단한 예제를 아래에 두었습니다. 
 
----
+<br></br>
+
 ###  *1. 서비스*
 
 *1.1 서비스 시작*
