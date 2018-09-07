@@ -1,16 +1,13 @@
 Icon Dev Guide
 ==============
-아이콘은 아이콘 재단의 블록체인이다. 
-<p></p>본 문서에서는 아이콘의 개발자용 툴인 T-bears 와, 아이콘에서 제공하는 파이썬 SDK, 자바 SDK를 활용하여 기초적인 개발을 도와주는 Guide다. 
+아이콘은 아이콘 재단의 블록체인이다.  
+본 문서에서는 아이콘의 개발자용 툴인 T-bears 와, 아이콘에서 제공하는 파이썬 SDK, 자바 SDK를 활용하여 기초적인 개발을 도와주는 Guide다. 
 따라하기 쉬운 Sample 코드를 활용하여 주어진 상황별로 튜토리얼을 진행해 봅니다. 본가이드는 아래의 아이콘 github의 내용을 기반으로 작성되었습니다.
 
 <br></br>
-아이콘 홈페이지 : <https://icon.foundation/?lang=ko>
-
-아이콘 T-bears : <https://github.com/icon-project/t-bears>
-
-아이콘 파이썬 SDK : <https://github.com/icon-project/icon-sdk-python>
-
+아이콘 홈페이지 : <https://icon.foundation/?lang=ko>. 
+아이콘 T-bears : <https://github.com/icon-project/t-bears>. 
+아이콘 파이썬 SDK : <https://github.com/icon-project/icon-sdk-python>. 
 아이콘 자바 SDK : <https://github.com/icon-project/icon-sdk-java>
 
 <br></br>
@@ -19,13 +16,13 @@ Icon Dev Guide
 ## 순서
 1. T-bears를 사용해서 아이콘 로컬네트워크 구축하기
 2. aws에서 아이콘 네트워크 구축하기
-3. [개발환경 구축하기](#개발환경 구축하기)
-	* [파이썬](## 파이썬 개발 환경 구축하기)
-		* [파이썬설치](#### 파이썬 설치) 
-		* [Git설치](#### Git 설치) 
-		* [파이썬SDK 설치하기](### 파이썬 SDK 설치하기)
-		* [1. Git의 코드를 다운로드하여 설치하는 방법](#### 1. Git의 코드를 다운로드하여 설치하는 방법)
-		* [2. pip install 을 활용한 방법](#### 2. pip install 을 활용한 방법)
+3. [개발환경 구축하기](#개발환경 구축하기). 
+	* [파이썬](## 파이썬 개발 환경 구축하기). 
+		* [파이썬설치](#### 파이썬 설치).  
+		* [Git설치](#### Git 설치).    
+		* [파이썬SDK 설치하기](### 파이썬 SDK 설치하기). 
+		* [1. Git의 코드를 다운로드하여 설치하는 방법](#### 1. Git의 코드를 다운로드하여 설치하는 방법). 
+		* [2. pip install 을 활용한 방법](#### 2. pip install 을 활용한 방법). 
 
 	* [자바](## 자바 개발 환경 구축하기)
 
