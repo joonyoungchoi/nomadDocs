@@ -1,15 +1,52 @@
-
 Icon Dev Guide
 ==============
+아이콘은 아이콘 재단의 블록체인이다.  
+본 문서에서는 아이콘의 개발자용 툴인 T-bears 와, 아이콘에서 제공하는 파이썬 SDK, 자바 SDK를 활용하여 기초적인 개발을 도와주는 Guide다. 
+따라하기 쉬운 Sample 코드를 활용하여 주어진 상황별로 튜토리얼을 진행해 봅니다. 본가이드는 아래의 아이콘 github의 내용을 기반으로 작성되었습니다.
 
-아이콘은 아이콘 재단의 블록체인 입니다.
-본 문서에서는 아이콘의 개발자용 툴인 T-bears 와, 아이콘에서 제공하는 파이썬 SDK, 자바 SDK를 활용하여 기초적인 개발을 도와주는 Guide다. 따라하기 쉬운 Sample 코드를 활용하여 주어진 상황별로 튜토리얼을 진행해 봅니다. 본가이드는 아래의 아이콘 github의 내용을 기반으로 작성되었습니다.
+<br></br>
+아이콘 홈페이지 : <https://icon.foundation/?lang=ko>. 
+아이콘 T-bears : <https://github.com/icon-project/t-bears>. 
+아이콘 파이썬 SDK : <https://github.com/icon-project/icon-sdk-python>. 
+아이콘 자바 SDK : <https://github.com/icon-project/icon-sdk-java>
+
+<br></br>
 
 
-### 1. 설치하기
-### 2. JavaSDK 활용하여 응답 받아보기
-### 3. PythonSDK 활용하여 응답 받아보기
-### 4. SCORE 활용해 보기
+## 순서
+1. 설치하기
+2. [SDK 사용하기위한 환경설정](#개발환경 구축하기). 
+	* [파이썬](## 파이썬 개발 환경 구축하기). 
+		* [파이썬설치](#### 파이썬 설치).  
+		* [Git설치](#### Git 설치).    
+		* [파이썬SDK 설치하기](### 파이썬 SDK 설치하기). 
+		* [1. Git의 코드를 다운로드하여 설치하는 방법](#### 1. Git의 코드를 다운로드하여 설치하는 방법). 
+		* [2. pip install 을 활용한 방법](#### 2. pip install 을 활용한 방법). 
+
+	* [자바](## 자바 개발 환경 구축하기). 
+		* [자바설치](#### Java 설치).  
+		* [이클립스설치](#### Eclipse 설치).  
+		* [Git설치](#### Git 설치 ). 
+
+		* [1. Git의 코드를 다운로드하여 설치하는 방법](#### 1. Git의 코드를 다운로드하여 설치하는 방법). 
+
+		* [2. Maven dependency setting](#### 2. Maven dependency setting). 
+
+			* [Maven dependency 적용 확인](#### Maven dependency 적용 확인). 
+
+		* [3. Gradle dependency setting](#### 3. Gradle dependency setting). 
+			* [Gradle dependency 적용 확인](#### Gradle dependency 적용 확인). 
+			
+3. SDK 활용하기
+	* 지갑사용하기
+	* 네트워크와 연결하기
+	* 트랜젝션 만들어보기
+
+4. T-bears, SCORE 사용해보기
+
+<br></br>
+
+
 
 T-bears는 아이콘-더 루프팀의 개발자용 CLI 로컬 테스트 개발툴입니다.
 ICON은 JSON-RPC방식으로 통신합니다. Tbears는, 로컬에서 localhostJSON-RPC 응답을 지원하는 개발툴이다. 
