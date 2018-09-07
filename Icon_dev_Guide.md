@@ -213,7 +213,7 @@ Stopped tbears service successfully
 ```
 tbears clear         
 ```
-출력되는 메시지를 통해 서비스에 배포된 SCORE가 삭제되는 것을 확인할 수 있습니다.(`tbears clear`의 경우 `tbears stop`을 통해 T-Bears 서비스가 중단된 상태에서만 가능합니다.)
+출력되는 메시지를 통해 서비스에 배포된 SCORE가 삭제되는 것을 확인할 수 있습니다. (`tbears clear`의 경우 `tbears stop`을 통해 T-Bears 서비스가 중단된 상태에서만 가능합니다.)
 ```
 Cleared SCORE deployed on tbears successfully
 ```
@@ -346,7 +346,7 @@ transaction hash: 0x7047a50fcad1cffb3390d161cbbd34915dab0ef0f7159b10683ae32159f8
 ```
 > method : ~~~ . "method" 에 들어갈 메소드명은 `tbears scoreapi` 를 통해 확인할 수 있습니다.
 
-> params :
+> json 파일에 대한 설명 추가
 
 SCORE의 `hello` 메소드를 호출합니다.
 ```
@@ -373,18 +373,18 @@ response : {
     "to": "cx02b13428a8aef265fbaeeb37394d3ae8727f7a19",
     "dataType": "call",
     "data": {
-      "method": "name"
-      ----------------------------------------------------------
-      // 입력해야할 parameter가 있을 경우
+      "method": "name",
+      // 입력해야할 parameter가 있을 경우 추가
       "params":{ 
           "key":"value"
-          }        
-      ----------------------------------------------------------
+          }
     }
   },
   "id": 1
 }
 ```
+> json 파일에 대한 설명 추가
+
 SCORE의 `name` 메소드를 호출합니다.
 
 ```
