@@ -49,17 +49,19 @@ Icon Dev Guide
 
 <br></br>
 
+---
+### 설치하기(macOS)
 
-
-T-bears는 아이콘-더 루프팀의 개발자용 CLI 로컬 테스트 개발툴입니다.
-ICON은 JSON-RPC방식으로 통신합니다. Tbears는, 로컬에서 localhostJSON-RPC 응답을 지원하는 개발툴이다. 
-현재, Git에 공개가 되어있으며, 사용을 원하는 개발자는 언제든 다운로드 받아 사용 가능하다. 
-<https://github.com/icon-project/t-bears.git>
+#### T-Bears 설치하기
+>T-Bears를 설치하는 방법에는 두가지가 있으며 다음과 같습니다.
+```
+1. Git의 코드를 다운로드하여 설치하기
+2. PyPI 통해 설치하기
+```
+>두가지 방법을 진행하기에 앞서 공통적으로 구성해야할 환경은 아래와 같습니다.
 
 ---
-### 1. 설치하기(macOS)
-
-* 공통
+#### 공통
 
 * Home Brew(macOS용 패키지 관리자)를 설치합니다.
 
@@ -94,13 +96,9 @@ bash ./Anaconda3-5.2.0-MacOSX-x86_64.sh
 ```
 pip3 install virtualenv
 ```
-#### T-Bears 설치하기
-```
-1. Git의 코드를 다운로드하여 설치하는 방법
-2. PyPI 통해 설치하기
-```
 
-#### 1. Git의 코드를 다운로드하여 설치하는 방법
+<br></br>
+#### 1. Git의 코드를 다운로드하여 설치하기
 * git 설치가 완료되면, tbears Git repository에 존재하는 코드를 `t-bears` 디렉토리로 clone 합니다.
 
 ```
@@ -112,9 +110,9 @@ source venv/bin/activate
 (venv) ./build.sh
 (venv) pip install ./dist/tbears-1.0.4-py3-none-any.whl
 ```
-
+<br></br>
 #### 2. PyPI 통해 설치하기
-* work directory 생성 -> tbears 설치
+* work 디렉토리 생성 -> tbears 설치
 ```
 mkdir work
 cd work
@@ -124,43 +122,52 @@ source ./bin/activate
 
 (work) pip install tbears
 ```
+---
+### SCORE 활용하기
+T-bears는 아이콘-더 루프팀의 개발자용 CLI 로컬 테스트 개발툴입니다.
+ICON은 JSON-RPC방식으로 통신합니다. Tbears는, 로컬에서 localhostJSON-RPC 응답을 지원하는 개발툴이다. 
+현재, Git에 공개가 되어있으며, 사용을 원하는 개발자는 언제든 다운로드 받아 사용 가능하다. 
+<https://github.com/icon-project/t-bears.git>
+
+### T-Bears 활용하기 (1.0.4 version)
+>T-Bears 활용하여 실행할 간단한 예제를 아래에 두었습니다. 
 
 ---
-### 4. T-Bears 활용하기 (1.0.4 version)
+###  *1. 서비스*
 
-###  *4.1 서비스*
-
-*4.1.1 서비스 시작*
+*1.1 서비스 시작*
 
 ```
 tbears start
 ```
-출력 :
+출력되는 메시지를 통해 서비스가 시작되는 것을 확인할 수 있습니다.
 ```
 Started tbears service successfully
 ```
-*4.1.2 서비스 중단*
+<br></br>
+*1.2 서비스 중단*
 
 ```
 tbears stop          
 ```
-출력 : 
+출력되는 메시지를 통해 서비스가 중단되는 것을 확인할 수 있습니다.
 ```
 Stopped tbears service successfully
 ```
-*4.1.3 서비스에 배포된 SCORE 삭제*
+<br></br>
+*1.3 서비스에 배포된 SCORE 삭제*
 
 ```
 tbears clear         
 ```
-출력 :
+출력되는 메시지를 통해 서비스에 배포된 SCORE가 삭제되는 것을 확인할 수 있습니다.
 ```
 Cleared SCORE deployed on tbears successfully
 ```
+---
+### *2. SCORE 배포하기*
 
-### *4.2 SCORE 배포하기*
-
-*4.2.1 init으로 생성한 SCORE 프로젝트 배포하기*
+*2.1 init으로 생성한 SCORE 프로젝트 배포하기*
 
 init 명령어를 통해 SCORE 프로젝트를 생성합니다.
 ```
@@ -176,14 +183,14 @@ Initialized tbears successfully
 ```
 tbears deploy myproject
 ```
-출력 : 
+출력 
 ```
 Send deploy request successfully.
 If you want to check SCORE deployed successfully, execute txresult command
 transaction hash: 0x1468dd5deab399e309732728d37786eab8ad1f5a09ac9b85c92be0cc884eed72
 ```
-
-*4.2.2 samples로 생성한 SCORE 배포하기*
+<br></br>
+*2.2 samples로 생성한 SCORE 배포하기*
 
 `tbears samples` 명령을 통해 샘플을 생성합니다.
 ```
@@ -218,6 +225,8 @@ tbears genconf (명령어 실행 후 생성된 설정 파일 중 tbears_cli_conf
     "transfer": {}
 }
 ```
+> "scoreParams" 에 들어가는 파라미터의 경우 SCORE파일의 on_install 메소드의 파라미터를 통해 확인할 수 있습니다.
+
 생성된 프로젝트를 T-Bears 서비스에 배포합니다.('-c' 옵션을 통해 수정한 설정파일을 적용합니다.)
 ```
 tbears deploy -c ./tbears_cli_config.json .
@@ -228,8 +237,10 @@ Send deploy request successfully.
 If you want to check SCORE deployed successfully, execute txresult command
 transaction hash: 0x7047a50fcad1cffb3390d161cbbd34915dab0ef0f7159b10683ae32159f8fbde
 ```
-### *4.3 배포한 SCORE의 메소드 호출하기*
-*4.3.1 init을 통해 생성한 SCORE의 'hello' 메소드 호출*
+---
+### *3. 배포한 SCORE의 메소드 호출하기*
+
+*3.1 init을 통해 생성한 SCORE의 'hello' 메소드 호출*
 
 `tbears call`의 필수 요소인 json파일(call.json)을 다음과 같이 작성합니다
 ```
@@ -247,11 +258,13 @@ transaction hash: 0x7047a50fcad1cffb3390d161cbbd34915dab0ef0f7159b10683ae32159f8
   "id": 1
 }
 ```
+> "method" 에 들어갈 메소드명은 SCORE파일의 `@external`을 통해 확인할 수 있습니다.
+
 SCORE의 `hello` 메소드를 호출합니다.
 ```
 tbears call call.json
 ```
-출력 :
+출력
 ```
 response : {
         "jsonrpc": "2.0",
@@ -259,7 +272,8 @@ response : {
         "id": 1
     }
 ```
-*4.3.2 samples를 통해 생성한 SCORE("standard_token.py")의 'name' 메소드 호출*
+<br></br>
+*3.2 samples를 통해 생성한 SCORE("standard_token.py")의 'name' 메소드 호출*
 
 `tbears call`의 필수 요소인 json파일(call.json)을 다음과 같이 작성합니다
 ```
@@ -288,7 +302,7 @@ SCORE의 `name` 메소드를 호출합니다.
 ```
 tbears call call.json
 ```
-출력 :
+출력
 ```
 response : {
     "jsonrpc": "2.0",
@@ -296,9 +310,10 @@ response : {
     "id": 1
 }
 ```
+---
+### *4. 트랜잭션*
 
-### *4.4 트랜잭션*
-*4.4.1 트랜잭션 요청*
+*4.1 트랜잭션 요청*
 
 `tbears sendtx`의 필수 요소인 json파일(send.json)을 다음과 같이 작성합니다
 ```
@@ -329,7 +344,7 @@ response : {
 ```
 tbears keystore key
 ```
-출력 :
+출력
 ```
 input your keystore password:
 Made keystore file successfully
@@ -339,19 +354,20 @@ Made keystore file successfully
 ```
 tbears sendtx -k key send.json
 ```
-출력 :
+출력
 ```
 input your keystore password:
 Send transaction request successfully.
 transaction hash: 0xd8801c6b0f8c63642859fe3dbd2d4ee030149d76258abc1764335b397cc073e3
 ```
-*4.4.2 트랜잭션 결과 확인*
+<br></br>
+*4.2 트랜잭션 결과 확인*
 
 `txresult`를 통해 요청한 트랜잭션의 결과를 확인합니다.
 ```
 tbears txresult 0xd8801c6b0f8c63642859fe3dbd2d4ee030149d76258abc1764335b397cc073e3
 ```
-출력 : 
+출력 
 ```
 Transaction result: {
     "jsonrpc": "2.0",
@@ -371,39 +387,40 @@ Transaction result: {
     "id": 1
 }
 ```
+---
+### *5. ICX*
 
-### *4.5 ICX*
-*4.5.1 ICX 보내기*
+*5.1 ICX 보내기*
 
 먼저 `cat key`를 실행하여 address를 확인한다
 ```
 {"address": "hx62d878f8c21fbbd61fcbb5f5a1a6ff3c86996ffb", "crypto": {"cipher": "aes-128-ctr", "cipherparams": {"iv": "bda6f1ff9f0bebf5fa6f0d8e435cc5a0"}, "ciphertext": "a4b6ae5e6a8a478214bbd13300983167b1500d5bff80e14b6d173407ba20f392", "kdf": "scrypt", "kdfparams": {"dklen": 32, "n": 16384, "r": 1, "p": 8, "salt": "0d85bcf3cf41f6114626a4cbbb202838"}, "mac": "8eaccb70cbaa74cce0f40b9ef38e2e7c0969f0b8a285bf5d28be901c1b482e7e"}, "id": "cc69678b-21df-4cae-91b4-1cc71fd149fa", "version": 3, "coinType": "icx"}%
 ```
-제네시스 블록에서 key에서 확인한 주소로 1icx를 보낸다
+제네시스 블록에서 key에서 확인한 주소로 1 icx를 보낸다
 ```
 tbears transfer -f hx0000000000000000000000000000000000000000 hx62d878f8c21fbbd61fcbb5f5a1a6ff3c86996ffb 1e18
 ```
-출력 :
+출력
 ```
 Send transfer request successfully.
 transaction hash: 0x33f4c69eabf45ab62f216e7498e01b3c684324543fa92b8b9a3c288d340813c8
 ```
-
-*4.5.2 ICX 잔고 확인하기* 
+<br></br>
+*5.2 ICX 잔고 확인하기* 
 
 `tbears balance`를 통해 해당 주소의 잔고를 확인할 수 있다.
 ```
 tbears balance hx62d878f8c21fbbd61fcbb5f5a1a6ff3c86996ffb
 ```
-출력 :
+출력
 
 ```
 balance in hex: 0xde0b6b3a7640000
 balance in decimal: 1000000000000000000
 ```
-
 ---
-* server 명령어
+### *6. 명령어 정리*
+*6.1 server 명령어*
 
 `tbears start` : T-Bears 서비스를 시작합니다. 
 ```
@@ -438,8 +455,9 @@ tbears clear [-h]
 옵션 :
 
 >-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
----
-* utility 명령어
+
+<br></br>
+*6.2 utility 명령어*
 
 `tbears keystore` : keystore 파일을 해당 path에 생성합니다. secp256k1 라이브러리를 사용하여 개인키와 공개키를 생성합니다.
 ```
@@ -487,9 +505,9 @@ expected result :
     Made tbears_cli_config.json, tbears_server_config.json successfully
 ```
 
----
+<br></br>
 
-* SCORE 명령어
+*6.3 SCORE 명령어*
 
 `tbears init` : SCORE 프로젝트를 생성합니다. [project].py 와 package.json 파일을 [project] 디렉토리 안에 생성합니다. SCORE class의 클래스명은 [socreClass]를 따라 생성됩니다.
 `tbears_server_config.json` 파일과 `tbears_cli_config.json` 이 없을 시 현재 디렉토리에 함께 생성됩니다.
@@ -740,9 +758,9 @@ expected result :
         }
     ]
 ```
----
+<br></br>
 
-* ICX, 트랜잭션, 블록과 관련된 명렁어
+*6.4 ICX, 트랜잭션, 블록과 관련된 명렁어*
 
 `tbears transfer` : ICX 코인을 전송합니다.
 ```
@@ -1061,11 +1079,11 @@ expected result :
 
 `tbears console` : IPython을 사용하여 T-Bears 서비스의 interactive 모드로 진입합니다. 앞서 설명한 명령어들을 tbears를 생략하고 실행할 수 있게 되며 몇가지 추가적인 기능들을 제공합니다. 자세한 내용은 [https://github.com/icon-project/t-bears](https://github.com/icon-project/t-bears)에서 확인할 수 있다.
 
----
-* 설정 파일
+<br></br>
+*6.5 설정 파일*
 
 `tbears_server_config.json` : T-Bears 서비스를 시작할때 초기 설정과 파라미터를 "tbears_server_config.json" 통해 설정합니다.
-```
+```ls
 examples : 
     {
         "hostAddress": "0.0.0.0",
@@ -1130,8 +1148,6 @@ examples :
         "transfer": {}
     }
 ```
-
-
 ---
 # 개발환경 구축하기
 현재 아이콘의 개발자 배포용 SDK는 파이썬, 자바 두 가지 종류가 있다. 개발자들을 위해서 Git을 통해 배포되고 있으며, 각각 언어들을 활용해 개발자들은 지갑을 만들거나, Dapp을 만들어볼 수 있다. 
