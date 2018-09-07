@@ -26,32 +26,32 @@ Icon Dev Guide
 
 2. T-Bears, SCORE 활용하기
     * 서비스
-        1. 서비스 시작 
-        2. 서비스 중단
-        3. 서비스에 배포된 SCORE 삭제
+        * 서비스 시작 
+        * 서비스 중단
+        * 서비스에 배포된 SCORE 삭제
 
     * SCORE 배포하기
-        1. init으로 생성한 SCORE 프로젝트 배포하기
-        2. samples로 생성한 SCORE 배포하기
+        * init으로 생성한 SCORE 프로젝트 배포하기
+        * samples로 생성한 SCORE 배포하기
 
     * 배포한 SCORE의 메소드 호출하기
-        1. init을 통해 생성한 SCORE의 'hello' 메소드 호출
-        2. samples를 통해 생성한 SCORE("standard_token.py")의 'name' 메소드 호출
+        * init을 통해 생성한 SCORE의 'hello' 메소드 호출
+        * samples를 통해 생성한 SCORE("standard_token.py")의 'name' 메소드 호출
 
     * 트랜잭션
-        1. 트랜잭션 요청
-        2. 트랜잭션 결과 확인
+        * 트랜잭션 요청
+        * 트랜잭션 결과 확인
 
     * ICX
-        1. ICX 보내기
-        2. ICX 잔고 확인하기
+        * ICX 보내기
+        * ICX 잔고 확인하기
 
     * 명령어 정리
-        1. server 명령어
-        2. utility 명령어
-        3. SCORE 명령어
-        4. ICX, 트랜잭션, 블록과 관련된 명렁어
-        5. 설정 파일
+        * server 명령어
+        * utility 명령어
+        * SCORE 명령어
+        * ICX, 트랜잭션, 블록과 관련된 명렁어
+        * 설정 파일
 
 3. SDK 개발환경 구축하기
 	* 파이썬 
