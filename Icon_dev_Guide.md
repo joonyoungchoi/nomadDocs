@@ -47,9 +47,12 @@ Icon Dev Guide
 	* 지갑사용하기
 		#### wallet create (지갑생성)
 		#### wallet load (지갑로드)
-		#### wallet store (지갑저장)	
+		#### wallet store (지갑저장)
+		
 	
 	* 네트워크와 연결하기
+	
+	
 	* 트랜젝션 만들어보기
 		#### ICX를 전송하는 트랜젝션
 		#### 토큰을 전송하는 트랜젝션
