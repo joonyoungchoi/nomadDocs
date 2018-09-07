@@ -1147,7 +1147,7 @@ examples :
 
 ---
 # 3. SDK 개발환경 구축하기
-현재 아이콘의 개발자 배포용 SDK는 파이썬, 자바 두 가지 종류가 있다. 개발자들을 위해서 Git을 통해 배포되고 있으며, 각각 언어들을 활용해 개발자들은 지갑을 만들거나, Dapp을 만들어볼 수 있다. 
+현재 아이콘의 개발자 배포용 SDK는 파이썬, 자바 두 가지 종류가 있습니다. 개발자들을 위해서 Git을 통해 배포되고 있으며, 각각 언어들을 활용해 개발자들은 지갑을 만들거나, Dapp을 만들어볼 수 있습니다. 
 
 ## 파이썬 개발 환경 구축하기
 
@@ -1300,7 +1300,7 @@ Git의 코드를 다운로드하여 설치하는 방법은 아이콘이 지원�
 
 
 #### 2. Maven dependency setting
-* 만들어진 Maven 패키지 안의 POM.xml 파일에 아래와 같이 삽입한다. 
+* 만들어진 Maven 패키지 안의 POM.xml 파일에 아래와 같이 삽입합니다. 
 
 1. icon-sdk를 위한 Dependencies 설정
 
@@ -1324,10 +1324,10 @@ Git의 코드를 다운로드하여 설치하는 방법은 아이콘이 지원�
   </dependencies>
 ```
 
- ``` <dependencies> ``` 부터 ``` </dependencies> ``` 까지 내용을 붙여 넣는다. 
+ ``` <dependencies> ``` 부터 ``` </dependencies> ``` 까지 내용을 붙여 넣습니다. 
  
 * 본 Sample Code에서는 
-logging-interceptor를 활용한 Log를 위하여 dependencies에 logging-interceptor도 추가하였다.(필수아님)
+logging-interceptor를 활용한 Log를 위하여 dependencies에 logging-interceptor도 추가하였습니다.(옵션입니다. )
 
 * 예시 (POM.xml) // 현재 버전 0.9.4
 
@@ -1371,7 +1371,7 @@ logging-interceptor를 활용한 Log를 위하여 dependencies에 logging-interc
 
 ```
 
-위와 같이 dependency 설정을 마치면,  refreash를 해 주어야 원격 아카이브에서 jar 파일을 다운받는다. 
+위와 같이 dependency 설정을 마치면,  refreash를 해 주어야 원격 아카이브에서 jar 파일을 다운받습니다. 
 
 ```[생성된 패키지 우클릭 --> Maven --> UpdateProject]```
 
@@ -1381,7 +1381,7 @@ logging-interceptor를 활용한 Log를 위하여 dependencies에 logging-interc
 정상적으로 다운로드가 완료 되면, 프로젝트 내에 있는 
 ```[Maven Dependencies]```에서 
 ```icon-sdk-버전.jar``` 
-```logging-interceptor-버전.jar``` 가 다운로드 되어있는것을 확인 할 수 있다. 
+```logging-interceptor-버전.jar``` 가 다운로드 되어있는것을 확인 할 수 있습니다. 
 
 
 #### 3. Gradle dependency setting
@@ -1432,7 +1432,7 @@ dependencies {
 }
 ```
 
-위와 같이 dependency 설정을 마치면,  Refreash를 해 주어야 원격 아카이브에서 jar 파일을 다운받는다. 
+위와 같이 dependency 설정을 마치면,  Refreash를 해 주어야 원격 아카이브에서 jar 파일을 다운받습니다. 
 
 ```[생성된 패키지 우클릭 --> Gradle --> Refreash Gradle Project]```
 
@@ -1440,7 +1440,7 @@ dependencies {
 
 정상적으로 다운로드가 완료 되면, 프로젝트 내에 있는 
 ```[Project and External Dependencies]```에서 
-```icon-sdk-버전.jar```  가 다운로드 되어있는것을 확인 할 수 있다. 
+```icon-sdk-버전.jar```  가 다운로드 되어있는것을 확인 할 수 있습니다. 
 
 
 
@@ -1452,7 +1452,7 @@ dependencies {
 
 
 ## 지갑만들기
-아이콘의 지갑은 여러 방법을 통하여 만들 수 있습니다. KeyWallet은 Keystore 파일을 통하여 백업할 수 있고, Keystore 파일을 통하여 다시 불러들일 수 있습니다. 가장 간단하게 아이콘의 지갑을 만나볼 수 있는 방법중 하나는 크롬의 확장프로그램(<https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel>)을 다운로드받아 사용하는 것입니다.
+아이콘의 지갑은 여러 방법을 통하여 만들 수 있습니다. KeyWallet은 Keystore 파일을 통하여 백업할 수 있고, Keystore 파일을 통하여 다시 불러들일 수 있습니다. 가장 간단하게 아이콘의 지갑을 만나볼 수 있는 방법중 하나는 크롬의 [확장프로그램](<https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel>)을 다운로드받아 사용하는 것입니다.
 
 지갑에 관련된 작업은 크게 3가지로 분류됩니다.
 
@@ -1469,8 +1469,8 @@ dependencies {
 
 Keystore파일을 저장할 경우, 비밀번호를 통해서 Keystore파일 내의 정보를 암호화합니다. 따라서, Keystore파일을 불러올 경우에는 저장할 때 입력했던 비밀번호를 통해서 복호화를 통하여 불러오게 됨으로, 저장할 경우에 사용하였던 비밀번호가 필수적으로 필요합니다. 지갑을 만들경우 생성되는 개인키는 토큰 또는 ICX를 전송할 때 사용됨으로, 반드시 본인이 별도로 보안이 유지되는 곳에 기록해 두어야 합니다. 각 언어별 예제는 아래 순서대로 안내되어 있습니다.
 
-1. [자바 SDK로 지갑 만들기](### 1. 자바 SDK로 지갑 만들기)
-2. [파이썬 SDK로 지갑 만들기](### 2. 파이썬 SDK로 지갑 만들기)
+1. 자바 SDK로 지갑 만들기
+2. 파이썬 SDK로 지갑 만들기
 
 <br></br>
 
@@ -1479,7 +1479,7 @@ Keystore파일을 저장할 경우, 비밀번호를 통해서 Keystore파일 내
 
  SDK에 내장된 함수를 통하여 지갑 인스턴스를 생성합니다.
 
-##### 자바 SDK로 실행
+* ##### 자바 SDK로 실행
 
 	wallet = KeyWallet.create()
     create.getAddress();
@@ -1494,7 +1494,7 @@ Keystore파일을 저장할 경우, 비밀번호를 통해서 Keystore파일 내
     
 *위 출력값은 예시입니다. 실행하실 때 마다 출력값은 달라집니다.*
 
-##### 파이썬 SDK로 실행
+* ##### 파이썬 SDK로 실행
 
 	from iconsdk.wallet.wallet import KeyWallet
 
