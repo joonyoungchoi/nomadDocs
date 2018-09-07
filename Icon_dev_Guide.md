@@ -1240,7 +1240,7 @@ Git의 코드를 다운로드하여 설치하는 방법은 아이콘이 지원�
 	
 	Maven 
 	OR
-	Gradle(Optional)
+	Gradle
 	
 <br></br>
 
