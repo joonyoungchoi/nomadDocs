@@ -225,6 +225,12 @@ Cleared SCORE deployed on tbears successfully
 
 init 명령어를 통해 SCORE 프로젝트를 생성합니다.(현재 디렉토리에 `1.keystore_test1 2.tbears_cli_config.json 3.tbears_server_config.json`를 생성합니다. 직접 `tbears genconf`를 통해 생성할 수도 있습니다.)
 
+> `keystore_test1` : 테스트 계정을 위한 keystore 파일을 의미합니다.
+
+> `tbears_cli_config.json` : start, stop, samples, clear, init, keystore를 제외한 모든 T-Bears CLI 명령어를 수행할 때 디폴트 파라미터와 초기 설정을 위해 사용됩니다..
+
+> `tbears_server_config.json` : T-Bears 서비스를 시작할때 초기 설정과 파라미터를 "tbears_server_config.json" 통해 설정합니다.
+
 ```
 tbears genconf (optional : 미실행시 init단계에서 설정파일을 생성합니다.)
 tbears init myproject ABCToken
@@ -233,6 +239,12 @@ tbears init myproject ABCToken
 ```
 __init__.py  myproject.py package.json
 ```
+
+> `__init__py` : 프로젝트 디렉토리가 파이썬 패키지로 인식되도록 하는 파일을 의미합니다.
+
+> `myproject.py` : SCORE 파일을 의미하며, 예제의 명령어와 같이 실행 시 ABCToken 클래스가 정의되어 있습니다. ABCToken 클래스의 경우 "hello" 메소드를 예시로 가지고 있습니다.
+
+> `package.json` : SCORE가 로드 되었을때 필요한 정보를 가지고 있으며, "main_file" 와 "main_class" 를 필요로 합니다.
 
 생성된 프로젝트를 T-Bears 서비스에 배포합니다. (tbears deploy의 경우 tbears start를 통해 T-Bears 서비스가 가동 중인 상태에서만 가능합니다.)
 ```
@@ -265,6 +277,31 @@ Transaction result: {
     "id": 1
 }
 ```
+> `txHash` : 트랜잭션의 해시값을 의미합니다.
+
+> `blockHeight` : 해당 트랜잭션을 포함하는 블록의 높이를 의미합니다.
+
+> `blockHash` : 해당 트랜잭션을 포함하는 블록의 해시값을 의미합니다.
+
+> `txIndex` : 트랜잭션이 포함된 블록에서의 트랜잭션 인덱스를 의미합니다.
+
+> `to` : 트랜잭션을 받는 수신자의 주소를 의미합니다.
+
+> `scoreAddress` : 새로운 SCORE를 생성한 경우 SCORE의 주소를 의미합니다. (optional)
+
+> `stepUsed` : 해당 트랜잭션에서 소비된 "step"의 양을 의미합니다.
+
+> `stepPrice` : 해당 트랜잭션에서 소비된 "step" 당 지불할 가격을 의미합니다.
+
+> `cumulativeStepUsed` : 해당 트랜잭션과 해당 트랜잭션을 포함하는 블록 내 모든 진행 중인 트랜잭션의 "stepUsed"을 합친 양을 의미합니다.
+
+> `eventLogs` : 해당 트랜잭션이 생성한 eventlogs를 모은 배열을 의미합니다.
+
+> `logsBloom` : 관련된 eventlogs를 빠르게 수집하기 위한 Bloom 필터를 의미합니다.
+
+> `id` : `Request Object`의 `id`와 동일한 값을 가지고 있어야 합니다. `Request Object`의 `id`는 반드시 String, Number, Null 중 한가지 값을 가지며, 사용자에 의해 정의됩니다. 값으로 Null 사용을 권장하지 않으며, 숫자의 경우 소수값을 사용할 수 없습니다.
+
+> `status` : 트랜잭션 성공 시 1의 값을 가지며, 실패시 0의 값을 가집니다.
 
 <br></br>
 *2.2 samples로 생성한 SCORE 배포하기*
@@ -281,6 +318,11 @@ __init__.py            package.json           standard_crowd_sale.py
 standard_token:
 __init__.py       package.json      standard_token.py
 ```
+
+> `standard_crowd_sale.py` : 
+SCORE 파일을 의미하며, 예제의 명령어와 같이 실행 시 StandardCrowdSale 클래스가 정의되어 있습니다. StandardCrowdSale 클래스의 경우 호출 가능한 다양한 메소드(`total_joiner_count`, `check_goal_reached`, `safe_withdrawal` 등)를 가지고 있습니다.
+
+> `standard_token.py` : SCORE 파일을 의미하며, 예제의 명령어와 같이 실행 시 StandardToken 클래스가 정의되어 있습니다. StandardToken 클래스의 경우 호출 가능한 다양한 메소드(`name`, `symbol`, `decimals` 등)를 가지고 있습니다.
 
 생성된 standard_token 디렉토리로 이동하여 설정파일을 생성합니다.
 ```
@@ -308,7 +350,30 @@ tbears genconf (명령어 실행 후 생성된 설정 파일 중 tbears_cli_conf
     "transfer": {}
 }
 ```
-> "scoreParams" 에 들어가는 파라미터의 경우 SCORE파일의 on_install 메소드의 파라미터를 통해 확인할 수 있습니다.
+
+> `uri` : Request를 보낼 URI를 의미합니다.
+
+> `nid` : 네트워크 ID를 의미합니다. T-Bears의 경우 0x3 을 사용합니다.
+
+> `keyStore` : Keystore 파일의 위치를 의미합니다.
+
+> `from` : "From" 주소를 의미합니다. keyStore가 설정되어 있을 경우 keyStore의 설정을 따릅니다.
+
+> `to` : "To" 주소를 의미합니다.
+
+> `stepLimit` : 디폴트 값으로 0x3000000를 가지며, stepLimit 값을 의미합니다. (optional)
+
+> `deploy` : deploy 명령을 위한 설정을 의미합니다.
+
+> `deploy.mode` : 배포 모드를 의미하며 "install" 과 "update" 중 선택할 수 있습니다.
+>+ "install" : 새로운 SCORE를 배포합니다.
+>+ "update" : 기존에 배포된 SCORE를 업데이트 합니다.
+
+> `deploy.scoreParams` : SCORE를 배포하는 경우에 install 또는 update에 필요한 파라미터를 의미합니다. 필요한 파라미터의 경우 SCORE파일의 on_install() 또는 on_update() 메소드를 통해 확인할 수 있습니다.
+
+> `txresult` : `txresult` 명령을 위한 설정을 의미합니다. 
+
+> `transfer` : `transfer` 명령을 위한 설정을 의미합니다.
 
 생성한 프로젝트를 T-Bears 서비스에 배포합니다.('-c' 옵션을 통해 수정한 설정파일을 적용합니다.)
 ```
@@ -333,7 +398,7 @@ transaction hash: 0xb6c94d6b05999bedcdbe45a162ea27d52e71797293f158dd0ef4ea519731
   "method": "icx_call",
   "params": {
     "from": "hxef73db5d0ad02eb1fadb37d0041be96bfa56d4e6",
-    "to": "cxa0bfb410f8d0acf94bc154f52bee34702fec177c",
+    "to": "cx53d5080a7d8a805bb10eb9bc64637809dc910832",
     "dataType": "call",
     "data": {
       "method": "hello"
@@ -342,14 +407,18 @@ transaction hash: 0xb6c94d6b05999bedcdbe45a162ea27d52e71797293f158dd0ef4ea519731
   "id": 1
 }
 ```
-> json 파일에 대한 설명 추가
+> `icx_call` : SCORE의 메소드(external function)을 호출합니다.
 
-> "method" 에 들어갈 메소드명은 `tbears scoreapi`에 앞서 배포후 txresult를 통해 확인한 트랜잭션 결과에서 scoreAddress 를 통해 확인할 수 있습니다.
-```
-tbears scoreapi cxa0bfb410f8d0acf94bc154f52bee34702fec177c
-```
-결과 : 
-```
+> `from` : 메시지를 보내는 사람의 주소를 의미합니다.
+
+> `to` : 메시지를 처리할 SCORE 주소를 의미합니다.
+
+> `data.method` : `tbears scoreapi` 명령을 통해 `scoreAddress` 를 입력으로 하여 `method` 에 들어갈 메소드명을 통해 확인할 수 있습니다.
+
+> `data.params` : 호출하는 메소드가 필요로 하는 파라미터를 의미합니다. (optional)
+
+`tbears scoreapi` 를 통해 해당 SCORE의 호출 가능한 메소드를 확인한 결과는 다음과 같습니다.
+```json
 SCORE API: [
     {
         "type": "fallback",
@@ -369,18 +438,17 @@ SCORE API: [
     }
 ]
 ```
-
-`scoreapi`를 통해 확인한 SCORE의 `hello` 메소드를 호출합니다.
+SCORE의 `hello` 메소드를 호출합니다.
 ```
 tbears call call.json
 ```
 출력
 ```
 response : {
-    "jsonrpc": "2.0",
-    "result": "Hello",
-    "id": 1
-}
+        "jsonrpc": "2.0",
+        "result": "hello",
+        "id": 1
+    }
 ```
 <br></br>
 *3.2 samples를 통해 생성한 SCORE("standard_token.py")의 'name' 메소드 호출*
@@ -395,11 +463,7 @@ response : {
     "to": "cx02b13428a8aef265fbaeeb37394d3ae8727f7a19",
     "dataType": "call",
     "data": {
-      "method": "name",
-      // 입력해야할 parameter가 있을 경우 추가
-      "params":{ 
-          "key":"value"
-          }
+      "method": "name"
     }
   },
   "id": 1
@@ -449,6 +513,26 @@ response : {
   "id": 1
 }
 ```
+> `version` : 프로토콜의 버전의 의미합니다. (V3를 사용하는 경우 "0x3"로 설정합니다.)
+
+> `from` : 트랜잭션을 생성한 지갑의 주소를 의미합니다.
+
+> `to` : 코인을 받을 지갑의 주소, 또는 트랜잭션을 실행할 SCORE의 주소를 의미합니다.
+
+> `value` : 디폴트 값으로 0을 가지며, 송금할 ICX의 양을 의미합니다. (단위 : loop, 1 icx = 10 ^ 18 loop)
+
+> `stepLimit` : 트랜잭션에 의해 소비될 수 있는 step의 최대치를 의미합니다. 
+
+> `timestamp` : 트랜잭션이 생성된 시간을 의미합니다. (μs 단위로 표시합니다.)
+
+> `nid` : 네트워크 ID를 의미합니다. ("0x1" : 메인넷, "0x2" : 테스트넷, etc)
+
+> `nonce` : 트랜잭션 해시값의 충돌을 막기 위한 임의의 수를 의미합니다.
+
+> `dataType` : 데이터의 타입을 의미합니다. (call, deploy, message)
+
+> `data` : 데이터의 내용은 데이터타입에 따라 다양하게 나타나며, [Parameters - data](https://github.com/icon-project/icon-rpc-server/blob/master/docs/icon-json-rpc-v3.md#sendtxparameterdata) 를 통해 데이터타입에 따른 데이터의 내용을 확인할 수 있습니다. 
+
 
 트랜잭션 서명에 필요한 keystore 파일을 생성합니다.
 ```
@@ -503,13 +587,15 @@ Transaction result: {
 *5.1 ICX 보내기*
 
 제네시스 블록과 Test Account를 제외한 다른 address에는 ICX가 없으므로, Test Account에서 나의 지갑으로 ICX를 보내는 예제를 작성하였습니다.
+
 ICX를 보내기 위해 먼저 keystore 파일을 통해 지갑의 주소를 확인합니다. (예제의 경우 `keystore` 파일의 이름이 `key` 이므로 `cat key`를 통해 확인하였습니다.)
 ```
-{"address": "hx408a524b9400991184b4130bdf98a6a7aa5af3e6", "crypto": {"cipher": "aes-128-ctr", "cipherparams": {"iv": "997ccd9be2f68c9fc211a50e5b807e71"}, "ciphertext": "9a55b1c47382d8f769bb2afbb457ce443ac173c927cfd65fbe146a5163610ab4", "kdf": "scrypt", "kdfparams": {"dklen": 32, "n": 16384, "r": 1, "p": 8, "salt": "1faaea660430dbf95c0514022db9d422"}, "mac": "adca3906083974e4f9bf53a35d8edf7a24d5f30e03e1503782960db71f89746a"}, "id": "9dd9907c-0b86-4b2f-bf05-2d92e2fae309", "version": 3, "coinType": "icx"}%
+{"address": "hx408a524b9400991184b4130bdf98a6a7aa5af3e6", ...}
 ```
-Test Account에서 나의 지갑으로 1 icx를 보냅니다. (`tbears transfer`의 전송 단위는 1 loop이며 1 icx = 1e18 loop 입니다.)
+
+Test Account에서 나의 지갑으로 1 icx를 보냅니다. (`tbears transfer`의 전송 단위는 1 loop이며 1 icx = 10 ^ 18 loop 입니다.)
 ```
-tbears transfer -f hxe7af5fcfd8dfc67530a01a0e403882687528dfcb hx62d878f8c21fbbd61fcbb5f5a1a6ff3c86996ffb 1e18
+tbears transfer -f hxe7af5fcfd8dfc67530a01a0e403882687528dfcb hx408a524b9400991184b4130bdf98a6a7aa5af3e6 1e18
 ```
 출력
 ```
@@ -519,9 +605,9 @@ transaction hash: 0x33f4c69eabf45ab62f216e7498e01b3c684324543fa92b8b9a3c288d3408
 <br></br>
 *5.2 ICX 잔고 확인하기* 
 
-`tbears balance`를 통해 해당 주소의 잔고를 확인할 수 있다.
+`tbears balance`를 통해 해당 주소의 잔고를 확인할 수 있습니다.
 ```
-tbears balance hx62d878f8c21fbbd61fcbb5f5a1a6ff3c86996ffb
+tbears balance hx408a524b9400991184b4130bdf98a6a7aa5af3e6
 ```
 출력
 
