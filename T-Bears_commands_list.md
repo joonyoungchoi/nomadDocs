@@ -61,7 +61,8 @@ examples :
 ```
 expected result : 
 1), 2)
-    input your keystore password: (비밀번호 설정)
+    Input your keystore password:
+    Retype your keystore password:
 
     Made keystore file successfully
 
@@ -70,7 +71,9 @@ expected result :
 ```
 
 
-`tbears genconf` : T-Bears의 설정 파일들을 생성합니다. (tbears_cli_config.json, tbears_cli_config.json)
+`tbears genconf` : T-Bears의 설정 파일들을 생성합니다. ("tbears_cli_config.json", "tbears_server_config.json", "keystore_test1")
+
+
 ```
 tbears genconf [-h]
 
@@ -81,7 +84,7 @@ examples : tbears genconf
 >-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
 ```
 expected result :
-    Made tbears_cli_config.json, tbears_server_config.json successfully
+    Made tbears_cli_config.json, tbears_server_config.json, keystore_test1 successfully
 ```
 
 <br></br>
@@ -89,7 +92,7 @@ expected result :
 *3. SCORE 명령어*
 
 `tbears init` : SCORE 프로젝트를 생성합니다. [project].py 와 package.json 파일을 [project] 디렉토리 안에 생성합니다. SCORE class의 클래스명은 [socreClass]를 따라 생성됩니다.
-`tbears_server_config.json` 파일과 `tbears_cli_config.json` 이 없을 시 현재 디렉토리에 함께 생성됩니다.
+`tbears_server_config.json`, `tbears_cli_config.json`, `keystore_test1` 파일이 없을 시 현재 디렉토리에 함께 생성됩니다.
 ```
 tbears init [-h] project scoreClass
 
@@ -101,7 +104,7 @@ examples :
 필수 요소 :
 >project : 프로젝트 디렉토리의 위치 또는 zip 파일의 위치를 의미합니다.
 
->scoreClass : 
+>scoreClass : SCORE 클래스명을 의미합니다.
 
 옵션 :
 
