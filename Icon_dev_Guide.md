@@ -213,7 +213,12 @@ Cleared SCORE deployed on tbears successfully
 
 *2.1 init으로 생성한 SCORE 프로젝트 배포하기*
 
+<<<<<<< HEAD
 init 명령어를 통해 SCORE 프로젝트를 생성합니다.
+=======
+init 명령어를 통해 SCORE 프로젝트를 생성합니다.(현재 디렉토리에 `1.keystore_test1 2.tbears_cli_config.json 3.tbears_server_config.json`를 생성합니다. 직접 `tbears genconf`를 통해 생성할 수도 있습니다.)
+
+>>>>>>> ea332fe65ccf8b6f40b6e5c2c33f89239e852c7c
 ```
 tbears genconf (optional : 미실행시 init단계에서 설정파일을 생성합니다.)
 tbears init myproject ABCToken
@@ -231,8 +236,33 @@ tbears deploy myproject
 ```
 Send deploy request successfully.
 If you want to check SCORE deployed successfully, execute txresult command
-transaction hash: 0x1468dd5deab399e309732728d37786eab8ad1f5a09ac9b85c92be0cc884eed72
+transaction hash: 0x6fb79dec3a8f16478a4c1fb759b3df6defef86cdebe402b5a61e69ef4b3a9080
 ```
+`tbears txresult` 에 앞서 확인한 `transaction hash` 값을 입력으로 하여 실행할 경우 해당 트랜잭션의 결과를 확인할 수 있습니다.
+```
+Transaction result: {
+    "jsonrpc": "2.0",
+    "result": {
+        "txHash": "0xb6c94d6b05999bedcdbe45a162ea27d52e71797293f158dd0ef4ea5197317acc",
+        "blockHeight": "0xe",
+        "blockHash": "0x7778e2dba93f82d330759b40a130e46bd5b5a02a49ef3281ce973c9161fe2bc5",
+        "txIndex": "0x0",
+        "to": "cx0000000000000000000000000000000000000000",
+        "scoreAddress": "cxd3bc5f3e59ba351350baa77f197aa49694e09536",
+        "stepUsed": "0x251f070",
+        "stepPrice": "0x0",
+        "cumulativeStepUsed": "0x251f070",
+        "eventLogs": [],
+        "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "status": "0x1"
+    },
+    "id": 1
+}
+```
+<<<<<<< HEAD
+=======
+
+>>>>>>> ea332fe65ccf8b6f40b6e5c2c33f89239e852c7c
 <br></br>
 *2.2 samples로 생성한 SCORE 배포하기*
 
@@ -271,16 +301,24 @@ tbears genconf (명령어 실행 후 생성된 설정 파일 중 tbears_cli_conf
 ```
 > "scoreParams" 에 들어가는 파라미터의 경우 SCORE파일의 on_install 메소드의 파라미터를 통해 확인할 수 있습니다.
 
+<<<<<<< HEAD
 생성된 프로젝트를 T-Bears 서비스에 배포합니다.('-c' 옵션을 통해 수정한 설정파일을 적용합니다.)
+=======
+생성한 프로젝트를 T-Bears 서비스에 배포합니다.('-c' 옵션을 통해 수정한 설정파일을 적용합니다.)
+>>>>>>> ea332fe65ccf8b6f40b6e5c2c33f89239e852c7c
 ```
 tbears deploy -c ./tbears_cli_config.json .
 ```
 출력:
 ```
-Send deploy request successfully.
 If you want to check SCORE deployed successfully, execute txresult command
-transaction hash: 0x7047a50fcad1cffb3390d161cbbd34915dab0ef0f7159b10683ae32159f8fbde
+transaction hash: 0xb6c94d6b05999bedcdbe45a162ea27d52e71797293f158dd0ef4ea5197317acc
 ```
+<<<<<<< HEAD
+=======
+`tbears txresult` 에 앞서 확인한 `transaction hash` 값을 입력으로 하여 실행할 경우 해당 트랜잭션의 결과를 확인할 수 있습니다.
+
+>>>>>>> ea332fe65ccf8b6f40b6e5c2c33f89239e852c7c
 ---
 ### *3. 배포한 SCORE의 메소드 호출하기*
 
@@ -293,7 +331,11 @@ transaction hash: 0x7047a50fcad1cffb3390d161cbbd34915dab0ef0f7159b10683ae32159f8
   "method": "icx_call",
   "params": {
     "from": "hxef73db5d0ad02eb1fadb37d0041be96bfa56d4e6",
+<<<<<<< HEAD
     "to": "cx60b12af828d4caf960cfbf031f2027093dca2c08",
+=======
+    "to": "cxa0bfb410f8d0acf94bc154f52bee34702fec177c",
+>>>>>>> ea332fe65ccf8b6f40b6e5c2c33f89239e852c7c
     "dataType": "call",
     "data": {
       "method": "hello"
@@ -302,19 +344,49 @@ transaction hash: 0x7047a50fcad1cffb3390d161cbbd34915dab0ef0f7159b10683ae32159f8
   "id": 1
 }
 ```
+<<<<<<< HEAD
 > "method" 에 들어갈 메소드명은 SCORE파일의 `@external`을 통해 확인할 수 있습니다.
+=======
+> json 파일에 대한 설명 추가
+>>>>>>> ea332fe65ccf8b6f40b6e5c2c33f89239e852c7c
 
-SCORE의 `hello` 메소드를 호출합니다.
+> "method" 에 들어갈 메소드명은 `tbears scoreapi`에 앞서 배포후 txresult를 통해 확인한 트랜잭션 결과에서 scoreAddress 를 통해 확인할 수 있습니다.
+```
+tbears scoreapi cxa0bfb410f8d0acf94bc154f52bee34702fec177c
+```
+결과 : 
+```
+SCORE API: [
+    {
+        "type": "fallback",
+        "name": "fallback",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "name": "hello",
+        "inputs": [],
+        "outputs": [
+            {
+                "type": "str"
+            }
+        ],
+        "readonly": "0x1"
+    }
+]
+```
+
+`scoreapi`를 통해 확인한 SCORE의 `hello` 메소드를 호출합니다.
 ```
 tbears call call.json
 ```
 출력
 ```
 response : {
-        "jsonrpc": "2.0",
-        "result": "hello",
-        "id": 1
-    }
+    "jsonrpc": "2.0",
+    "result": "Hello",
+    "id": 1
+}
 ```
 <br></br>
 *3.2 samples를 통해 생성한 SCORE("standard_token.py")의 'name' 메소드 호출*
@@ -341,6 +413,10 @@ response : {
   "id": 1
 }
 ```
+<<<<<<< HEAD
+=======
+
+>>>>>>> ea332fe65ccf8b6f40b6e5c2c33f89239e852c7c
 SCORE의 `name` 메소드를 호출합니다.
 
 ```
@@ -384,6 +460,10 @@ response : {
   "id": 1
 }
 ```
+<<<<<<< HEAD
+=======
+
+>>>>>>> ea332fe65ccf8b6f40b6e5c2c33f89239e852c7c
 트랜잭션 서명에 필요한 keystore 파일을 생성합니다.
 ```
 tbears keystore key
