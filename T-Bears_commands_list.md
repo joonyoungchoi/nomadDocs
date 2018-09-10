@@ -1,5 +1,5 @@
 ### *T-Bears 명령어 정리*
-*6.1 server 명령어*
+*1. server 명령어*
 
 `tbears start` : T-Bears 서비스를 시작합니다. 
 ```
@@ -36,7 +36,7 @@ tbears clear [-h]
 >-h, --help : 화면에 명령어에 대한 도움말을 출력합니다.
 
 <br></br>
-*6.2 utility 명령어*
+*2. utility 명령어*
 
 `tbears keystore` : keystore 파일을 해당 path에 생성합니다. secp256k1 라이브러리를 사용하여 개인키와 공개키를 생성합니다.
 ```
@@ -86,7 +86,7 @@ expected result :
 
 <br></br>
 
-*6.3 SCORE 명령어*
+*3. SCORE 명령어*
 
 `tbears init` : SCORE 프로젝트를 생성합니다. [project].py 와 package.json 파일을 [project] 디렉토리 안에 생성합니다. SCORE class의 클래스명은 [socreClass]를 따라 생성됩니다.
 `tbears_server_config.json` 파일과 `tbears_cli_config.json` 이 없을 시 현재 디렉토리에 함께 생성됩니다.
@@ -339,7 +339,7 @@ expected result :
 ```
 <br></br>
 
-*6.4 ICX, 트랜잭션, 블록과 관련된 명렁어*
+*4. ICX, 트랜잭션, 블록과 관련된 명렁어*
 
 `tbears transfer` : ICX 코인을 전송합니다.
 ```
@@ -656,76 +656,4 @@ expected result :
     }
 ```
 
-`tbears console` : IPython을 사용하여 T-Bears 서비스의 interactive 모드로 진입합니다. 앞서 설명한 명령어들을 tbears를 생략하고 실행할 수 있게 되며 몇가지 추가적인 기능들을 제공합니다. 자세한 내용은 [https://github.com/icon-project/t-bears](https://github.com/icon-project/t-bears)에서 확인할 수 있다.
-
-<br></br>
-*6.5 설정 파일*
-
-`tbears_server_config.json` : T-Bears 서비스를 시작할때 초기 설정과 파라미터를 "tbears_server_config.json" 통해 설정합니다.
-```ls
-examples : 
-    {
-        "hostAddress": "0.0.0.0",
-        "port": 9000,
-        "scoreRootPath": "./.score",
-        "stateDbRootPath": "./.statedb",
-        "log": {
-            "logger": "tbears",
-            "level": "info",
-            "filePath": "./tbears.log",
-            "colorLog": true,
-            "outputType": "console|file",
-            "rotate": {
-                "type": "bytes",
-                "maxBytes": 10485760,
-                "backupCount": 10
-            }
-        },
-        "service": {
-            "fee": false,
-            "audit": false,
-            "deployerWhiteList": false
-        },
-        "genesis": {
-            "nid": "0x3",
-            "accounts": [
-                {
-                    "name": "genesis",
-                    "address": "hx0000000000000000000000000000000000000000",
-                    "balance": "0x2961fff8ca4a62327800000"
-                },
-                {
-                    "name": "fee_treasury",
-                    "address": "hx1000000000000000000000000000000000000000",
-                    "balance": "0x0"
-                }
-            ]
-        },
-        "channel": "loopchain_default",
-        "amqpKey": "7100",
-        "amqpTarget": "127.0.0.1",
-        "blockConfirmInterval": 10,
-        "blockConfirmEmpty": true
-    }
-```
-
-`tbears_cli_config.json` : start, stop, samples, clear, init, keystore를 제외한 모든 T-Bears CLI 명령어를 수행할 때 디폴트 파라미터와 초기 설정을 위해 사용된다.
-```
-examples : 
-    {
-        "uri": "http://127.0.0.1:9000/api/v3",
-        "nid": "0x3",
-        "keyStore": null,
-        "from": "hxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "to": "cx0000000000000000000000000000000000000000",
-        "stepLimit": "0x3000000",
-        "deploy": {
-            "mode": "install",
-            "scoreParams": {}
-        },
-        "txresult": {},
-        "transfer": {}
-    }
-```
-
----
+`tbears console` : IPython을 사용하여 T-Bears 서비스의 interactive 모드로 진입합니다. 앞서 설명한 명령어들을 tbears를 생략하고 실행할 수 있게 되며 몇가지 추가적인 기능들을 제공합니다. 자세한 내용은 [https://github.com/icon-project/t-bears](https://github.com/icon-project/t-bears)에서 확인할 수 있습니다.
