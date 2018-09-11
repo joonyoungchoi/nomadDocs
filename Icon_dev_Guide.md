@@ -90,6 +90,8 @@ ICON Dev Guide
 		* SCORE를 Deploy 하는 트랜젝션
 
 
+* [#Block에서 정보 가지고 오기](#block에서-정보-가지고-오기)	
+
 <br></br>
 
 ---
