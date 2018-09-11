@@ -18,7 +18,7 @@ ICON Dev Guide
 
 ## 순서
 
-1. [T-Bears 설치하기](#1-T-Bears-설치하기)
+1. [T-Bears 설치하기](#1-t-bears-설치하기)
     * [공통](#공통)
 		* MacOS
 		* Ubuntu Linux
@@ -29,7 +29,7 @@ ICON Dev Guide
 
 	* [Docker 활용하기](#3.-Docker-활용하기)
 
-2. [T-Bears 활용하기](#2-T-Bears-활용하기)
+2. [T-Bears 활용하기](#2-t-bears-활용하기)
     * [서비스](#1.-서비스)
         * 서비스 시작 
         * 서비스 중단
