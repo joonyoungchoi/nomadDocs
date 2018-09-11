@@ -19,31 +19,33 @@ ICON Dev Guide
 ## 순서
 
 1. T-Bears 설치하기
-    * 공통
+    * [공통](#공통)
+		* MacOS
+		* Linux
 
-    * Git의 코드를 다운로드하여 설치하기
+    * [Git의 코드를 다운로드하여 설치하기](#1.-Git의-코드를-다운로드하여-설치하기)
     
-    * PyPI 통해 설치하기
+    * [PyPI 통해 설치하기](#2.-PyPI-통해-설치하기)
 
 2. T-Bears 활용하기
-    * 서비스
+    * [서비스](#1.-서비스)
         * 서비스 시작 
         * 서비스 중단
         * 서비스에 배포된 SCORE 삭제
 
-    * SCORE 배포하기
+    * [SCORE 배포하기](#2.-SCORE-배포하기)
         * init으로 생성한 SCORE 프로젝트 배포하기
         * samples로 생성한 SCORE 배포하기
 
-    * 배포한 SCORE의 메소드 호출하기
+    * [배포한 SCORE의 메소드 호출하기](#3.-배포한-SCORE의-메소드-호출하기)
         * init을 통해 생성한 SCORE의 'hello' 메소드 호출
         * samples를 통해 생성한 SCORE("standard_token.py")의 'name' 메소드 호출
 
-    * 트랜잭션
+    * [트랜잭션](#4.-트랜잭션)
         * 트랜잭션 요청
         * 트랜잭션 결과 확인
 
-    * ICX
+    * [ICX](#5.-ICX)
         * ICX 보내기
         * ICX 잔고 확인하기
 
@@ -121,16 +123,18 @@ ICON Dev Guide
 
 ---
 # 1. T-Bears 설치하기 (macOS)
-T-Bears를 설치하는 방법에는 두가지가 있으며 다음과 같습니다.
+T-Bears를 설치하는 방법에는 세가지가 있으며 다음과 같습니다.
 ```
 1. Git의 코드를 다운로드하여 설치하기
 2. PyPI 통해 설치하기
+3. Docker 활용하기
 ```
->두가지 방법을 진행하기에 앞서 공통적으로 구성해야할 환경은 아래와 같습니다.
+>세가지 방법을 진행하기에 앞서 공통적으로 구성해야할 환경은 아래와 같습니다.
 
 
 #### 공통
 
+#### *MacOS*
 * Home Brew(macOS용 패키지 관리자)를 설치합니다.
 
 ```
@@ -164,8 +168,37 @@ bash ./Anaconda3-5.2.0-MacOSX-x86_64.sh
 ```
 pip3 install virtualenv
 ```
+---
+#### *Linux*
 
-<br></br>
+* LevelDB, libsecp256k1를 설치합니다.
+```
+sudo apt-get install libleveldb1 libleveldb-dev
+sudo apt-get install libsecp256k1-dev
+```
+
+* RabbitMQ를 설치합니다.
+```
+sudo apt-get install rabbitmq-server
+```
+
+* wget, git을 설치합니다.
+```
+sudo apt-get install wget
+sudo apt-get install git
+```
+
+* Anaconda를 설치합니다.
+```
+wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-MacOSX-x86_64.sh
+bash ./Anaconda3-5.2.0-MacOSX-x86_64.sh
+```
+
+* Virtualenv (python3 venv 대체 가능)를 설치합니다.
+```
+pip3 install virtualenv
+```
+---
 #### 1. Git의 코드를 다운로드하여 설치하기
 * git 설치가 완료되면, tbears Git repository에 존재하는 코드를 `t-bears` 디렉토리로 clone 합니다.
 
@@ -186,7 +219,7 @@ source venv/bin/activate
 ```
 (venv) pip install ./dist/tbears-1.0.5-py3-none-any.whl
 ```
-<br></br>
+---
 #### 2. PyPI 통해 설치하기
 > 보다 간단한 방법으로 가급적 두번째 방법을 따라 설치하기를 권장합니다. 
 
@@ -1410,6 +1443,7 @@ content 파라미터에는 파일을 로드하여 삽입해 줍니다. 트랜젝
 
 <br></br>
 
+
 **Block을 불러들이지 않고 조회할 수 있는 데이터**
 
 		특정 주소의 Balance
@@ -1476,6 +1510,7 @@ api 서버와 연결되는 URL 주소에 httpclient 를 활용하여, OkHttpClie
     }
 
 지정된 Address 주소의 잔액을 리턴합니다.
+
 
 ~~~
     public void getBalance(String Address) throws IOException {
@@ -1810,6 +1845,272 @@ icon_service.get_transaction_result(tx_hash)
  'logsBloom': '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
  'status': '0x1'}
 ~~~
+=======
+
+~~~
+    public void getBalance(String Address) throws IOException {
+        Address address = new Address(Address);
+        BigInteger balance = iconService.getBalance(address).execute();
+        System.out.println("balance:" + balance);
+    }
+~~~
+
+* ##### 파이썬 SDK로 실행
+
+사용할 라이브러리를 import 합니다.
+
+	from iconsdk.icon_service import IconService
+	from iconsdk.providers.http_provider import HTTPProvider
+
+선언되는 **icon_service 객체는 RPC를 위한 연결을 수립합니다.**  여기서, URL은 연결코자 하는 ICON네트워크의 주소를 입력해 줍니다.
+
+	icon_service = IconService(HTTPProvider("http://[node ip]/api/v3"))
+
+Balance를 조회할 Adress를 입력합니다. 
+
+	balance = icon_service.get_balance(Adress)
+
+<br></br>
+
+## 2. 현재 발행된 코인의 총 수 호출하기.
+
+발행된 코인의 총 수를 구합니다. 처음부터 **icon_service 객체는 RPC를 위한 연결을 수립합니다.** 까지의 내용은 생략되었습니다. 
+
+
+* ##### 자바 SDK로 실행
+
+TotalSupply(현재 발행된 ICX의 총 수)를 출력합니다. 
+
+    public void getTotalSupply() throws IOException {
+        BigInteger totalSupply = iconService.getTotalSupply().execute();
+        System.out.println("totalSupply:" + totalSupply);
+    }
+
+
+* ##### 파이썬 SDK로 실행
+
+TotalSupply(현재 발행된 ICX의 총 수)를 출력합니다. 
+	
+	print(icon_service.get_total_supply());
+
+
+<br></br>
+## 	3. SCORE주소를 통해서 SCORE API를 모두 호출하기. 
+
+SCORE의 주소를 입력하여 SCORE의 api 목록을 호출합니다. 
+
+#####  자바 SDK로 실행
+
+	   public void getScoreApi(String SCOREAddress) throws IOException {
+   	     Address scoreAddress = new Address(SCOREAddress);
+   	     List<ScoreApi> apis = iconService.getScoreApi(scoreAddress).execute();
+   	     System.out.println("apis:" + apis);
+   	     };
+ 
+
+
+#####  파이썬 SDK로 실행
+
+	
+	print(score_apis = icon_service.get_score_api(SCOREAddress));
+
+
+ 
+
+<br></br>
+
+> Block에서 정보를 가지고 오기 전에...
+## Block을 불러오는 세 가지 방법
+
+블록에서 정보를 읽기 위해서는 ICON 네트워크에서 특정 Block을 불러와야 합니다. SDK를 활용하여 블록을 불러들이는 방법은 크게 세 가지가 있습니다.
+
+	1. 가장 마지막에 만들어진 Block 불러오기
+	2. 특정 높이의 Block 불러오기
+	3. Block의 Hash 값을 통하여 불러오기
+
+<br></br>
+
+### 1. 가장 마지막에 만들어진 Block 불러오기
+가장 마지막에 만들어진 Block을 불러오는 메서드 입니다.
+Block을 불러들이기 위해서 작성되는 코드는 자바와 파이썬에서 모두 **iconService 객체는 RPC를 위한 연결을 수립합니다.**  부분이 동일합니다. 1. 가장 마지막에 만들어진 Block 불러오기를 제외한 2, 3번에서는 **iconService 객체는 RPC를 위한 연결을 수립합니다.**  부분을 생략하겠습니다. 
+
+* ##### 자바 SDK로 실행
+
+api 서버와 연결되는 URL 주소에 httpclient 를 활용하여, OkHttpClient 접속을 만들어내는 클래스입니다. 
+**iconService 객체는 RPC를 위한 연결을 수립합니다.**  여기서, URL은 연결코자 하는 ICON네트워크의 주소를 입력해 줍니다. 
+
+	public final String URL = "http://[node ip]/api/v3";    
+	private IconService iconService;
+    public BasicGetMethods() {
+        OkHttpClient httpClient = new OkHttpClient.Builder()
+                .build();
+        iconService = new IconService(new HttpProvider(httpClient, URL));
+    }
+
+가장 마지막 블럭을 불러옵니다. 
+
+    public Block getLastBlock() throws IOException {
+        Block block = iconService.getLastBlock().execute();
+        System.out.println("block:" + block);
+        return block;
+    }
+
+실행코드 
+
+        BasicGetMethods LastBlock = new BasicGetMethods();
+        LastBlock.getLastBlock();
+
+* 파이썬 SDK로 실행
+
+사용할 라이브러리를 import 합니다.
+
+	from iconsdk.icon_service import IconService
+	from iconsdk.providers.http_provider import HTTPProvider
+
+**iconService 객체는 RPC를 위한 연결을 수립합니다.**  여기서, URL은 **자바 SDK로 실행** 과 동일하게, 연결코자 하는 ICON네트워크의 주소를 입력해 줍니다.
+
+	icon_service = IconService(HTTPProvider("http://[node ip]/api/v3"))
+
+마지막 블록(가장 최신의 블록)을 불러옵니다.
+
+	block = icon_service.get_block("latest")    	
+<br></br>
+
+
+### 2. 특정높이의 Block 불러오기
+
+**1. 가장 마지막에 만들어진 Block 불러오기**와 동일하게 네트워크와의 연결을 수립한 후, 
+해당 네트워크에서 특정 높이의 Block을 불러옵니다. 
+
+* 자바 SDK로 실행
+
+        Block block = iconService.getBlock(height).execute();
+   
+
+* 파이썬  SDK로 실행
+
+		block = icon_service.get_block(height)
+		
+		
+<br></br>
+
+### 3. Block의 Hash 값을 통하여 불러오기
+
+##### 자바 SDK로 실행
+블록의 Hash값은 Bytes 로 삽입되어야 합니다.
+
+    public void getBlockByHash(String Hash) throws IOException {
+        Bytes hash = new Bytes(Hash);
+        Block block = iconService.getBlock(hash).execute();
+    }
+   
+
+##### 파이썬  SDK로 실행
+
+		block = icon_service.get_block(Hash)
+		
+
+<br></br>
+
+
+>위에서 언급한 3가지 방법으로 불러들인 Block 의 정보를 불러볼 수 있습니다.
+## Block에서 정보 불러오기.
+
+**Block을 불러오는 세 가지 방법**에서 Block을 불러오게 되면, 해당 Block에서 아래와 같은 정보를 출력 해 볼 수 있습니다. 
+<br></br>
+
+
+**불러들인 Block에서 얻을 수 있는 데이터**
+   
+* 불러들인 블록의 해시 
+> BlockHash
+      
+* 블록에 기입되어있는루트머클트리의 해시 (제네시스 블록과 같은 값)
+> MerkleTreeRootHash
+      
+* peer의 ID Block을 만들어낸 Node의 ID
+> PeerId
+      
+* 이전 블록의 해시 
+> PrevBlockHash
+      
+* 불러들인 블럭의 해시 
+> hashCode
+      
+* 블럭이 만들어진 시간 
+> Timestamp
+      
+* 블럭에 포함되어있는 Transaction들 
+> Transactions
+      
+* 해싱되어 서명된  데이터
+> Signature
+
+<br></br>
+
+
+블럭에 포함되어있는 Transaction들의 경우에는 트랜젝션의 실패 유무와 상관 없이 기록됩니다. 따라서 get_transaction_result와 같은 함수를 통하여 Transaction이 실패했는지, 성공했는지, 어떤 트랜젝션인지 확인할 수 있습니다. 이러한 결과는 ICON에서 제공하는 [ICONTracker](https://tracker.icon.foundation)에서 제공되고 있습니다.
+
+<br></br>
+
+**아래 수행되는 예제 코드는 Block을 불러들인 상태에서, 불러들여진 Block 인스턴스를 통하여 로드하는 내용을 수록하고 있습니다. 따라서, Block을 불러들이기 이전까지의 내용은 생략되었습니다. Block을 불러들이는 내용은 1. 가장 마지막에 만들어진 Block 불러오기의 내용을 참조하시면 됩니다.**
+
+
+##### 자바 SDK로 실행
+
+높이를 통해서 불러들인 블럭에서 출력할 수 있는 내용을 모두 출력해 봅니다.
+
+~~~    
+    public void getWholeBlockget(int Height) throws IOException {
+        BigInteger height = BigInteger.valueOf(Height);
+        Block block = iconService.getBlock(height).execute();
+        System.out.println("block BlockHash:" + block.getBlockHash());
+        System.out.println("block MerkleTreeRootHash:" + block.getMerkleTreeRootHash());
+        System.out.println("block PeerId:" + block.getPeerId());
+        System.out.println("block PrevBlockHash:" + block.getPrevBlockHash());
+        System.out.println("block hashCode:" + block.hashCode());
+        System.out.println("block BlockHash:" + block.getBlockHash());
+        System.out.println("block Timestamp:" + block.getTimestamp());
+        System.out.println("block Transactions:" + block.getTransactions());
+        System.out.println("block Signature:" + block.getSignature());
+    }
+
+~~~
+##### 파이썬 SDK로 실행
 
 
 
+~~~
+Todo
+~~~
+
+
+#### 내가 보낸 트랜젝션 결과 확인하기
+
+트랜젝션의 발생은 누구나 할 수 있지만, 수수료부족 등의 이유로 거절되기도 합니다. 그렇기 때문에, 트랜젝션을 발생시킨 주체는, 항상 트랜젝션의 결과를 확인해야 합니다. 
+
+##### 자바 SDK로 실행
+
+~~~
+    // Transaction Hash 값을 통해서 Transaction 을 호출한다. 
+    public void getTransaction(String Tx_Hash) throws IOException {
+        Bytes txHash = new Bytes(Tx_Hash);
+        ConfirmedTransaction tx = iconService.getTransaction(txHash).execute();
+        System.out.println("transaction:" + tx);
+    }
+    // Transaction Hash 값을 통하여 Transaction의 결과를 호출한다. 
+    public void getTransactionResult(String TX_Hash) throws IOException {
+        Bytes txHash = new Bytes(TX_Hash);
+        TransactionResult tx = iconService.getTransactionResult(txHash).execute();
+        System.out.println("transaction:" + tx);
+    }
+
+
+
+~~~
+##### 파이썬 SDK로 실행
+
+
+~~~
+Todo
+~~~
