@@ -23,31 +23,31 @@ ICON Dev Guide
 		* MacOS
 		* Ubuntu Linux
 
-    * [Git의 코드를 다운로드하여 설치하기](#1.-Git의-코드를-다운로드하여-설치하기)
+    * [Git의 코드를 다운로드하여 설치하기](#1-Git의-코드를-다운로드하여-설치하기)
     
-    * [PyPI 통해 설치하기](#2.-PyPI-통해-설치하기)
+    * [PyPI 통해 설치하기](#2-PyPI-통해-설치하기)
 
-	* [Docker 활용하기](#3.-Docker-활용하기)
+	* [Docker 활용하기](#3-Docker-활용하기)
 
 2. [T-Bears 활용하기](#2-t-bears-활용하기)
-    * [서비스](#1.-서비스)
+    * [서비스](#1-서비스)
         * 서비스 시작 
         * 서비스 중단
         * 서비스에 배포된 SCORE 삭제
 
-    * [SCORE 배포하기](#2.-SCORE-배포하기)
+    * [SCORE 배포하기](#2-score-배포하기)
         * init으로 생성한 SCORE 프로젝트 배포하기
         * samples로 생성한 SCORE 배포하기
 
-    * [배포한 SCORE의 메소드 호출하기](#3.-배포한-SCORE의-메소드-호출하기)
+    * [배포한 SCORE의 메소드 호출하기](#3-배포한-score의-메소드-호출하기)
         * init을 통해 생성한 SCORE의 'hello' 메소드 호출
         * samples를 통해 생성한 SCORE("standard_token.py")의 'name' 메소드 호출
 
-    * [트랜잭션](#4.-트랜잭션)
+    * [트랜잭션](#4-트랜잭션)
         * 트랜잭션 요청
         * 트랜잭션 결과 확인
 
-    * [ICX](#5.-ICX)
+    * [ICX](#5-icx)
         * ICX 보내기
         * ICX 잔고 확인하기
 
