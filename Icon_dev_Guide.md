@@ -23,42 +23,33 @@ ICON Dev Guide
 		* MacOS
 		* Ubuntu Linux
 
-    * Git의 코드를 다운로드하여 설치하기
+    * [Git의 코드를 다운로드하여 설치하기](#1.-Git의-코드를-다운로드하여-설치하기)
     
-    * PyPI 통해 설치하기
-
-	* [Docker 활용하기](#3.-Docker-활용하기)
+    * [PyPI 통해 설치하기](#2.-PyPI-통해-설치하기)
 
 	* [Docker 활용하기](#3.-Docker-활용하기)
 
 2. T-Bears 활용하기
-    * 서비스
+    * [서비스](#1.-서비스)
         * 서비스 시작 
         * 서비스 중단
         * 서비스에 배포된 SCORE 삭제
 
-    * SCORE 배포하기
+    * [SCORE 배포하기](#2.-SCORE-배포하기)
         * init으로 생성한 SCORE 프로젝트 배포하기
         * samples로 생성한 SCORE 배포하기
 
-    * 배포한 SCORE의 메소드 호출하기
+    * [배포한 SCORE의 메소드 호출하기](#3.-배포한-SCORE의-메소드-호출하기)
         * init을 통해 생성한 SCORE의 'hello' 메소드 호출
         * samples를 통해 생성한 SCORE("standard_token.py")의 'name' 메소드 호출
 
-    * 트랜잭션
+    * [트랜잭션](#4.-트랜잭션)
         * 트랜잭션 요청
         * 트랜잭션 결과 확인
 
-    * ICX
+    * [ICX](#5.-ICX)
         * ICX 보내기
         * ICX 잔고 확인하기
-
-    * 명령어 정리
-        * server 명령어
-        * utility 명령어
-        * SCORE 명령어
-        * ICX, 트랜잭션, 블록과 관련된 명렁어
-        * 설정 파일
 
 3. [SDK 개발환경 구축하기](#3-sdk-개발환경-구축하기)
 	* [파이썬](#파이썬-개발-환경-구축하기) 
@@ -114,10 +105,7 @@ ICON Dev Guide
 	
 	* [내가 보낸 트랜젝션의 결과 확인해 보기](#내가-보낸-트랜젝션-결과-확인하기)
 
-
-
-
-<br></br>
+<br>
 
 ---
 # T-Bears 소개
@@ -127,16 +115,18 @@ ICON Dev Guide
 
 ---
 # 1. T-Bears 설치하기 (macOS)
-T-Bears를 설치하는 방법에는 두가지가 있으며 다음과 같습니다.
+T-Bears를 설치하는 방법에는 세가지가 있으며 다음과 같습니다.
 ```
 1. Git의 코드를 다운로드하여 설치하기
 2. PyPI 통해 설치하기
+3. Docker 활용하기
 ```
->두가지 방법을 진행하기에 앞서 공통적으로 구성해야할 환경은 아래와 같습니다.
+>세가지 방법을 진행하기에 앞서 1, 2번 방법의 경우 공통적으로 구성해야할 환경은 아래와 같습니다.
 
 
 #### 공통
 
+#### *MacOS*
 * Home Brew(macOS용 패키지 관리자)를 설치합니다.
 
 ```
@@ -270,7 +260,6 @@ docker start -i local-tbears
 ```
 docker run -it --name local-tbears -p 9000:9000 iconloop/tbears
 ```
-> 권장
 
 ---
 # 2. T-Bears 활용하기
