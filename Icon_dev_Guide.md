@@ -114,7 +114,7 @@ ICON Dev Guide
 현재, [GitHub](https://github.com/icon-project/t-bears.git)에 소스가 공개 되어있으며, 사용을 원하는 개발자는 언제든 다운로드 받아 사용할 수 있습니다.
 
 ---
-# 1. T-Bears 설치하기
+# 1. T\-Bears 설치하기
 T-Bears를 설치하는 방법에는 세가지가 있으며 다음과 같습니다.
 ```
 1. Git의 코드를 다운로드하여 설치하기
@@ -262,7 +262,7 @@ docker run -it --name local-tbears -p 9000:9000 iconloop/tbears
 ```
 
 ---
-# 2. T-Bears 활용하기
+# 2. T\-Bears 활용하기
 
 ###  *1. 서비스*
 
