@@ -997,6 +997,7 @@ Keystore파일을 저장할 경우, 비밀번호를 통해서 Keystore파일 내
 	from iconsdk.wallet.wallet import KeyWallet
 
 	wallet = KeyWallet.create()
+	
 	wallet.get_address()
 
 출력
