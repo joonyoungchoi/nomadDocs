@@ -29,6 +29,8 @@ ICON Dev Guide
 
 	* [Docker 활용하기](#3.-Docker-활용하기)
 
+	* [Docker 활용하기](#3.-Docker-활용하기)
+
 2. T-Bears 활용하기
     * 서비스
         * 서비스 시작 
@@ -199,6 +201,11 @@ sudo apt-get install git
 ```
 wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh
 bash ./Anaconda3-5.2.0-Linux-x86_64.sh
+```
+
+* Virtualenv (python3 venv 대체 가능)를 설치합니다.
+```
+pip3 install virtualenv
 ```
 ---
 #### 1. Git의 코드를 다운로드하여 설치하기
