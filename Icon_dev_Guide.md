@@ -21,11 +21,13 @@ ICON Dev Guide
 1. T-Bears 설치하기
     * [공통](#공통)
 		* MacOS
-		* Linux
+		* Ubuntu Linux
 
     * [Git의 코드를 다운로드하여 설치하기](#1.-Git의-코드를-다운로드하여-설치하기)
     
     * [PyPI 통해 설치하기](#2.-PyPI-통해-설치하기)
+
+	* [Docker 활용하기](#3.-Docker-활용하기)
 
 2. T-Bears 활용하기
     * [서비스](#1.-서비스)
@@ -114,7 +116,7 @@ T-Bears를 설치하는 방법에는 세가지가 있으며 다음과 같습니�
 ```
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
-* LevelDB, libsecp256k1를 설치합니다.
+* LevelDB, autoconf, automake, libtool, pkg-config 를 설치합니다.
 ```
 brew install leveldb
 brew install autoconf automake libtool pkg-config
@@ -134,8 +136,8 @@ brew install git // git 설치
 
 * Anaconda를 설치합니다.
 ```
-wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-MacOSX-x86_64.sh
-bash ./Anaconda3-5.2.0-MacOSX-x86_64.sh
+wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh 
+bash ./Anaconda3-5.2.0-Linux-x86_64.sh
 ```
 
 * Virtualenv (python3 venv 대체 가능)를 설치합니다.
@@ -143,17 +145,24 @@ bash ./Anaconda3-5.2.0-MacOSX-x86_64.sh
 pip3 install virtualenv
 ```
 ---
-#### *Linux*
+#### *Ubuntu Linux*
+* apt-get 패키지 리스트를 업데이트 및 업그레이드 합니다.
+```
+sudo apt-get update
+sudo apt-get upgrade
+```
 
-* LevelDB, libsecp256k1를 설치합니다.
+* LevelDB, libsecp256k1, autoconf, automake, libtool, pkg-config 를 설치합니다.
 ```
 sudo apt-get install libleveldb1 libleveldb-dev
+sudo apt-get install autoconf automake libtool pkg-config
 sudo apt-get install libsecp256k1-dev
 ```
 
 * RabbitMQ를 설치합니다.
 ```
 sudo apt-get install rabbitmq-server
+sudo service rabbitmq-server start
 ```
 
 * wget, git을 설치합니다.
@@ -164,8 +173,8 @@ sudo apt-get install git
 
 * Anaconda를 설치합니다.
 ```
-wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-MacOSX-x86_64.sh
-bash ./Anaconda3-5.2.0-MacOSX-x86_64.sh
+wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh
+bash ./Anaconda3-5.2.0-Linux-x86_64.sh
 ```
 
 * Virtualenv (python3 venv 대체 가능)를 설치합니다.
@@ -211,6 +220,32 @@ source ./bin/activate
 ```
 (work) pip install tbears
 ```
+---
+#### 3. Docker 활용하기
+* Docker 설치하기
+```
+curl -fsSL https://get.docker.com/ | sudo sh
+```
+* Docker image 가져오기
+```
+docker pull iconloop/tbears
+```
+* 새로운 Docker 컨테이너 생성하기
+```
+docker create --name local-tbears -p 9000:9000 -it iconloop/tbears
+```
+
+* 생성한 Docker 컨테이너 실행하기
+```
+docker start -i local-tbears
+```
+
+* 앞서 설명한 3단계의 과정을 `run` 명령을 통해 한번에 실행할 수 있습니다.
+```
+docker run -it --name local-tbears -p 9000:9000 iconloop/tbears
+```
+> 권장
+
 ---
 # 2. T-Bears 활용하기
 
