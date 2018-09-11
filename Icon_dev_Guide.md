@@ -20,6 +20,8 @@ ICON Dev Guide
 
 1. T-Bears 설치하기
     * [공통](#공통)
+		* MacOS
+		* Linux
 
     * [Git의 코드를 다운로드하여 설치하기](#1.-Git의-코드를-다운로드하여-설치하기)
     
@@ -95,16 +97,18 @@ ICON Dev Guide
 
 ---
 # 1. T-Bears 설치하기 (macOS)
-T-Bears를 설치하는 방법에는 두가지가 있으며 다음과 같습니다.
+T-Bears를 설치하는 방법에는 세가지가 있으며 다음과 같습니다.
 ```
 1. Git의 코드를 다운로드하여 설치하기
 2. PyPI 통해 설치하기
+3. Docker 활용하기
 ```
->두가지 방법을 진행하기에 앞서 공통적으로 구성해야할 환경은 아래와 같습니다.
+>세가지 방법을 진행하기에 앞서 공통적으로 구성해야할 환경은 아래와 같습니다.
 
 
 #### 공통
 
+#### *MacOS*
 * Home Brew(macOS용 패키지 관리자)를 설치합니다.
 
 ```
@@ -138,8 +142,37 @@ bash ./Anaconda3-5.2.0-MacOSX-x86_64.sh
 ```
 pip3 install virtualenv
 ```
+---
+#### *Linux*
 
-<br></br>
+* LevelDB, libsecp256k1를 설치합니다.
+```
+sudo apt-get install libleveldb1 libleveldb-dev
+sudo apt-get install libsecp256k1-dev
+```
+
+* RabbitMQ를 설치합니다.
+```
+sudo apt-get install rabbitmq-server
+```
+
+* wget, git을 설치합니다.
+```
+sudo apt-get install wget
+sudo apt-get install git
+```
+
+* Anaconda를 설치합니다.
+```
+wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-MacOSX-x86_64.sh
+bash ./Anaconda3-5.2.0-MacOSX-x86_64.sh
+```
+
+* Virtualenv (python3 venv 대체 가능)를 설치합니다.
+```
+pip3 install virtualenv
+```
+---
 #### 1. Git의 코드를 다운로드하여 설치하기
 * git 설치가 완료되면, tbears Git repository에 존재하는 코드를 `t-bears` 디렉토리로 clone 합니다.
 
@@ -160,7 +193,7 @@ source venv/bin/activate
 ```
 (venv) pip install ./dist/tbears-1.0.5-py3-none-any.whl
 ```
-<br></br>
+---
 #### 2. PyPI 통해 설치하기
 > 보다 간단한 방법으로 가급적 두번째 방법을 따라 설치하기를 권장합니다. 
 
