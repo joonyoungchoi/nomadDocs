@@ -47,6 +47,13 @@ ICON Dev Guide
         * ICX 보내기
         * ICX 잔고 확인하기
 
+    * 명령어 정리
+        * server 명령어
+        * utility 명령어
+        * SCORE 명령어
+        * ICX, 트랜잭션, 블록과 관련된 명렁어
+        * 설정 파일
+
 3. SDK 개발환경 구축하기
 	* 파이썬 
 		* 파이썬이 설치되어있지 않다면?  
@@ -68,7 +75,7 @@ ICON Dev Guide
 			
 3. SDK 활용하기
 	* 지갑사용하기
-		*  wallet create (지갑생성)
+		* wallet create (지갑생성)
 		* wallet load (지갑로드)
 		* wallet store (지갑저장)
 		
@@ -81,6 +88,27 @@ ICON Dev Guide
 		* 토큰을 전송하는 트랜젝션
 		* 메세지를 전송하는 트랜젝션
 		* SCORE를 Deploy 하는 트랜젝션
+
+
+	* [Block에서 정보 가지고오기](#block에서-정보-가지고-오기)
+	
+	* [간단한 조회 해 보기](#간단한-조회-해-보기)
+	 
+	* [불러온 Block에서-정보-불러오기](#block에서-정보-불러오기)
+		* 1. 특정 주소의 Balance 호출하기.
+		* 2.현재 발행된 코인의 총 수 호출하기.
+		* 3.score주소를 통해서 score api를 모두 호출하기
+		
+	* [Block을 불러오는 세 가지 방법](#block을-불러오는-세-가지-방법)
+		* 1.가장 마지막에 만들어진 Block 불러오기
+		* 2.특정높이의 Block 불러오기
+		* 3.Block의 hash 값을 통하여 불러오기
+		
+	* [불러들인 Block에서 정보 불러오기](#불러들인-block에서-정보-불러오기)
+	
+	* [내가 보낸 트랜젝션의 결과 확인해 보기](#내가-보낸-트랜젝션-결과-확인하기)
+
+
 
 
 <br></br>
@@ -701,9 +729,7 @@ Git의 코드를 다운로드하여 설치하는 방법은 아이콘이 지원�
 	
 	Eclipse Version: 2.2.200.v20180611-0500
 	
-	Maven 
-	OR
-	Gradle
+	Maven 	OR	Gradle
 	
 <br></br>
 
@@ -911,7 +937,7 @@ dependencies {
 
 
 # 4. SDK 활용하기
-현재 아이콘의 개발자 배포용 SDK는 파이썬, 자바 두 가지 종류가 있습니다. 개발자들을 위해서 Git을 통해 배포되고 있으며, 각각 언어들을 활용해 개발자들은 지갑을 만들거나, 트랜젝션을 보내거나, 내 지갑의 토큰 balnce 를 조회할 수 있습니다.
+현재 아이콘의 개발자 배포용 SDK는 파이썬, 자바 두 가지 종류가 있습니다. 개발자들을 위해서 Git을 통해 배포되고 있으며, 각각 언어들을 활용해 개발자들은 지갑을 만들거나, 내 지갑의 토큰 balnce 를 조회할 수 있습니다.
 
 
 ## 지갑만들기
@@ -945,17 +971,16 @@ Keystore파일을 저장할 경우, 비밀번호를 통해서 Keystore파일 내
 * ##### 자바 SDK로 실행
 
 	wallet = KeyWallet.create()
-    create.getAddress();
      
-    System.out.println("privateKey로 로드한 지갑 주소 : " +  
-    load.getAddress());
+    System.out.println("지갑 주소 : " +  
+    wallet.getAddress());
     
 출력
 
     hx4873b94352c8c1f3b2f09aaeccea31ce9e90bd31
     // 지갑 주소를 출력합니다
     
-*위 출력값은 예시입니다. 실행하실 때 마다 출력값은 달라집니다.*
+*위 출력값은 예시입니다. 지갑마다 출력값은 달라집니다.*
 
 * ##### 파이썬 SDK로 실행
 
@@ -966,10 +991,9 @@ Keystore파일을 저장할 경우, 비밀번호를 통해서 Keystore파일 내
 
 출력
 
-	wallet.get_address()
 	Out[6]: 'hxfb87932482914ff8ecc750767242e1cbe8b8c41b'
 	## 지갑 주소를 출력합니다.
-*위 출력값은 예시입니다. 실행하실 때 마다 출력값은 달라집니다.*
+*위 출력값은 예시입니다. 지갑마다 출력값은 달라집니다.*
 
 
 
@@ -980,25 +1004,53 @@ Keystore파일을 저장할 경우, 비밀번호를 통해서 Keystore파일 내
 **wallet load (지갑로드)**
 
 ##### 1. private key 변수를 이용해 지갑을 로드합니다. 
-> JavaSDK 에서는 privateKey를 출력하는 기능이 구현되어있지 않습니다.(2018/09/07기준) iconex 크롬 익스텐션 또는 모바일 앱에서도 프라이빗 키를 확인할 수 있습니다. 
+
+> privateKey를 통해 지갑을 불러들여 보고, 불러들인지갑의  privateKey를 출력해서 확인해 봅니다. iconex 크롬 익스텐션 또는 모바일 앱에서도 프라이빗 키를 확인할 수 있습니다. 
 
 * ##### 자바 SDK로 실행
 
-		public static final String 
-		PRIVATE_KEY_STRING = "PrivateKey";
-    	KeyWallet loadedKey = KeyWallet.load(PRIVATE_KEY_STRING);  
-     	//privateKey 로  keywallet 로드 
+		//개인키를 사용하여 지갑을 불러옵니다. 
+		Bytes Personal_Key = new Bytes("625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981");
+	    Wallet Localwallet = KeyWallet.load(Personal_Key);
+
+	    //불러온 지갑의 주소를 확인합니다.
+	    System.out.println("주소 = "+Localwallet);
+
+	    //불러온 지갑의 개인키를 확인하여, 제대로 불러왔는지 확인합니다.
+	    System.out.println("개인키 = "+KeyWallet.load(Personal_Key).getPrivateKey());
+		
+    	//
+
+결과 
+
+		주소 = hxcc61e31ed6080926d6d6f7d0ac6e1b8b2ee5a9fa
+		개인키 = 0x625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981
+
+
 
 * ##### 파이썬 SDK로 실행
-		key= 'PrivateKey'
-		wallet = KeyWallet.load(key)
-		//PrivateKey를 통하여 KeyWallet 로드
+
+key=bytes.fromhex("625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981")
+
+		##개인키를 통해서 지갑 불러오기
+		wallet = wallet.load(key)
+		##불러온 지갑에서 개인키와 송금주소를 출력
+		print("PK : "+wallet.get_private_key());
+		print("address : "+wallet.get_address());
+
+출력
+
+		PK : 625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981
+		address : hxd4b792110d4be458e74fcab3cab1d820b04bc696
+
 		
-	<br></br>
+<br></br>
+
 
 ##### 2. 기존에 저장되어있는 keystore 파일로 지갑을 로드합니다. 
 
 * ##### 자바 SDK로 실행
+
 		File file = new File(destinationDirectory, store);
     	//keystore file로 load, import한다.
      	KeyWallet keyStoreLoad = KeyWallet.load(password, file);
@@ -1011,7 +1063,7 @@ Keystore파일을 저장할 경우, 비밀번호를 통해서 Keystore파일 내
 
 		hx4873b94352c8c1f3b2f09aaeccea31ce9e90bd31
 		// 지갑주소를 리턴합니다.
-*위 출력값은 예시입니다. 실행하실 때 마다 출력값은 달라집니다.*
+*위 출력값은 예시입니다. 지갑마다 출력값은 달라집니다.*
 
 * ##### 파이썬 SDK로 실행
 		##password와 keystore의 위치를 통해 KeyWallet.load을 불러들입니다. 
@@ -1022,7 +1074,7 @@ Keystore파일을 저장할 경우, 비밀번호를 통해서 Keystore파일 내
 		hx4873b94352c8c1f3b2f09aaeccea31ce9e90bd31
 		## 지갑주소를 리턴합니다.
 				
-*위 출력값은 예시입니다. 실행하실 때 마다 출력값은 달라집니다.*
+*위 출력값은 예시입니다. 지갑마다 출력값은 달라집니다.*
 
 <br></br>
 
@@ -1032,7 +1084,7 @@ Keystore파일을 저장할 경우, 비밀번호를 통해서 Keystore파일 내
 keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아이콘 크롬 확장프로그램 [지갑](<https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel>)에서는, 숫자, 문자, 특수문자를 모두 포함하여 9자 이상입니다. 현재 SDK상에서는 규약이 강제되어있지 않습니다. 보안성을 위해서는 아이콘 크롬 확장 프로그램에서와 같은 강제성이 부여되는것이 좋습니다.
  
 지갑을 저장하기 위해서는, 지갑 인스턴스를 불러들어야 합니다. 
-불러들인 지갑 인스턴스를 지정된 위치와 지정된 비밀번호로 암호화 하여 keyStore파일로 저장하여, T-bears, aws, SDK, [크롬확장프로그램](<https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel>)을 통해서 사용할 수 있습니다.
+불러들인 지갑 인스턴스를 지정된 비밀번호로 암호화 하여 사용자가 원하는 위치에 keyStore파일로 저장합니다. 저장된 지갑은 T-bears, aws, SDK, [크롬확장프로그램](<https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel>)을 통해서 사용할 수 있습니다.
 
 * ##### 자바 SDK로 실행
 		File destinationDirectory = new File("./keystore"); 
@@ -1043,22 +1095,33 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 		//parameter : 로드한 지갑객체, 비밀번호 , 저장할 경로 
 		//성공시 저장된 key store file 의 파일명이 리턴됩니다. 
 		
+출력
+
+	Located in = ./UTC--2018-09-11T05-56-12.561512000Z--hxc9107883221a9edb20c8d4166db68520973bae8a.json
+
+		
 * ##### 파이썬 SDK로 실행
 
-		wallet.store("./keystore", "password") 
+
+
+		made_wallet=wallet.KeyWallet.create()
+		made_wallet.store("/Users/nc0201020/Desktop/makekeystore","User_password123")
+
+
+		
 
 <br></br>
 
 
 ### 네트워크와 연결하기
-트랜젝션을 보내기 이전에, 사용자는 아이콘 블록체인 네트워크와 연결이 되어야 한다. 네트워크는 아래 3가지가 존재합니다.
+지갑은 로컬에서 네트워크와의 연결이 없어도 만들 수 있습니다. 하지만 트랜젝션을 보내는 작업은 T-Bears와 같은 ICON네트워크와 연결되어있어야 가능합니다. 네트워크는 아래 4가지가 존재합니다.
 
 		1. 메인넷
 		2. 테스트넷
 		3. 로컬넷
 		4. aws 네트워크
 
- 실제 트랜젝션을 발생시키고 거래를 블록에 기입하기 위해서는 네트워크에 연결이 되어 있어야 합니다. 위의 4가지 네트워크의 유형중, 메인넷은 아이콘블록체인 네트워크의 메인 네트워크를 말하며, 테스트넷은 개발자들을 위해 오픈된 테스트 넷을 말합니다. 둘 다 현재는 오픈되어있지 않습니다. (2018/09/07기준) SDK 테스트는 앞선 1번에서 T-bears 를 활용하여 구축한 로컬 네트워크와 연결하여 진행하겠습니다. 네트워크와의 연결은 트랜젝션을 작성하고 노드에 보낼때 반드시 필요한 부분 이기 때문에, 아래의 [트랜젝션 보내기](### 트랜젝션 보내기)에 포함하겠습니다. 
+ 실제 트랜젝션을 발생시키고, 거래를 블록에 기입하기 위해서는 네트워크에 연결이 되어 있어야 합니다. 위의 4가지 네트워크의 유형중, 메인넷은 아이콘블록체인 네트워크의 메인 네트워크를 말하며, 테스트넷은 개발자들을 위해 오픈된 테스트 넷을 말합니다. 둘 다 현재는 오픈되어있지 않습니다. (2018/09/07기준) SDK 테스트는 앞선 1번에서 T-bears 를 활용하여 구축한 로컬 네트워크와 연결하여 진행하겠습니다. 네트워크와의 연결은 트랜젝션을 작성하고 노드에 보낼때 반드시 필요한 부분 이기 때문에, 아래의 [트랜젝션 보내기](### 트랜젝션 보내기)에 포함하겠습니다. 
 
 <br></br>
 
@@ -1068,14 +1131,14 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 트랜젝션은 4가지 종류가 있습니다. 
 
 		1. ICX를 전송하는 트랜젝션
-		2. 토큰을 전송하는 트랜젝션
+		2. SCORE를 실행하는 트랜젝션
 		3. 메세지를 전송하는 트랜젝션
 		4. SCORE를 Deploy 하는 트랜젝션
 
-각기 트랜젝션은 서버에 json 형식으로 전송이 되며, 서버는 해당 트랜젝션을 받아 블록에 트랜젝션 해시값을 기입함 으로서, 사용자가 전송한 트랜젝션이 블록에 기입됩니다. 
+각기 트랜젝션은 서버에 json 형식으로 전송이 되며, 서버는 해당 트랜젝션을 받아 블록에 트랜젝션 해시값을 기입함 으로서 사용자가 전송한 트랜젝션이 블록에 기입됩니다. 
 
 	1. 지갑만들기에서 만든 지갑을 불러와서 다른 지갑으로 ICX를 보내보고 결과 확인하기
-	2. 지갑만들기에서 만든 지갑을 불러와서 다른 지갑으로 토큰을 보내보고 결과 확인하기
+	2. SCORE의 함수를 호출하고, 결과를 받습니다.
 	3. 메세지를 트랜젝션에 넣고 전송해 보기
 	4. 만들어진 SCORE를 Deploy 해 보기
 
@@ -1098,7 +1161,7 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 	    private KeyWallet wallet;
 	    private KeyWallet keyStoreLoad;
 
-	지갑을 로드할때 필요한 변수를 선언합니다.
+지갑을 로드할때 필요한 변수를 선언합니다.
  
 	    public static final String 
 	    PRIVATE_KEY_STRING =  "----------";
@@ -1107,8 +1170,7 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 	    public static final String ADDRESS = "hx------------------";
 	    public static final String PASSWORD = "Password";
 
-	노드와의 연결 및 상세한 로그를 표출하기 위한 logger를 선언합니다. logger는 옵션이기 때문에 생략하셔도 됩니다.
-	**[option]이라고 주석처리된 코드는 생략하셔도 됩니다.**
+노드와의 연결 및 상세한 로그를 표출하기 위한 logger를 선언합니다. logger는 옵션이기 때문에 생략하셔도 됩니다.**[option]이라고 주석처리된 코드는 생략하셔도 됩니다.**
 
 		HttpLoggingInterceptor logging = new HttpLoggingInterceptor();  //[option]
 		//httpProvider 의 url의 정보를 가로채기위함입니다.
@@ -1122,17 +1184,17 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
      	iconService = new IconService(new HttpProvider(httpClient, URL)); 
      	
 
-	keyStore 파일을 저장한 경로를 정하고  그 경로에 저장되어있는 기존의 keyStore파일을 이용해 지갑을 로드 합니다. 
+keyStore 파일을 저장한 경로를 정하고  그 경로에 저장되어있는 기존의 keyStore파일을 이용해 지갑을 로드 합니다. 
 
    		File destinationDirectory = new File("./iconSDKfile"); 
     	File file = new File(destinationDirectory, "keystore.json"); 
     	keyStoreLoad = KeyWallet.load(PASSWORD, file);  
     
 
-	IXC 송금 하기
+IXC 송금 하기
 	
 	
-	접속하려는 노드의 networkId값은 해당 네트워크의 제네시스 블록에 기록된 값을 기입해 줍니다. networkId는 네트워크를 구분 해 주는 확인자 중 하나이기 때문에 네트워크마다 다르지만, 1은 메인넷, 2는 테스트넷, 3번부터는 Custom Network 가 할당할 수 있습니다. [T-bears의 networkId는 기본 3번으로 할당되어 있습니다. ]
+접속하려는 노드의 networkId값은 해당 네트워크의 제네시스 블록에 기록된 값을 기입해 줍니다. networkId는 네트워크를 구분 해 주는 확인자 중 하나이기 때문에 네트워크마다 다르지만, 1은 메인넷, 2는 테스트넷, 3번부터는 Custom Network 가 할당할 수 있습니다. [T-bears의 networkId는 기본 3번으로 할당되어 있습니다. ]
 	
 		BigInteger networkId = new BigInteger("3"); 
 		
@@ -1143,27 +1205,27 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 		//돈을 받을 주소
 
 
-	송금할금액(ICX)을 정하고, stepLimit 과 timestamp, nonce 를 정해줍니다. 아이콘 네트워크의 전송은 내부적으로 Loop단위로 전송이 되게 됩니다. 따라서 전송될 때 에는 ICX를 Loop 로 계산하여 보내게 됩니다. ICX와 Loop의 비율은 아래와 같습니다. 
+송금할금액(ICX)을 정하고, stepLimit 과 timestamp, nonce 를 정해줍니다. 아이콘 네트워크의 전송은 내부적으로 Loop단위로 전송이 되게 됩니다. 따라서 전송될 때 에는 ICX를 Loop 로 계산하여 보내게 됩니다. ICX와 Loop의 비율은 아래와 같습니다. 
 	
-											1 ICX = 1*10^(18) Loop 
+							1 ICX = 1*10^(18) Loop 
 					
 		
 		//보낼 ICX의 양은 "1"이며, ICX를 Loop로 계산해 주는 코드입니다. 
 		BigInteger value = IconAmount.of("1", 18).toLoop(); 
 	   	
-	stepLimit은 수수료의 한계치 입니다. 스마트컨트렉트를 사용할 경우, 잘못된 스마트컨트렉트의 결과로 모든 잔고가 소진되는것을 막아주기 위함 입니다. 
-	ICX 전송시, 권장하는 stepLimit은 10,000입니다. 또한 IRC 2 기반 토큰을 전송할 경우, 권장 step limit 은 20,000 입니다. 
+stepLimit은 수수료의 한계치 입니다. 스마트컨트렉트를 사용할 경우, 잘못된 스마트컨트렉트의 결과로 모든 잔고가 소진되는것을 막아주기 위함 입니다. 
+ICX 전송시, 권장하는 stepLimit은 10,000입니다. 또한 IRC 2 기반 토큰을 전송할 경우, 권장 step limit 은 20,000 입니다. 
 	
 		BigInteger stepLimit = new BigInteger("75000"); 
 	
-	동일 트랜잭션을 막기 위해 타임스탬프 값을 사용합니다. timestamp는 꼭 현재 시간을 넣어야 합니다. 현재시간과 큰 격차가 있을 경우, 서버에서 트랜젝션을 거부합니다. 
+동일 트랜잭션을 막기 위해 타임스탬프 값을 사용합니다. timestamp는 꼭 현재 시간을 넣어야 합니다. 현재시간과 큰 격차가 있을 경우, 서버에서 트랜젝션을 거부합니다. 
 	
 		long timestamp = System.currentTimeMillis() * 1000L;
 	
 
-	**Transaction 메세지 생성**
+**Transaction 메세지 생성**
 	
-	nonce 값은 입력하지 않아도 괜찮습니다. 
+nonce 값은 입력하지 않아도 괜찮습니다. 
 
 	    Transaction transaction = TransactionBuilder.of(networkId) 
 	    			.from(fromAddress)    //보낼 지갑 주소 
@@ -1174,8 +1236,8 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 	    			.nonce(nonce)  // 
 	    			.build();
 	    			
-	Transaction 결과 확인
-	트랜잭션 정보가 맞는지 확인하기 위한 signedTransaction을 생성하고, 트랜잭션으로 hash값을 확인합니다. 
+Transaction 결과 확인
+트랜잭션 정보가 맞는지 확인하기 위한 signedTransaction을 생성하고, 트랜잭션으로 hash값을 확인합니다. 
 
 			SignedTransaction signedTransaction =new SignedTransaction(transaction, keyStoreLoad ); 
 			String hash = iconService.sendTransaction(signedTransaction).execute();
@@ -1223,13 +1285,16 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 	전송된 트랜젝션의 결과확인 		
 	
 			tx_hash = icon_service.send_transaction(signed_transaction)
+			
+			
+### [트랜젝션의 결과 확인](#내가-보낸-트랜젝션-결과-확인하기)
 
 ## 2. SCORE의 함수를 호출하고, 결과를 받습니다.  
 
 * ##### 자바 SDK로 실행
 	**Transaction 메세지 생성**
-	파라미터를 call 에 삽입하여, 결과를 불러옵니다. 
-	SCORE마다 지정한 함수를 실행하여, 결과를 받아올 수 있습니다. 
+	파라미터를 call 에 삽입하여 SCORE 함수를 호출하여 결과를 불러옵니다. 
+	SCORE마다 지정한 함수를 실행하여 결과를 받아올 수 있습니다. 
 		
 		RpcObject params = new RpcObject.Builder()
 				.put("_owner", new RpcValue(fromAddress))
@@ -1275,11 +1340,11 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
                 .from(fromAddress)
                 .to(toAddress)
                 .stepLimit(stepLimit)
-                .timestamp(new BigInteger(Long.toString(timestamp)))
+                .timestamp(new BigInteger(Long.toString(timestamp)))		
+                //timestamp는 unix time을 삽입합니다. 시간은 1/1000000초 까지 기록됩니다. 
                 .nonce(nonce)
                 .message(message)
                 .build();
-	
 	
 	
 * ##### 파이썬 SDK로 실행
@@ -1294,18 +1359,28 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 			    .message("test")\
 			    .build()
 
+<br></br>
+
 ##	4. 만들어진 SCORE를 Deploy 해 보기
+
+로컬에서 사용자가 만들어낸 SCORE 실행파일(파이썬)을 아이콘 네트워크에 Deploy(배포) 합니다. 
+content 파라미터에는 파일을 로드하여 삽입해 줍니다. 트랜젝션의 용량제한이 있으므로(2018/09/06기준 현재 최대 512kb) 용량을 잘 지키고, 스마트 컨트렉트 코드 작성 규칙을 지켜 작성하여야 합니다. 
+규칙을 지키지 않은 스마트컨트렉트 코드는 아이콘 네트워크에 치명적인 영향을 끼치므로, 규칙에 따라서 작성하여야 합니다. 
+
 * ##### 자바 SDK로 실행
 	**Transaction 메세지 생성**
-	로컬에서 사용자가 만들어낸 SCORE 실행파일(파이썬)을 아이콘 네트워크에 Deploy(배포) 합니다. 
-	content 파라미터에는 파일을 로드하여 삽입해 줍니다. 트랜젝션의 용량제한이 있으므로(2018/09/06기준 현재 최대 512kb) 용량을 잘 지키고, 스마트 컨트렉트 코드 작성 규칙을 지키지 않으면, 아이콘 네트쿼크에 치명적인 영향을 끼치므로, 규칙에 따라서 작성하여야 합니다.  
 	
 		Transaction transaction = TransactionBuilder.of(networkId)
 		    .from(wallet.getAddress())
 		    .to(scoreAddress)
 		    .stepLimit(new BigInteger("5000000"))
 		    .nonce(new BigInteger("1000000"))
-		    .deploy("application/zip", content)
+		    .deploy("application/zip", content) 
+		    // (20180910기준) zip만 지원합니다. 
+		    
+		    [변경]
+		    .deploy("zip", content)  
+		    
 		    .params(params)
 		    .build();
 
@@ -1318,7 +1393,7 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 		    .step_limit(1000000)\
 		    .nid(3)\
 		    .nonce(100)\
-		    .content_type("application/zip")\
+		    .content_type("zip")\
 		    .content(content)\
 		    .params(params)\
 		    .build()
@@ -1327,19 +1402,413 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 <br></br>
 
 
-# Block에서 조회해보기
+# Block에서 정보 가지고 오기
 
-아이콘의 C-Rep 노드가 만들어내는 Block은, 다음과 같은 구조를 지니고 있다. [블록사진] 위 사진대로 블록은 각각의 TX를 지님과 동시에 블록을 만들어낸 피어의 ID, 이전 블록의 해시값인 PrevBlockHash와 같이, 많은 정보를 내포하고 있다. ICON에서 제공하는 자바, 파이썬 SDK를 활용하면 지정된 번호의 블록 내에서 아래의 정보를 읽어들일 수 있다. [표 삽입]
+아이콘의 C-Rep 노드가 만들어내는 Block은 아래와 같은 정보를 지니고 있다. 블록은 각각의 TX를 지님과 동시에 블록을 만들어낸 피어의 ID, 이전 블록의 해시값인 PrevBlockHash와 같이, 많은 정보를 내포하고 있다. ICON에서 제공하는 자바, 파이썬 SDK를 활용하면, 특정 번호의 블럭을 혹은 가장 최근의 블록을 불러들여서 정보를 출력해 볼 수 있습니다. 
 
+ Block의 정보는 크게 두 가지로 나뉩니다. **Block을 불러들이지 않고 조회할 수 있는 데이터**와 **불러들인 Block에서 얻을 수 있는 데이터**입니다. 
+
+<br></br>
+
+**Block을 불러들이지 않고 조회할 수 있는 데이터**
+
+		특정 주소의 Balance
+		현재 발행된 코인의 총 수 
+		현재 블록의 높이
+		SCOREAddress를 통해서 SCORE API를 호출한다.
+
+ <br></br>
+
+**불러들인 Block에서 얻을 수 있는 데이터**
+   
+      불러들인 블록의 해시 
+      BlockHash
+      
+      블록에 기입되어있는루트머클트리의 해시 (제네시스 블록과 같은 값)
+      MerkleTreeRootHash
+      
+      peer의 ID Block을 만들어낸 Node의 ID
+      PeerId
+      
+      이전 블록의 해시 
+      PrevBlockHash
+      
+      불러들인 블럭의 해시 
+      hashCode
+      
+      블럭이 만들어진 시간 
+      Timestamp
+      
+      블럭에 포함되어있는 Transaction들 
+      Transactions
+      
+      해싱되어 서명된  데이터
+      Signature
+
+<br></br>
+
+> Block을 불러오지 않아도, 네트워크와 연결되었다면 조회할 수 있는 정보들
+## 간단한 조회 해 보기.
+
+ICON네트워크와 정상적으로 연결되었다면, 조회 해 볼 수 있는 정보들은 아래와 같습니다. 
+
+	1. 특정 주소의 Balance 호출하기.
+	2. 현재 발행된 코인의 총 수 호출하기.
+	3. SCORE주소를 통해서 SCORE API를 모두 호출하기. 
+
+파이썬과 자바 SDK 모두, **iconService 객체는 RPC를 위한 연결을 수립합니다.** 부분의 내용이 서로 같습니다. 따라서, 처음 이후엔 모두 생략하겠습니다. 
+
+##1. 특정 주소의 Balance 호출하기.
+
+주어진 주소의 Balance를 호출하여 출력합니다.
+
+* ##### 자바 SDK로 실행
+
+api 서버와 연결되는 URL 주소에 httpclient 를 활용하여, OkHttpClient 접속을 만들어내는 클래스입니다. 연결을 위해 선언되는 
+**iconService 객체는 RPC를 위한 연결을 수립합니다.**  여기서, URL은 연결코자 하는 ICON네트워크의 주소를 입력해 줍니다. 
+
+	public final String URL = "http://[node ip]/api/v3";    
+	private IconService iconService;
+    public BasicGetMethods() {
+        OkHttpClient httpClient = new OkHttpClient.Builder()
+                .build();
+        iconService = new IconService(new HttpProvider(httpClient, URL));
+    }
+
+지정된 Address 주소의 잔액을 리턴합니다.
+
+~~~
+    public void getBalance(String Address) throws IOException {
+        Address address = new Address(Address);
+        BigInteger balance = iconService.getBalance(address).execute();
+        System.out.println("balance:" + balance);
+    }
+~~~
+
+* ##### 파이썬 SDK로 실행
+
+사용할 라이브러리를 import 합니다.
+
+	from iconsdk.icon_service import IconService
+	from iconsdk.providers.http_provider import HTTPProvider
+
+선언되는 **icon_service 객체는 RPC를 위한 연결을 수립합니다.**  여기서, URL은 연결코자 하는 ICON네트워크의 주소를 입력해 줍니다.
+
+	icon_service = IconService(HTTPProvider("http://[node ip]/api/v3"))
+
+Balance를 조회할 Adress를 입력합니다. 
+
+	balance = icon_service.get_balance(Adress)
+
+<br></br>
+
+## 2. 현재 발행된 코인의 총 수 호출하기.
+
+발행된 코인의 총 수를 구합니다. 처음부터 **icon_service 객체는 RPC를 위한 연결을 수립합니다.** 까지의 내용은 생략되었습니다. 
 
 
 * ##### 자바 SDK로 실행
-	**Transaction 메세지 생성**
+
+TotalSupply(현재 발행된 ICX의 총 수)를 출력합니다. 
+
+    public void getTotalSupply() throws IOException {
+        BigInteger totalSupply = iconService.getTotalSupply().execute();
+        System.out.println("totalSupply:" + totalSupply);
+    }
 
 
+* ##### 파이썬 SDK로 실행
+
+TotalSupply(현재 발행된 ICX의 총 수)를 출력합니다. 
+	
+	print(icon_service.get_total_supply());
 
 
----
+<br></br>
+## 	3. SCORE주소를 통해서 SCORE API를 모두 호출하기. 
+
+SCORE의 주소를 입력하여 SCORE의 api 목록을 호출합니다. 
+
+#####  자바 SDK로 실행
+
+	   public void getScoreApi(String SCOREAddress) throws IOException {
+   	     Address scoreAddress = new Address(SCOREAddress);
+   	     List<ScoreApi> apis = iconService.getScoreApi(scoreAddress).execute();
+   	     System.out.println("apis:" + apis);
+   	     };
+ 
+
+
+#####  파이썬 SDK로 실행
+
+	
+	print(score_apis = icon_service.get_score_api(SCOREAddress));
+
+
+ 
+
+<br></br>
+
+> Block에서 정보를 가지고 오기 전에...
+## Block을 불러오는 세 가지 방법
+
+블록에서 정보를 읽기 위해서는 ICON 네트워크에서 특정 Block을 불러와야 합니다. SDK를 활용하여 블록을 불러들이는 방법은 크게 세 가지가 있습니다.
+
+	1. 가장 마지막에 만들어진 Block 불러오기
+	2. 특정 높이의 Block 불러오기
+	3. Block의 Hash 값을 통하여 불러오기
+
+<br></br>
+
+### 1. 가장 마지막에 만들어진 Block 불러오기
+가장 마지막에 만들어진 Block을 불러오는 메서드 입니다.
+Block을 불러들이기 위해서 작성되는 코드는 자바와 파이썬에서 모두 **iconService 객체는 RPC를 위한 연결을 수립합니다.**  부분이 동일합니다. 1. 가장 마지막에 만들어진 Block 불러오기를 제외한 2, 3번에서는 **iconService 객체는 RPC를 위한 연결을 수립합니다.**  부분을 생략하겠습니다. 
+
+* ##### 자바 SDK로 실행
+
+api 서버와 연결되는 URL 주소에 httpclient 를 활용하여, OkHttpClient 접속을 만들어내는 클래스입니다. 
+**iconService 객체는 RPC를 위한 연결을 수립합니다.**  여기서, URL은 연결코자 하는 ICON네트워크의 주소를 입력해 줍니다. 
+
+	public final String URL = "http://[node ip]/api/v3";    
+	private IconService iconService;
+    public BasicGetMethods() {
+        OkHttpClient httpClient = new OkHttpClient.Builder()
+                .build();
+        iconService = new IconService(new HttpProvider(httpClient, URL));
+    }
+
+가장 마지막 블럭을 불러옵니다. 
+
+    public Block getLastBlock() throws IOException {
+        Block block = iconService.getLastBlock().execute();
+        System.out.println("block:" + block);
+        return block;
+    }
+
+실행코드 
+
+        BasicGetMethods LastBlock = new BasicGetMethods();
+        LastBlock.getLastBlock();
+
+* 파이썬 SDK로 실행
+
+사용할 라이브러리를 import 합니다.
+
+	from iconsdk.icon_service import IconService
+	from iconsdk.providers.http_provider import HTTPProvider
+
+**iconService 객체는 RPC를 위한 연결을 수립합니다.**  여기서, URL은 **자바 SDK로 실행** 과 동일하게, 연결코자 하는 ICON네트워크의 주소를 입력해 줍니다.
+
+	icon_service = IconService(HTTPProvider("http://[node ip]/api/v3"))
+
+마지막 블록(가장 최신의 블록)을 불러옵니다.
+
+	block = icon_service.get_block("latest")    	
+<br></br>
+
+
+### 2. 특정높이의 Block 불러오기
+
+**1. 가장 마지막에 만들어진 Block 불러오기**와 동일하게 네트워크와의 연결을 수립한 후, 
+해당 네트워크에서 특정 높이의 Block을 불러옵니다. 
+
+* 자바 SDK로 실행
+
+        Block block = iconService.getBlock(height).execute();
+   
+
+* 파이썬  SDK로 실행
+
+		block = icon_service.get_block(height)
+		
+		
+<br></br>
+
+### 3. Block의 Hash 값을 통하여 불러오기
+
+##### 자바 SDK로 실행
+블록의 Hash값은 Bytes 로 삽입되어야 합니다.
+
+    public void getBlockByHash(String Hash) throws IOException {
+        Bytes hash = new Bytes(Hash);
+        Block block = iconService.getBlock(hash).execute();
+    }
+   
+
+##### 파이썬  SDK로 실행
+
+		block = icon_service.get_block(Hash)
+		
+
+<br></br>
+
+
+>위에서 언급한 3가지 방법으로 불러들인 Block 의 정보를 불러볼 수 있습니다.
+## 불러온 Block에서 정보 불러오기.
+
+**Block을 불러오는 세 가지 방법**에서 Block을 불러오게 되면, 해당 Block에서 아래와 같은 정보를 출력 해 볼 수 있습니다. 
+<br></br>
+
+
+**불러들인 Block에서 얻을 수 있는 데이터**
+   
+* 불러들인 블록의 해시 
+> BlockHash
+      
+* 블록에 기입되어있는루트머클트리의 해시 (제네시스 블록과 같은 값)
+> MerkleTreeRootHash
+      
+* peer의 ID Block을 만들어낸 Node의 ID
+> PeerId
+      
+* 이전 블록의 해시 
+> PrevBlockHash
+      
+* 불러들인 블럭의 해시 
+> hashCode
+      
+* 블럭이 만들어진 시간 
+> Timestamp
+      
+* 블럭에 포함되어있는 Transaction들 
+> Transactions
+      
+* 해싱되어 서명된  데이터
+> Signature
+
+<br></br>
+
+
+블럭에 포함되어있는 Transaction들의 경우에는 트랜젝션의 실패 유무와 상관 없이 기록됩니다. 따라서 get transaction result와 같은 함수를 통하여 Transaction이 실패했는지, 성공했는지, 어떤 트랜젝션인지 확인할 수 있습니다. 이러한 결과는 ICON에서 제공하는 [ICONTracker](https://tracker.icon.foundation)에서 제공되고 있습니다.
+
+<br></br>
+
+**아래 수행되는 예제 코드는 Block을 불러들인 상태에서, 불러들여진 Block 인스턴스를 통하여 로드하는 내용을 수록하고 있습니다. 따라서, Block을 불러들이기 이전까지의 내용은 생략되었습니다. Block을 불러들이는 내용은 1. 가장 마지막에 만들어진 Block 불러오기의 내용을 참조하시면 됩니다.**
+
+
+##### 자바 SDK로 실행
+
+높이를 통해서 불러들인 블럭에서 출력할 수 있는 내용을 모두 출력해 봅니다. 이 작업은 **Block을 불러오는 세 가지 방법**중 한 가지를 사용자의 선택에 따라 불러들인 후, 활용 가능합니다. 
+
+~~~    
+    public void getWholeBlockget(int Height) throws IOException {
+        BigInteger height = BigInteger.valueOf(Height);
+        Block block = iconService.getBlock(height).execute();
+        System.out.println("block BlockHash:" + block.getBlockHash());
+        System.out.println("block MerkleTreeRootHash:" + block.getMerkleTreeRootHash());
+        System.out.println("block PeerId:" + block.getPeerId());
+        System.out.println("block PrevBlockHash:" + block.getPrevBlockHash());
+        System.out.println("block hashCode:" + block.hashCode());
+        System.out.println("block BlockHash:" + block.getBlockHash());
+        System.out.println("block Timestamp:" + block.getTimestamp());
+        System.out.println("block Transactions:" + block.getTransactions());
+        System.out.println("block Signature:" + block.getSignature());
+    }
+~~~
+결과
+
+~~~
+block BlockHash:0x933d5018323cfca4951cc8f16ee407b5356d129fbe7ea6878a9bc4b715636cdb
+block MerkleTreeRootHash:0xc27c3b0ecb8c3c689f134273b82a2af6f84ce76c0ebfa63542f7a0ae65b58336
+block PeerId:hx86aba2210918a9b116973f3c4b27c41a54d5dafe
+block PrevBlockHash:0x5b0c817130ea2b32d40938542153b214634fd25cf19b169b0efa9631b2854acb
+block hashCode:1293203138
+block BlockHash:0x933d5018323cfca4951cc8f16ee407b5356d129fbe7ea6878a9bc4b715636cdb
+block Timestamp:1536313982794810
+block Transactions:[foundation.icon.icx.data.ConfirmedTransaction@25df00a0]
+block Signature:56znSEOorKAZG/1XHNW24C+1a9ZsGY1Cf1P/YZ2NN0UsXa+W7r5puWvG5grr8wbkwWz6K02b/eo4BUdbxWox5QE=
+~~~
+
+
+##### 파이썬 SDK로 실행
+
+~~~
+icon_service.get_block(1)
+
+~~~
+
+결과
+
+~~~
+{'version': '0.1a',
+ 'prev_block_hash': '5b0c817130ea2b32d40938542153b214634fd25cf19b169b0efa9631b2854acb',
+ 'merkle_tree_root_hash': 'c27c3b0ecb8c3c689f134273b82a2af6f84ce76c0ebfa63542f7a0ae65b58336',
+ 'time_stamp': 1536313982794810,
+ 'confirmed_transaction_list': [{'from': 'hxebf3a409845cd09dcb5af31ed5be5e34e2af9433',
+   'to': 'hx4873b94352c8c1f3b2f09aaeccea31ce9e90bd31',
+   'value': '0x21e19e0c9bab2400000',
+   'version': '0x3',
+   'nid': '0x3',
+   'stepLimit': '0xf4240',
+   'timestamp': '0x57544f90d8cd0',
+   'signature': '6p/W20c9LKNA2HwtFFHU6vmGA3S/t7iHL63znZwOlzoH5gPxpfV8du2veUR5SdYxxCgDIgfuVWDMNF6AdxinhAA=',
+   'txHash': '0xc27c3b0ecb8c3c689f134273b82a2af6f84ce76c0ebfa63542f7a0ae65b58336'}],
+ 'block_hash': '933d5018323cfca4951cc8f16ee407b5356d129fbe7ea6878a9bc4b715636cdb',
+ 'height': 1,
+ 'peer_id': 'hx86aba2210918a9b116973f3c4b27c41a54d5dafe',
+ 'signature': '56znSEOorKAZG/1XHNW24C+1a9ZsGY1Cf1P/YZ2NN0UsXa+W7r5puWvG5grr8wbkwWz6K02b/eo4BUdbxWox5QE='}
+
+~~~
+
+<br></br>
+
+#### 내가 보낸 트랜젝션 결과 확인하기
+
+트랜젝션의 발생은 누구나 할 수 있지만, 수수료부족 등의 이유로 거절되기도 합니다. 때문에 트랜젝션을 발생시킨 주체는 항상 트랜젝션의 결과를 확인해야 합니다. 
+
+Transaction의 결과 또한, json 형식으로 출력됩니다. 
+**Transaction이 문제없이 완료되었을 경우에는 Status가 "1", "0x1"으로 출력이 됩니다.**
+
+
+##### 자바 SDK로 실행
+
+~~~
+    // Transaction Hash 값을 통해서 Transaction 을 호출한다. 
+    public void getTransaction(String Tx_Hash) throws IOException {
+        Bytes txHash = new Bytes(Tx_Hash);
+        ConfirmedTransaction tx = iconService.getTransaction(txHash).execute();
+        System.out.println("transaction:" + tx);
+    }
+    // Transaction Hash 값을 통하여 Transaction의 결과를 호출한다. 
+    public void getTransactionResult(String TX_Hash) throws IOException {
+        Bytes txHash = new Bytes(TX_Hash);
+        TransactionResult tx = iconService.getTransactionResult(txHash).execute();
+        System.out.println("transaction: " + tx.getLogsBloom());
+        System.out.println("TransactionResult Status: " + tx.getStatus());
+    }
+
+~~~
+결과 
+
+~~~
+transaction: 0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+TransactionResult Status: 1
+
+~~~
+
+##### 파이썬 SDK로 실행
+
+
+~~~
+tx_hash="0xc27c3b0ecb8c3c689f134273b82a2af6f84ce76c0ebfa63542f7a0ae65b58336"
+icon_service.get_transaction_result(tx_hash)
+~~~
+
+결과 
+
+~~~
+{'txHash': '0xc27c3b0ecb8c3c689f134273b82a2af6f84ce76c0ebfa63542f7a0ae65b58336',
+ 'blockHeight': '0x1',
+ 'blockHash': '0x933d5018323cfca4951cc8f16ee407b5356d129fbe7ea6878a9bc4b715636cdb',
+ 'txIndex': '0x0',
+ 'to': 'hx4873b94352c8c1f3b2f09aaeccea31ce9e90bd31',
+ 'stepUsed': '0xf4240',
+ 'stepPrice': '0x2540be400',
+ 'cumulativeStepUsed': '0xf4240',
+ 'eventLogs': [],
+ 'logsBloom': '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
+ 'status': '0x1'}
+~~~
 
 
 
