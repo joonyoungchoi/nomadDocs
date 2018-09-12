@@ -855,19 +855,19 @@ Git의 코드를 다운로드하여 설치하는 방법은 아이콘이 지원�
 ```
 <dependencies>
 	<!-- icon-sdk를 위한 dependency -->
-  <dependency>
-  <groupId>foundation.icon</groupId>
-  <artifactId>icon-sdk</artifactId>
-  <version>0.9.1</version>
-  </dependency>
+  	<dependency>
+		<groupId>foundation.icon</groupId>
+		<artifactId>icon-sdk</artifactId>
+		<version>0.9.1</version>
+  	</dependency>
   
 	<!-- okhttp3를 위한 dependency -->
- <dependency>
-  <groupId>com.squareup.okhttp3</groupId>
-  <artifactId>logging-interceptor</artifactId>
-  <version>3.11.0</version>
-</dependency>
-  </dependencies>
+ 	<dependency>
+  		<groupId>com.squareup.okhttp3</groupId>
+  		<artifactId>logging-interceptor</artifactId>
+  		<version>3.11.0</version>
+	</dependency>
+</dependencies>
 ```
 
  ``` <dependencies> ``` 부터 ``` </dependencies> ``` 까지 내용을 붙여 넣습니다. 
@@ -879,40 +879,40 @@ logging-interceptor를 활용한 Log를 위하여 dependencies에 logging-interc
 
 ```   
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>java_icon</groupId>
-  <artifactId>java_icon</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>java_icon</groupId>
+	<artifactId>java_icon</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 
 
-<dependencies>
-	<!-- icon-sdk를 위한 dependency -->
-  <dependency>
-  <groupId>foundation.icon</groupId>
-  <artifactId>icon-sdk</artifactId>
-  <version>0.9.4</version>
-  </dependency>
+	<dependencies>
+		<!-- icon-sdk를 위한 dependency -->
+  		<dependency>
+  			<groupId>foundation.icon</groupId>
+  			<artifactId>icon-sdk</artifactId>
+  			<version>0.9.4</version>
+  		</dependency>
   
-	<!-- logging-interceptor를 위한 dependency -->
- <dependency>
-  <groupId>com.squareup.okhttp3</groupId>
-  <artifactId>logging-interceptor</artifactId>
-  <version>3.11.0</version>
-</dependency>
-  </dependencies>
+		<!-- logging-interceptor를 위한 dependency -->
+ 		<dependency>
+  			<groupId>com.squareup.okhttp3</groupId>
+  			<artifactId>logging-interceptor</artifactId>
+  			<version>3.11.0</version>
+		</dependency>
+  	</dependencies>
   
-  <build>
-    <sourceDirectory>src</sourceDirectory>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.7.0</version>
-        <configuration>
-          <release>10</release>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+		<plugin>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.7.0</version>
+			<configuration>
+			<release>10</release>
+			</configuration>
+		</plugin>
+		</plugins>
+	</build>
 </project>
 
 ```
@@ -1080,8 +1080,8 @@ Keystore 파일을 저장할 경우, 비밀번호를 통해서 Keystore 파일 �
 
 	출력 
 
-			주소 = hxcc61e31ed6080926d6d6f7d0ac6e1b8b2ee5a9fa
-			개인키 = 0x625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981
+		주소 = hxcc61e31ed6080926d6d6f7d0ac6e1b8b2ee5a9fa
+		개인키 = 0x625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981
 
 
 
@@ -1096,8 +1096,8 @@ Keystore 파일을 저장할 경우, 비밀번호를 통해서 Keystore 파일 �
 
 	출력
 
-			PK : 625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981
-			address : hxd4b792110d4be458e74fcab3cab1d820b04bc696
+		PK : 625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981
+		address : hxd4b792110d4be458e74fcab3cab1d820b04bc696
 
 		
 <br></br>
@@ -1591,10 +1591,11 @@ SCORE의 주소를 입력하여 SCORE의 api 목록을 호출합니다.
 #####  자바 SDK로 실행
 
 	   public void getScoreApi(String SCOREAddress) throws IOException {
-   	     Address scoreAddress = new Address(SCOREAddress);
-   	     List<ScoreApi> apis = iconService.getScoreApi(scoreAddress).execute();
-   	     System.out.println("apis:" + apis);
-   	     };
+   	     	Address scoreAddress = new Address(SCOREAddress);
+   	     	List<ScoreApi> apis = iconService.getScoreApi(scoreAddress).execute();
+   	     	System.out.println("apis:" + apis);
+	   };
+
  
 
 
@@ -1631,8 +1632,7 @@ api 서버와 연결되는 URL 주소에 httpclient 를 활용하여, OkHttpClie
 	public final String URL = "http://[node ip]/api/v3";    
 	private IconService iconService;
     public BasicGetMethods() {
-        OkHttpClient httpClient = new OkHttpClient.Builder()
-                .build();
+        OkHttpClient httpClient = new OkHttpClient.Builder().build();
         iconService = new IconService(new HttpProvider(httpClient, URL));
     }
 
