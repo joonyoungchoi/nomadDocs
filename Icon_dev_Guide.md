@@ -1534,7 +1534,7 @@ api 서버와 연결되는 URL 주소에 httpclient 를 활용하여, OkHttpClie
         iconService = new IconService(new HttpProvider(httpClient, URL));
     }
 
-지정된 Address 주소의 잔액을 리턴합니다.
+지정된 Address 주소의 잔액을 출력합니다.
 
 ~~~
     public void getBalance(String Address) throws IOException {
