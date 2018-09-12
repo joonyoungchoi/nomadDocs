@@ -822,7 +822,7 @@ Home Brew[<https://brew.sh>] 를 통하여 설치를 진행합니다.
 <br></br>
 
 ### 자바 SDK 설치하기
-자바를 활용하여 개발할 수 있도록 아이콘재단에서 공개한 자바SDK를 다운로드 받는 방법은 아래와 같이 두 가지 입니다.  
+자바를 활용하여 개발할 수 있도록 아이콘재단에서 공개한 자바SDK를 다운로드 받는 방법은 아래와 같이 세 가지 입니다.  
 
 	1. Git의 코드를 다운로드하여 설치하는 방법
 	2. Maven dependency 설정을 통한 다운로드 방법 (권장)
@@ -873,7 +873,7 @@ Git의 코드를 다운로드하여 설치하는 방법은 아이콘이 지원�
  ``` <dependencies> ``` 부터 ``` </dependencies> ``` 까지 내용을 붙여 넣습니다. 
  
 * 본 Sample Code에서는 
-logging-interceptor를 활용한 Log를 위하여 dependencies에 logging-interceptor도 추가하였습니다.(옵션입니다. )
+logging-interceptor를 활용한 Log를 위하여 dependencies에 logging-interceptor도 추가하였습니다.(옵션입니다.)
 
 * 예시 (POM.xml) // 현재 버전 0.9.4
 
@@ -933,15 +933,15 @@ logging-interceptor를 활용한 Log를 위하여 dependencies에 logging-interc
 #### 3. Gradle dependency setting
 
 	
-	만들어진 Gradle 패키지 안의 build.Gradle 파일에 아래와 같이 삽입한다. 
+	만들어진 Gradle 패키지 안의 build.Gradle 파일에 아래와 같이 삽입합니다.
 	
 
 ```
-    implementation 'foundation.icon:icon-sdk:0.9.3'
+    implementation 'foundation.icon:icon-sdk:0.9.5'
 ```
 
 
-* 예시 (build.Gradle) // 현재 버전 0.9.4
+* 예시 (build.Gradle) // 현재 버전 0.9.5
 	
 
 ```
@@ -973,12 +973,12 @@ dependencies {
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
     
-    implementation 'foundation.icon:icon-sdk:0.9.4'
+    implementation 'foundation.icon:icon-sdk:0.9.5'
     
 }
 ```
 
-위와 같이 dependency 설정을 마치면,  Refreash를 해 주어야 원격 아카이브에서 jar 파일을 다운받습니다. 
+위와 같이 dependency 설정을 마치면,  Refreash를 해주어야 원격 아카이브에서 jar 파일을 다운받습니다. 
 
 ```[생성된 패키지 우클릭 --> Gradle --> Refreash Gradle Project]```
 
@@ -986,7 +986,7 @@ dependencies {
 
 정상적으로 다운로드가 완료 되면, 프로젝트 내에 있는 
 ```[Project and External Dependencies]```에서 
-```icon-sdk-버전.jar```  가 다운로드 되어있는것을 확인 할 수 있습니다. 
+```icon-sdk-버전.jar```  가 다운로드 되어있는 것을 확인 할 수 있습니다. 
 
 
 
@@ -994,7 +994,7 @@ dependencies {
 
 
 # 4. SDK 활용하기
-현재 아이콘의 개발자 배포용 SDK는 파이썬, 자바 두 가지 종류가 있습니다. 개발자들을 위해서 Git을 통해 배포되고 있으며, 각각 언어들을 활용해 개발자들은 지갑을 만들거나, 내 지갑의 토큰 balnce 를 조회할 수 있습니다.
+현재 아이콘의 개발자 배포용 SDK는 파이썬, 자바 두 가지 종류가 있습니다. 개발자들을 위해서 Git을 통해 배포되고 있으며, 각각 언어들을 활용해 개발자들은 지갑을 만들거나, 내 지갑의 토큰 balance 를 조회할 수 있습니다.
 
 
 ## 지갑사용하기
@@ -1011,9 +1011,9 @@ dependencies {
 > 비밀번호와 Keystore 파일을 통하여 로드.
 
 #### wallet store (지갑저장)
-> Keystore파일을 경로와 비밀번호를 지정하여 저장.
+> Keystore 파일을 경로와 비밀번호를 지정하여 저장.
 
-Keystore파일을 저장할 경우, 비밀번호를 통해서 Keystore파일 내의 정보를 암호화합니다. 따라서, Keystore파일을 불러올 경우에는 저장할 때 입력했던 비밀번호를 통해서 복호화를 통하여 불러오게 됨으로, 저장할 경우에 사용하였던 비밀번호가 필수적으로 필요합니다. 지갑을 만들경우 생성되는 개인키는 토큰 또는 ICX를 전송할 때 사용됨으로, 반드시 본인이 별도로 보안이 유지되는 곳에 기록해 두어야 합니다. 각 언어별 예제는 아래 순서대로 안내되어 있습니다.
+Keystore 파일을 저장할 경우, 비밀번호를 통해서 Keystore 파일 내의 정보를 암호화합니다. 따라서, Keystore 파일을 불러올 경우에는 저장할 때 입력했던 비밀번호를 통해서 복호화를 통하여 불러오게 됨으로, 저장할 경우에 사용하였던 비밀번호가 필수적으로 필요합니다. 지갑을 만들경우 생성되는 개인키는 토큰 또는 ICX를 전송할 때 사용됨으로, 반드시 본인이 별도로 보안이 유지되는 곳에 기록해 두어야 합니다. 각 언어별 예제는 아래 순서대로 안내되어 있습니다.
 
 1. 자바 SDK로 지갑 만들기
 2. 파이썬 SDK로 지갑 만들기
@@ -1032,10 +1032,10 @@ Keystore파일을 저장할 경우, 비밀번호를 통해서 Keystore파일 내
     System.out.println("지갑 주소 : " +  
     wallet.getAddress());
     
-출력
+	출력
 
-    hx4873b94352c8c1f3b2f09aaeccea31ce9e90bd31
-    // 지갑 주소를 출력합니다
+		hx4873b94352c8c1f3b2f09aaeccea31ce9e90bd31
+		// 지갑 주소를 출력합니다
     
 *위 출력값은 예시입니다. 지갑마다 출력값은 달라집니다.*
 
@@ -1046,10 +1046,10 @@ Keystore파일을 저장할 경우, 비밀번호를 통해서 Keystore파일 내
 	wallet = KeyWallet.create()
 	wallet.get_address()
 
-출력
+	출력
 
-	Out[6]: 'hxfb87932482914ff8ecc750767242e1cbe8b8c41b'
-	## 지갑 주소를 출력합니다.
+		Out[6]: 'hxfb87932482914ff8ecc750767242e1cbe8b8c41b'
+		## 지갑 주소를 출력합니다.
 *위 출력값은 예시입니다. 지갑마다 출력값은 달라집니다.*
 
 
@@ -1062,43 +1062,42 @@ Keystore파일을 저장할 경우, 비밀번호를 통해서 Keystore파일 내
 
 ##### 1. private key 변수를 이용해 지갑을 로드합니다. 
 
-> privateKey를 통해 지갑을 불러들여 보고, 불러들인지갑의  privateKey를 출력해서 확인해 봅니다. iconex 크롬 익스텐션 또는 모바일 앱에서도 프라이빗 키를 확인할 수 있습니다. 
+> privateKey를 통해 지갑을 불러들여 보고, 불러들인 지갑의 privateKey를 출력해서 확인해 봅니다. iconex 크롬 익스텐션 또는 모바일 앱에서도 프라이빗 키를 확인할 수 있습니다. 
 
 * ##### 자바 SDK로 실행
 
 		//개인키를 사용하여 지갑을 불러옵니다. 
-		Bytes Personal_Key = new Bytes("625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981");
+		Bytes Private_Key = new Bytes("625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981");
 	    Wallet Localwallet = KeyWallet.load(Personal_Key);
 
 	    //불러온 지갑의 주소를 확인합니다.
-	    System.out.println("주소 = "+Localwallet);
+	    System.out.println("주소 = "+Localwallet.getAddress());
 
 	    //불러온 지갑의 개인키를 확인하여, 제대로 불러왔는지 확인합니다.
-	    System.out.println("개인키 = "+KeyWallet.load(Personal_Key).getPrivateKey());
+	    System.out.println("개인키 = "+KeyWallet.load(Private_Key).getPrivateKey());
 		
     	//
 
-결과 
+	출력 
 
-		주소 = hxcc61e31ed6080926d6d6f7d0ac6e1b8b2ee5a9fa
-		개인키 = 0x625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981
+			주소 = hxcc61e31ed6080926d6d6f7d0ac6e1b8b2ee5a9fa
+			개인키 = 0x625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981
 
 
 
 * ##### 파이썬 SDK로 실행
-
-key=bytes.fromhex("625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981")
-
+	
+		key=bytes.fromhex("625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981")
 		##개인키를 통해서 지갑 불러오기
 		wallet = wallet.load(key)
 		##불러온 지갑에서 개인키와 송금주소를 출력
 		print("PK : "+wallet.get_private_key());
 		print("address : "+wallet.get_address());
 
-출력
+	출력
 
-		PK : 625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981
-		address : hxd4b792110d4be458e74fcab3cab1d820b04bc696
+			PK : 625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981
+			address : hxd4b792110d4be458e74fcab3cab1d820b04bc696
 
 		
 <br></br>
@@ -1109,9 +1108,9 @@ key=bytes.fromhex("625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573
 * ##### 자바 SDK로 실행
 
 		File file = new File(destinationDirectory, store);
-    	//keystore file로 load, import한다.
+    	//keystore file로 load, import 합니다.
      	KeyWallet keyStoreLoad = KeyWallet.load(password, file);
-    	//위에서 생성한 keystore 파일과 비밀번호로 다시 로드 
+    	//위에서 생성한 keystore 파일과 비밀번호로 다시 load 합니다
 
 		System.out.println("keyStoreLoad address : " + 
 		keyStoreLoad.getAddress());
@@ -1119,7 +1118,7 @@ key=bytes.fromhex("625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573
 	출력
 
 		hx4873b94352c8c1f3b2f09aaeccea31ce9e90bd31
-		// 지갑주소를 리턴합니다.
+		// 지갑주소를 출력합니다.
 *위 출력값은 예시입니다. 지갑마다 출력값은 달라집니다.*
 
 * ##### 파이썬 SDK로 실행
@@ -1129,7 +1128,7 @@ key=bytes.fromhex("625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573
 	출력
 	
 		hx4873b94352c8c1f3b2f09aaeccea31ce9e90bd31
-		## 지갑주소를 리턴합니다.
+		## 지갑주소를 출력합니다.
 				
 *위 출력값은 예시입니다. 지갑마다 출력값은 달라집니다.*
 
@@ -1140,21 +1139,24 @@ key=bytes.fromhex("625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573
 ##### keyStore 파일이 저장될 경로를 지정하고 위에서 선언한 key의 password로 지갑을 저장합니다. 
 keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아이콘 크롬 확장프로그램 [지갑](<https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel>)에서는, 숫자, 문자, 특수문자를 모두 포함하여 9자 이상입니다. 현재 SDK상에서는 규약이 강제되어있지 않습니다. 보안성을 위해서는 아이콘 크롬 확장 프로그램에서와 같은 강제성이 부여되는것이 좋습니다.
  
-지갑을 저장하기 위해서는, 지갑 인스턴스를 불러들어야 합니다. 
-불러들인 지갑 인스턴스를 지정된 비밀번호로 암호화 하여 사용자가 원하는 위치에 keyStore파일로 저장합니다. 저장된 지갑은 T-bears, aws, SDK, [크롬확장프로그램](<https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel>)을 통해서 사용할 수 있습니다.
+지갑을 저장하기 위해서는, 지갑 인스턴스를 불러들여야 합니다. 
+불러들인 지갑 인스턴스를 지정된 비밀번호로 암호화 하여 사용자가 원하는 위치에 keyStore 파일로 저장합니다. 저장된 지갑은 T-Bears, aws, SDK, [크롬확장프로그램](<https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel>)을 통해서 사용할 수 있습니다.
 
 * ##### 자바 SDK로 실행
-		File destinationDirectory = new File("./keystore"); 
+
+		File destinationDirectory = new File("./"); 
 		//keyStore 파일 저장할 경로를 지정합니다. 
 		
 		String password = "qwer1234%"; // keysotre 파일의 password 
 		String store = KeyWallet.store(loadedKey, password, destinationDirectory);
 		//parameter : 로드한 지갑객체, 비밀번호 , 저장할 경로 
 		//성공시 저장된 key store file 의 파일명이 리턴됩니다. 
-		
-출력
 
-	Located in = ./UTC--2018-09-11T05-56-12.561512000Z--hxc9107883221a9edb20c8d4166db68520973bae8a.json
+		System.out.println("Located in = " + destinationDirectory + "/" + store);
+		
+	출력
+
+		Located in = ./UTC--2018-09-11T05-56-12.561512000Z--hxc9107883221a9edb20c8d4166db68520973bae8a.json
 
 		
 * ##### 파이썬 SDK로 실행
@@ -1171,14 +1173,14 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 
 
 ### 네트워크와 연결하기
-지갑은 로컬에서 네트워크와의 연결이 없어도 만들 수 있습니다. 하지만 트랜젝션을 보내는 작업은 T-Bears와 같은 ICON네트워크와 연결되어있어야 가능합니다. 네트워크는 아래 4가지가 존재합니다.
+지갑은 로컬에서 네트워크와의 연결이 없어도 만들 수 있습니다. 하지만 트랜젝션을 보내는 작업은 T-Bears와 같은 ICON네트워크와 연결되어 있어야 가능합니다. 네트워크는 아래 4가지가 존재합니다.
 
 		1. 메인넷
 		2. 테스트넷
 		3. 로컬넷
 		4. aws 네트워크
 
- 실제 트랜젝션을 발생시키고, 거래를 블록에 기입하기 위해서는 네트워크에 연결이 되어 있어야 합니다. 위의 4가지 네트워크의 유형중, 메인넷은 아이콘블록체인 네트워크의 메인 네트워크를 말하며, 테스트넷은 개발자들을 위해 오픈된 테스트 넷을 말합니다. 둘 다 현재는 오픈되어있지 않습니다. (2018/09/07기준) SDK 테스트는 앞선 1번에서 T-bears 를 활용하여 구축한 로컬 네트워크와 연결하여 진행하겠습니다. 네트워크와의 연결은 트랜젝션을 작성하고 노드에 보낼때 반드시 필요한 부분 이기 때문에, 아래의 [트랜젝션 보내기](### 트랜젝션 보내기)에 포함하겠습니다. 
+ 실제 트랜젝션을 발생시키고, 거래를 블록에 기입하기 위해서는 네트워크에 연결이 되어 있어야 합니다. 위의 4가지 네트워크의 유형 중 메인넷은 아이콘블록체인 네트워크의 메인 네트워크를 말하며, 테스트넷은 개발자들을 위해 오픈된 테스트 넷을 말합니다. 둘 다 현재는 오픈되어있지 않습니다. (2018/09/07기준) SDK 테스트는 앞선 1번에서 T-Bears 를 활용하여 구축한 로컬 네트워크와 연결하여 진행하겠습니다. 네트워크와의 연결은 트랜젝션을 작성하고 노드에 보낼때 반드시 필요한 부분 이기 때문에, 아래의 [트랜젝션 보내기](### 트랜젝션 보내기)에 포함하겠습니다. 
 
 <br></br>
 
@@ -1230,9 +1232,9 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 노드와의 연결 및 상세한 로그를 표출하기 위한 logger를 선언합니다. logger는 옵션이기 때문에 생략하셔도 됩니다.**[option]이라고 주석처리된 코드는 생략하셔도 됩니다.**
 
 		HttpLoggingInterceptor logging = new HttpLoggingInterceptor();  //[option]
-		//httpProvider 의 url의 정보를 가로채기위함입니다.
+		//httpProvider 의 url의 정보를 가로채기 위함입니다.
 	    logging.setLevel(HttpLoggingInterceptor.Level.BODY); //[option]
-   		OkHttpClient httpClient = new OkHttpClient.Builder() //로그  출력 
+   		OkHttpClient httpClient = new OkHttpClient.Builder() //로그 출력 
     			.addInterceptor(logging) // [option]
     			.build();
 
@@ -1248,10 +1250,10 @@ keyStore 파일을 저장한 경로를 정하고  그 경로에 저장되어있�
     	keyStoreLoad = KeyWallet.load(PASSWORD, file);  
     
 
-IXC 송금 하기
+ICX 송금 하기
 	
 	
-접속하려는 노드의 networkId값은 해당 네트워크의 제네시스 블록에 기록된 값을 기입해 줍니다. networkId는 네트워크를 구분 해 주는 확인자 중 하나이기 때문에 네트워크마다 다르지만, 1은 메인넷, 2는 테스트넷, 3번부터는 Custom Network 가 할당할 수 있습니다. [T-bears의 networkId는 기본 3번으로 할당되어 있습니다. ]
+접속하려는 노드의 networkId값은 해당 네트워크의 제네시스 블록에 기록된 값을 기입해 줍니다. networkId는 네트워크를 구분 해 주는 확인자 중 하나이기 때문에 네트워크마다 다르지만, 1은 메인넷, 2는 테스트넷, 3번부터는 Custom Network 가 할당할 수 있습니다. [T-Bears의 networkId는 기본 3번으로 할당되어 있습니다. ]
 	
 		BigInteger networkId = new BigInteger("3"); 
 		
@@ -1262,7 +1264,7 @@ IXC 송금 하기
 		//돈을 받을 주소
 
 
-송금할금액(ICX)을 정하고, stepLimit 과 timestamp, nonce 를 정해줍니다. 아이콘 네트워크의 전송은 내부적으로 Loop단위로 전송이 되게 됩니다. 따라서 전송될 때 에는 ICX를 Loop 로 계산하여 보내게 됩니다. ICX와 Loop의 비율은 아래와 같습니다. 
+송금할 금액(ICX)을 정하고, stepLimit 과 timestamp, nonce 를 정해줍니다. 아이콘 네트워크의 전송은 내부적으로 Loop단위로 전송이 되게 됩니다. 따라서 전송될 때 에는 ICX를 Loop 로 계산하여 보내게 됩니다. ICX와 Loop의 비율은 아래와 같습니다. 
 	
 							1 ICX = 1*10^(18) Loop 
 					
@@ -1317,7 +1319,7 @@ Transaction 결과 확인
 	
 		icon_service = IconService(HTTPProvider("http://localhost:9000/api/v3"))
 
-	ICX를 송금할 지갑의 프라이빗 키를 통해 지갑을 로드할 것 이므로, 지갑의 프라이빗 키를 선언하고, 지갑을 로드합니다. 
+	ICX를 송금할 지갑의 프라이빗 키를 통해 지갑을 로드할 것이므로, 지갑의 프라이빗 키를 선언하고, 지갑을 로드합니다. 
 	
 		key=UserPrivateKey
 		Loaded_wallet = KeyWallet.load(key)
@@ -1339,7 +1341,7 @@ Transaction 결과 확인
 		
 			signed_transaction = SignedTransaction(transaction, Loaded_wallet)
 			
-	전송된 트랜젝션의 결과확인 		
+	전송된 트랜젝션의 결과 확인 		
 	
 			tx_hash = icon_service.send_transaction(signed_transaction)
 			
@@ -1461,7 +1463,7 @@ content 파라미터에는 파일을 로드하여 삽입해 줍니다. 트랜젝
 
 # Block에서 정보 가지고 오기
 
-아이콘의 C-Rep 노드가 만들어내는 Block은 아래와 같은 정보를 지니고 있다. 블록은 각각의 TX를 지님과 동시에 블록을 만들어낸 피어의 ID, 이전 블록의 해시값인 PrevBlockHash와 같이, 많은 정보를 내포하고 있다. ICON에서 제공하는 자바, 파이썬 SDK를 활용하면, 특정 번호의 블럭을 혹은 가장 최근의 블록을 불러들여서 정보를 출력해 볼 수 있습니다. 
+아이콘의 C-Rep 노드가 만들어내는 Block은 아래와 같은 정보를 지니고 있습니다. 블록은 각각의 TX를 지님과 동시에 블록을 만들어낸 피어의 ID, 이전 블록의 해시값인 PrevBlockHash와 같이, 많은 정보를 내포하고 있습니다. ICON에서 제공하는 자바, 파이썬 SDK를 활용하면, 특정 번호의 블럭을 혹은 가장 최근의 블록을 불러들여서 정보를 출력해 볼 수 있습니다. 
 
  Block의 정보는 크게 두 가지로 나뉩니다. **Block을 불러들이지 않고 조회할 수 있는 데이터**와 **불러들인 Block에서 얻을 수 있는 데이터**입니다. 
 
@@ -1472,7 +1474,7 @@ content 파라미터에는 파일을 로드하여 삽입해 줍니다. 트랜젝
 		특정 주소의 Balance
 		현재 발행된 코인의 총 수 
 		현재 블록의 높이
-		SCOREAddress를 통해서 SCORE API를 호출한다.
+		SCOREAddress를 통해서 SCORE API를 호출합니다.
 
  <br></br>
 
@@ -1499,7 +1501,7 @@ content 파라미터에는 파일을 로드하여 삽입해 줍니다. 트랜젝
       블럭에 포함되어있는 Transaction들 
       Transactions
       
-      해싱되어 서명된  데이터
+      해싱되어 서명된 데이터
       Signature
 
 <br></br>
