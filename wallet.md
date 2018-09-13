@@ -42,14 +42,19 @@ wallet = KeyWallet.create()
 Example
 ``` 
 # PrivateKey 지갑 가져오기
-key=UserPrivateKey
+key = bytes.fromhex(UserPrivateKey)
 wallet = KeyWallet.load(key)
 
 # Keystore 파일로 지갑 가져오기
 wallet = KeyWallet.load("./keystore", "password")
 ```
 
-#### 지갑(keystore파일) 내보내기
+#### 지갑(keystore파일) 내보내기(저장)
+
+Example
+```
+wallet.store("경로","비밀번호")
+```
 
 
 
@@ -66,7 +71,28 @@ wallet = KeyWallet.create()
 
 Example
 ``` 
-wallet = KeyWallet.create()
+// PrivateKey 지갑 가져오기
+Bytes key = new Bytes(UserPrivateKey)
+Wallet wallet = KeyWallet.load(key);
+
+// Keystore 파일로 지갑 가져오기
+// 불러올 Keystore 파일 경로 
+File file = new File(destinationDirectory, store);
+KeyWallet keyStoreLoad = KeyWallet.load(password, file);
+```
+
+
+#### 지갑(keystore파일) 내보내기(저장)
+
+Example
+```
+// keyStore 파일 저장할 경로를 지정합니다.
+File destinationDirectory = new File("./"); 
+
+// keysotre 파일의 password 
+String password = ""; 
+   
+store = KeyWallet.store(loadedKey, password, destinationDirectory);
 ```
 
 
@@ -92,15 +118,10 @@ Create Wallet 클릭 지갑생성
 2. 지갑 이름 및 비밀번호 설정
 ![img003](./img/iconex003.png)
 <br><br>
-3. 지갑 백업(keystore) 다운
-<br>
-지갑을 백업 합니다.<br>
-keystore 파일은 지갑을 불러 올 때 쓰입니다.
+3. 지갑 백업(keystore) 다운<br>지갑을 백업 합니다파일은 지갑을 불러 올 때 쓰입니다.
 ![img004](./img/iconex004.png)
 <br><br>
-4. 지갑 privatekey 확인
-<br>
-privatekey 는 지갑을 불러 올 때 쓰입니다.
+4. 지갑 privatekey 확인<br>privatekey 는 지갑을 불러 올 때 쓰입니다.
 ![img005](./img/iconex005.png)
 
 
@@ -108,5 +129,6 @@ privatekey 는 지갑을 불러 올 때 쓰입니다.
 
 Load Wallet 클릭 지갑 불러오기
 <br><br>
-keystore 파일을 이용하는 Select wallet file 방식과<br> privatekey를 이용하는 Enter Private Key 방식 중 선택할수있습니다.
+
+1. keystore 파일을 이용하는 Select wallet file 방식과<br>privatekey를 이용하는 Enter Private Key 방식 중 선택할수있습니다.
 ![img006](./img/iconex006.png)
