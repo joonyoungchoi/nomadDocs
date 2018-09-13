@@ -2,7 +2,7 @@ ICON Dev Guide
 ==============
 아이콘은 아이콘 재단의 블록체인입니다.
 본 문서에서는 아이콘의 개발자용 툴인 T-Bears 와, 아이콘에서 제공하는 파이썬 SDK, 자바 SDK를 활용하여 기초적인 개발을 도와주는 Guide입니다.
-따라하기 쉬운 Sample 코드를 활용하여 주어진 상황별로 튜토리얼을 진행해 봅니다. 본가이드는 아래의 아이콘 github의 내용을 기반으로 작성되었습니다.
+따라하기 쉬운 Sample 코드를 활용하여 주어진 상황별로 튜토리얼을 진행해 봅니다. 본 가이드는 아래의 아이콘 github의 내용을 기반으로 작성되었습니다.
 
 <br></br>
 아이콘 홈페이지 : <https://icon.foundation/?lang=ko>. 
@@ -92,7 +92,7 @@ ICON Dev Guide
 	* [간단한 조회 해 보기](#간단한-조회-해-보기)
 	 
 	* [불러온 Block에서-정보-불러오기](#block에서-정보-불러오기)
-		* 1. 특정 주소의 Balance 호출하기
+		* 1.특정 주소의 Balance 호출하기
 		* 2.현재 발행된 코인의 총 수 호출하기
 		* 3.score주소를 통해서 score api를 모두 호출하기
 		
@@ -110,7 +110,7 @@ ICON Dev Guide
 ---
 # T-Bears 소개
 *T-Bears*는 *ICON*의 개발자용 CLI 로컬 테스트 개발툴입니다.
-*ICON* 네트워크는 *JSON-RPC* 방식으로 통신합니다. *T-Bears*는 로컬에서 *localhostJSON-RPC* 응답을 지원하는 개발툴입니다. 
+*ICON* 네트워크는 *JSON-RPC* 방식으로 통신하며, *T-Bears*는 로컬에서 *localhostJSON-RPC* 응답을 지원합니다.
 현재, [GitHub](https://github.com/icon-project/t-bears.git)에 소스가 공개 되어있으며, 사용을 원하는 개발자는 언제든 다운로드 받아 사용할 수 있습니다.
 
 ---
@@ -324,7 +324,7 @@ __init__.py  myproject.py package.json
 
 > `package.json` : SCORE가 로드 되었을때 필요한 정보를 가지고 있으며, "main_file" 와 "main_class" 를 필요로 합니다.
 
-생성된 프로젝트를 T-Bears 서비스에 배포합니다. (tbears deploy의 경우 tbears start를 통해 T-Bears 서비스가 가동 중인 상태에서만 가능합니다.)
+생성된 프로젝트를 T-Bears 서비스에 배포합니다. (`-u` 옵션을 적용하지 않을 경우, 디폴트 값으로 `http://127.0.0.1:9000/api/v3` 가지며, 따라서 예제의 tbears deploy의 경우 tbears start를 통해 T-Bears 서비스가 가동 중인 상태에서만 가능합니다.)
 ```
 tbears deploy myproject
 ```
@@ -491,7 +491,7 @@ transaction hash: 0xb6c94d6b05999bedcdbe45a162ea27d52e71797293f158dd0ef4ea519731
 
 > `to` : 메시지를 처리할 SCORE 주소를 의미합니다.
 
-> `data.method` : `tbears scoreapi` 명령을 통해 `scoreAddress` 를 입력으로 하여 `method` 에 들어갈 메소드명을 통해 확인할 수 있습니다.
+> `data.method` : `tbears scoreapi` 명령을 통해 `scoreAddress` 를 입력으로 하여 `method` 에 들어갈 메소드를 확인할 수 있습니다.
 
 > `data.params` : 호출하는 메소드가 필요로 하는 파라미터를 의미합니다. (optional)
 
@@ -582,9 +582,9 @@ response : {
     "to": "hxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     "dataType": "call",
     "data": {
-      "method": "setValue",
+      "method": "method to invoke",
       "params": {
-        "value": "0x123"
+        "key": "value"
       }
     }
   },
@@ -618,7 +618,8 @@ tbears keystore key
 ```
 출력
 ```
-input your keystore password:
+Input your keystore password:
+Retype your keystore password:
 Made keystore file successfully
 ```
 트랜잭션을 요청합니다.('-k' 옵션을 통해 생성한 keystore 파일을 적용합니다.)
@@ -673,13 +674,18 @@ ICX를 보내기 위해 먼저 keystore 파일을 통해 지갑의 주소를 확
 
 Test Account에서 나의 지갑으로 1 icx를 보냅니다. (`tbears transfer`의 전송 단위는 1 loop이며 1 icx = 10 ^ 18 loop 입니다.)
 ```
-tbears transfer -f hxe7af5fcfd8dfc67530a01a0e403882687528dfcb hx408a524b9400991184b4130bdf98a6a7aa5af3e6 1e18
+tbears transfer -k keystore_test1 -f hxe7af5fcfd8dfc67530a01a0e403882687528dfcb hx408a524b9400991184b4130bdf98a6a7aa5af3e6 1e18
 ```
+> `keystore_test1` : Test Account의 정보를 가지는 keystore 파일입니다. (*비밀번호* : *'test1_Account'*)
+
 출력
 ```
+Input your keystore password:
 Send transfer request successfully.
 transaction hash: 0x33f4c69eabf45ab62f216e7498e01b3c684324543fa92b8b9a3c288d340813c8
 ```
+> 이전에 `tbears start` 를 통해 *T-Bears* 서비스를 실행했다면, `-k` 옵션을 '생략' 또는 '부적절한 입력' 하더라도 *T-Bears* 자체가 에뮬레이터를 돌리는 것이므로 트랜잭션이 성공합니다.
+
 <br></br>
 *5.2 ICX 잔고 확인하기* 
 
