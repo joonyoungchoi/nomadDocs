@@ -2,13 +2,19 @@ wallet
 ==============
 
 ## wallet
-지갑은 ICON에 중요한 역할을합니다. 지갑에는 잔액 및 지갑정보가 들어있습니다. 지갑 상태는 블록에 저장되면 지갑은 ICON 이용에 필수적인 기능입니다.
+계정은 ICON에 중요한 역할을합니다. 계정에는 두 가지 종류의 계정이 있습니다. 일반적인 사용자가 소유한 외부 소유 계정인 Externally Owned Account (EOA)와 계약계정 Contract Account (CA)입니다
+여기에서는 EOA에 초점을 맞추고 간단히 지갑이라고 생각할 수 있습니다.
+지갑에는 잔액 및 지갑정보가 들어있습니다. 지갑 상태는 블록에 저장되면 지갑은 ICON 이용에 필수적인 기능입니다.
 지갑은 암호화를 사용하여 안전한 보안을 보장합니다.
 
-## Keyfiles
-Keyfiles은 private key(개인키), public key(공개키)로 정의되어있습니다 Keyfiles은 JSON형식으로 만들어져 있어 텍스트 편집기를 이용하여
-확인할 수 있습니다 Keyfiles 암호화 되어 파일 생성시 등록한 암호로 이용할 수 있습니다.<br>정기적으로 keyfiles을 백업하는 행동이 크게 도움이 될 것입니다.<br>
-<br>Keyfiles을 만드는것은 지갑을 만드는 것과 같습니다.
+## keystore(keyfiles)
+keystore는 private key(개인키), public key(공개키)로 정의되어있습니다 keystore는 JSON형식으로 만들어져 있어 텍스트 편집기를 이용하여
+확인할 수 있습니다 keystore는 암호화 되어 파일 생성시 등록한 암호로 이용할 수 있습니다.<br>정기적으로 keystore를 백업하는 행동이 크게 도움이 될 것입니다.<br>
+본인을 확인하는 방벙으로 keystore 사용합니다. keystore 생성할 때 입력했던 비밀번호를 통해 본인 확인을 하고 지갑에 접근할 수 있게 됩니다
+keystore를 생성시 등록한 비밀번호를 복호화 하여 Private Key를 알 수 있습니다.
+<br>
+
+keystore를 만드는것은 지갑을 만드는 것과 같습니다.
 
 ## T-bears 사용하기
 
@@ -23,7 +29,6 @@ tbears keystore [keystore name]
 
 Input your keystore password : 패스워드 입력
 Retype your keystore password : 패스워드 확인
-
 ```
 result
 ```
