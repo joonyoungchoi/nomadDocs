@@ -92,14 +92,13 @@ Create Wallet 클릭 지갑생성
 2. 지갑 이름 및 비밀번호 설정
 ![img003](./img/iconex003.png)
 <br><br>
-3. 지갑 백업(keystore) 다운<br>
-
-지갑을 백업 합니다.
-keystore 파일은 지갑을 불러 올 때 쓰입니다.
+3. 지갑 백업(keystore) 다운
+<br>
+지갑을 백업 합니다. keystore 파일은 지갑을 불러 올 때 쓰입니다.
 ![img004](./img/iconex004.png)
 <br><br>
-4. 지갑 privatekey 확인<br>
-
+4. 지갑 privatekey 확인
+<br>
 privatekey 는 지갑을 불러 올 때 쓰입니다.
 ![img005](./img/iconex005.png)
 
