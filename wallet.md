@@ -80,5 +80,5 @@ GUI 기반의 구글 크롬 확장 프로그램입니다.
 
 1. [ICONex 설치](<https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel>)
 
-![img001](./0912#1.png)
+![img001](./img/iconex001.png)
 
