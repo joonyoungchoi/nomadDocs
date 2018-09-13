@@ -437,14 +437,14 @@ tbears genconf (명령어 실행 후 생성된 설정 파일 중 tbears_cli_conf
 
 > `from` : "From" 주소를 의미합니다. keyStore가 설정되어 있을 경우 keyStore의 설정을 따릅니다.
 
-> `to` : "To" 주소를 의미합니다.
+> `to` : "To" 주소를 의미합니다. `deploy.mode`가 `install`일 경우 생략 가능하며, `deploy.mode`가 `install`이나 생략하지 않을 경우 scoreAddress를 `cx0000~` 으로 설정하여야 합니다.
 
 > `stepLimit` : 디폴트 값으로 0x3000000를 가지며, stepLimit 값을 의미합니다. (optional)
 
 > `deploy` : deploy 명령을 위한 설정을 의미합니다.
 
 > `deploy.mode` : 배포 모드를 의미하며 "install" 과 "update" 중 선택할 수 있습니다.
->+ "install" : 새로운 SCORE를 배포합니다.
+>+ "install" : 새로운 SCORE를 배포합니다. `to` 의 값이 `cx0000~`로 설정되어야 합니다.
 >+ "update" : 기존에 배포된 SCORE를 업데이트 합니다.
 
 > `deploy.scoreParams` : SCORE를 배포하는 경우에 install 또는 update에 필요한 파라미터를 의미합니다. 필요한 파라미터의 경우 SCORE파일의 on_install() 또는 on_update() 메소드를 통해 확인할 수 있습니다.
