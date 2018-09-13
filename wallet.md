@@ -6,6 +6,9 @@ wallet
 지갑은 암호화를 사용하여 안전한 보안을 보장합니다.
 
 ## Keyfiles
+Keyfiles은 private key(개인키), public key(공개키)로 정의되어있습니다 Keyfiles은 JSON형식으로 만들어져 있어 텍스트 편집기를 이용하여
+확인할 수 있습니다 Keyfiles 암호화 되어 파일 생성시 등록한 암호로 이용할 수 있습니다.<br>정기적으로 keyfiles을 백업하는 행동이 크게 도움이 될 것입니다.<br>
+<br>Keyfiles을 만드는것은 지갑을 만드는 것과 같습니다.
 
 ## T-bears 사용하기
 
@@ -132,3 +135,14 @@ Load Wallet 클릭 지갑 불러오기
 
 1. keystore 파일을 이용하는 Select wallet file 방식과<br>privatekey를 이용하는 Enter Private Key 방식 중 선택할수있습니다.
 ![img006](./img/iconex006.png)
+
+
+## 지갑 백업 및 복원
+
+### keyfiles 이용
+keyfiles이 있으면 백업과 복원이 자유롭습니다. keyfiles을 소유하고있으면 언제라도 백업과 복원이 가능합니다<br>
+keyfiles이용하여 지갑을 불러올시 사용자가 지정한 비밀번호가 필요합니다.
+
+### Privatekey 이용
+PrivateKey는 16진수로 인코딩 된 바이트로 암호화 되지않는 개인키를 포함하고 있습니다.<br>
+PrivateKey를 이용하여 지갑을 불러올 수 있습니다.
