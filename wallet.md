@@ -68,17 +68,45 @@ Example
 ``` 
 wallet = KeyWallet.create()
 ```
-result
-```
 
-```
 
 
 ## ICONex 사용하기
 GUI 기반의 구글 크롬 확장 프로그램입니다.
 
 
-1. [ICONex 설치](<https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel>)
+[ICONex 설치](<https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel>)
+
 
 ![img001](./img/iconex001.png)
 
+<br><br><br>
+### Create Wallet
+
+Create Wallet 클릭 지갑생성
+<br><br>
+
+1. 코인 선택
+![img002](./img/iconex002.png)
+<br><br>
+2. 지갑 이름 및 비밀번호 설정
+![img003](./img/iconex003.png)
+<br><br>
+3. 지갑 백업(keystore) 다운
+<br>
+지갑을 백업 합니다.<br>
+keystore 파일은 지갑을 불러 올 때 쓰입니다.
+![img004](./img/iconex004.png)
+<br><br>
+4. 지갑 privatekey 확인
+<br>
+privatekey 는 지갑을 불러 올 때 쓰입니다.
+![img005](./img/iconex005.png)
+
+
+### Load Wallet
+
+Load Wallet 클릭 지갑 불러오기
+<br><br>
+keystore 파일을 이용하는 Select wallet file 방식과<br> privatekey를 이용하는 Enter Private Key 방식 중 선택할수있습니다.
+![img006](./img/iconex006.png)
