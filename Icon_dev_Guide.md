@@ -1011,18 +1011,20 @@ dependencies {
 #### wallet create (지갑생성)
 >지갑을 임의로 생성.
 
+
+#### wallet store (지갑저장)
+> Keystore 파일을 경로와 비밀번호를 지정하여 저장.
+
+
 #### wallet load (지갑로드)
 > Private Key를 통하여 지갑을 로드.
 
 > 비밀번호와 Keystore 파일을 통하여 로드.
 
-#### wallet store (지갑저장)
-> Keystore 파일을 경로와 비밀번호를 지정하여 저장.
+Keystore 파일을 저장할 경우, 비밀번호를 통해서 Keystore 파일 내의 정보를 암호화합니다. 따라서, Keystore 파일을 불러올 경우에는 저장할 때 입력했던 비밀번호를 사용하여 복호화 하게 됨으로, 저장시 사용하였던 비밀번호가 필수적으로 필요합니다. 지갑을 만들경우 생성되는 개인키는 토큰 또는 ICX를 전송할 때 사용됨으로, 반드시 본인이 별도로 보안이 유지되는 곳에 기록해 두어야 하며, 유출을 주의하여야 합니다. 각 언어별 예제는 아래 순서대로 안내되어 있습니다.
 
-Keystore 파일을 저장할 경우, 비밀번호를 통해서 Keystore 파일 내의 정보를 암호화합니다. 따라서, Keystore 파일을 불러올 경우에는 저장할 때 입력했던 비밀번호를 통해서 복호화를 통하여 불러오게 됨으로, 저장할 경우에 사용하였던 비밀번호가 필수적으로 필요합니다. 지갑을 만들경우 생성되는 개인키는 토큰 또는 ICX를 전송할 때 사용됨으로, 반드시 본인이 별도로 보안이 유지되는 곳에 기록해 두어야 합니다. 각 언어별 예제는 아래 순서대로 안내되어 있습니다.
-
-1. 자바 SDK로 지갑 만들기
-2. 파이썬 SDK로 지갑 만들기
+	1. 자바 SDK로 지갑 만들기
+	2. 파이썬 SDK로 지갑 만들기
 
 <br></br>
 
@@ -1033,31 +1035,69 @@ Keystore 파일을 저장할 경우, 비밀번호를 통해서 Keystore 파일 �
 
 * ##### 자바 SDK로 실행
 
-	wallet = KeyWallet.create()
-     
-    System.out.println("지갑 주소 : " +  
-    wallet.getAddress());
-    
-	출력
 
-		hx4873b94352c8c1f3b2f09aaeccea31ce9e90bd31
+		KeyWallet KeyWallet = foundation.icon.icx.KeyWallet.create();
+		System.out.println("지갑 주소 : " +  KeyWallet.getAddress());
+
+
+	실행결과
+
+		지갑 주소 : hx159afb011f442cefc9cd07ef15748877aeeedb32
 		// 지갑 주소를 출력합니다
     
 *위 출력값은 예시입니다. 지갑마다 출력값은 달라집니다.*
 
 * ##### 파이썬 SDK로 실행
 
-	from iconsdk.wallet.wallet import KeyWallet
+		from iconsdk.wallet.wallet import KeyWallet
 
-	wallet = KeyWallet.create()
-	wallet.get_address()
+		wallet = KeyWallet.create()
+		wallet.get_address()
 
-	출력
+	실행결과
 
 		Out[6]: 'hxfb87932482914ff8ecc750767242e1cbe8b8c41b'
 		## 지갑 주소를 출력합니다.
+		
 *위 출력값은 예시입니다. 지갑마다 출력값은 달라집니다.*
 
+<br></br>
+
+**wallet store (지갑저장)**	
+##### keyStore 파일이 저장될 경로를 지정하고, 불러들여진 지갑 인스턴스를 입력한 password로 암호화하여 저장합니다. 
+keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아이콘 크롬 확장프로그램 [지갑](<https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel>)에서는, 숫자, 문자, 특수문자를 모두 포함하여 9자 이상입니다. 현재 SDK상에서는 규약이 강제되어있지 않습니다. 보안성을 위해서는 아이콘 크롬 확장 프로그램에서와 같은 강제성이 부여되는것이 좋습니다.
+ 
+지갑을 저장하기 위해서는 지갑 인스턴스를 불러들여야 합니다. 
+저장된 지갑은 T-Bears, aws, SDK, [크롬확장프로그램](<https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel>)을 통해서 사용할 수 있습니다.
+
+* ##### 자바 SDK로 실행
+
+		//keyStore 파일 저장할 경로를 지정합니다. 
+		File destinationDirectory = new File("./"); 
+
+		// keysotre 파일의 password
+		String password = "qwer1234%";  
+	
+		// KeyWallet.create() 를 사용하여, 새로 만들어낸 지갑을 저장하였습니다.
+		// 불러들인 지갑도 저장할 수 있습니다. 
+		String store = KeyWallet.store(KeyWallet.create(), password, destinationDirectory);	
+		//parameter : 로드한 지갑객체, 비밀번호 , 저장할 경로 
+		//성공시 저장된 key store file 의 파일명이 리턴됩니다. 
+	
+		System.out.println("Located in = " + destinationDirectory + "/" + store);
+		
+	실행결과
+
+		Located in = ./UTC--2018-09-13T03-12-16.955572000Z--hxa7e9954ab1d6a2b2faacf5af8b8bbec17ce5c8c8.json
+
+
+		
+* ##### 파이썬 SDK로 실행
+
+
+
+		made_wallet=wallet.KeyWallet.create()
+		made_wallet.store("/Users/nc0201020/Desktop/makekeystore","User_password123")
 
 
 
@@ -1071,20 +1111,19 @@ Keystore 파일을 저장할 경우, 비밀번호를 통해서 Keystore 파일 �
 > privateKey를 통해 지갑을 불러들여 보고, 불러들인 지갑의 privateKey를 출력해서 확인해 봅니다. iconex 크롬 익스텐션 또는 모바일 앱에서도 프라이빗 키를 확인할 수 있습니다. 
 
 * ##### 자바 SDK로 실행
-
+		
 		//개인키를 사용하여 지갑을 불러옵니다. 
 		Bytes Private_Key = new Bytes("625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981");
-	    Wallet Localwallet = KeyWallet.load(Personal_Key);
+		Wallet Localwallet = KeyWallet.load(Private_Key);
 
-	    //불러온 지갑의 주소를 확인합니다.
-	    System.out.println("주소 = "+Localwallet.getAddress());
+		//불러온 지갑의 주소를 확인합니다.
+		System.out.println("주소 = "+Localwallet.getAddress());
 
-	    //불러온 지갑의 개인키를 확인하여, 제대로 불러왔는지 확인합니다.
-	    System.out.println("개인키 = "+KeyWallet.load(Private_Key).getPrivateKey());
-		
-    	//
+		//불러온 지갑의 개인키를 확인하여, 제대로 불러왔는지 확인합니다.
+		System.out.println("개인키 = "+KeyWallet.load(Private_Key).getPrivateKey());
 
-	출력 
+
+	실행결과 
 
 		주소 = hxcc61e31ed6080926d6d6f7d0ac6e1b8b2ee5a9fa
 		개인키 = 0x625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981
@@ -1100,7 +1139,7 @@ Keystore 파일을 저장할 경우, 비밀번호를 통해서 Keystore 파일 �
 		print("PK : "+wallet.get_private_key());
 		print("address : "+wallet.get_address());
 
-	출력
+	실행결과 
 
 		PK : 625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981
 		address : hxd4b792110d4be458e74fcab3cab1d820b04bc696
@@ -1113,25 +1152,42 @@ Keystore 파일을 저장할 경우, 비밀번호를 통해서 Keystore 파일 �
 
 * ##### 자바 SDK로 실행
 
-		File file = new File(destinationDirectory, store);
-    	//keystore file로 load, import 합니다.
-     	KeyWallet keyStoreLoad = KeyWallet.load(password, file);
-    	//위에서 생성한 keystore 파일과 비밀번호로 다시 load 합니다
-
+		String destinationDirectory = "./Key/";
+		String password = "qwer1234%";
+		File file = new File(destinationDirectory);
+		String Firstfile = file.list()[0];
+		System.out.println("첫번째 파일명 : "+Firstfile);
+		
+		//Key경로 내의 첫 번째 지갑 파일을 불러들인 후, 로드합니다. 
+		KeyWallet keyStoreLoad = KeyWallet.load(password, new File(destinationDirectory+Firstfile));
+		
+		
+		//위에서 불러들인 키스토어의 주소를 출력합니다. 
 		System.out.println("keyStoreLoad address : " + 
 		keyStoreLoad.getAddress());
 		
-	출력
+		//위에서 불러들인 키스토어의 개안키를 출력합니다. 
+		System.out.println("keyStoreLoad PrivateKey : " + 
+		keyStoreLoad.getPrivateKey());
 
-		hx4873b94352c8c1f3b2f09aaeccea31ce9e90bd31
-		// 지갑주소를 출력합니다.
+
+		
+	실행결과 
+
+		첫번째 파일명 : UTC--2018-09-13T03-12-16.955572000Z--hxa7e9954ab1d6a2b2faacf5af8b8bbec17ce5c8c8.json
+		keyStoreLoad address : hxa7e9954ab1d6a2b2faacf5af8b8bbec17ce5c8c8
+		keyStoreLoad address : 0x00fae633e794bdb2b6a3f7e8dad200326fc3f6d097722455ebc936bed7fb4c0130
+
+
+		
 *위 출력값은 예시입니다. 지갑마다 출력값은 달라집니다.*
 
 * ##### 파이썬 SDK로 실행
 		##password와 keystore의 위치를 통해 KeyWallet.load을 불러들입니다. 
 		wallet = KeyWallet.load("./keystore", "password")
 		print(wallet.get_address())
-	출력
+		
+	실행결과 
 	
 		hx4873b94352c8c1f3b2f09aaeccea31ce9e90bd31
 		## 지갑주소를 출력합니다.
@@ -1139,44 +1195,6 @@ Keystore 파일을 저장할 경우, 비밀번호를 통해서 Keystore 파일 �
 *위 출력값은 예시입니다. 지갑마다 출력값은 달라집니다.*
 
 <br></br>
-
-
-**wallet store (지갑저장)**	
-##### keyStore 파일이 저장될 경로를 지정하고 위에서 선언한 key의 password로 지갑을 저장합니다. 
-keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아이콘 크롬 확장프로그램 [지갑](<https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel>)에서는, 숫자, 문자, 특수문자를 모두 포함하여 9자 이상입니다. 현재 SDK상에서는 규약이 강제되어있지 않습니다. 보안성을 위해서는 아이콘 크롬 확장 프로그램에서와 같은 강제성이 부여되는것이 좋습니다.
- 
-지갑을 저장하기 위해서는, 지갑 인스턴스를 불러들여야 합니다. 
-불러들인 지갑 인스턴스를 지정된 비밀번호로 암호화 하여 사용자가 원하는 위치에 keyStore 파일로 저장합니다. 저장된 지갑은 T-Bears, aws, SDK, [크롬확장프로그램](<https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel>)을 통해서 사용할 수 있습니다.
-
-* ##### 자바 SDK로 실행
-
-		File destinationDirectory = new File("./"); 
-		//keyStore 파일 저장할 경로를 지정합니다. 
-		
-		String password = "qwer1234%"; // keysotre 파일의 password 
-		String store = KeyWallet.store(loadedKey, password, destinationDirectory);
-		//parameter : 로드한 지갑객체, 비밀번호 , 저장할 경로 
-		//성공시 저장된 key store file 의 파일명이 리턴됩니다. 
-
-		System.out.println("Located in = " + destinationDirectory + "/" + store);
-		
-	출력
-
-		Located in = ./UTC--2018-09-11T05-56-12.561512000Z--hxc9107883221a9edb20c8d4166db68520973bae8a.json
-
-		
-* ##### 파이썬 SDK로 실행
-
-
-
-		made_wallet=wallet.KeyWallet.create()
-		made_wallet.store("/Users/nc0201020/Desktop/makekeystore","User_password123")
-
-
-		
-
-<br></br>
-
 
 ### 네트워크와 연결하기
 지갑은 로컬에서 네트워크와의 연결이 없어도 만들 수 있습니다. 하지만 트랜젝션을 보내는 작업은 T-Bears와 같은 ICON네트워크와 연결되어 있어야 가능합니다. 네트워크는 아래 4가지가 존재합니다.
@@ -1186,7 +1204,7 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 		3. 로컬넷
 		4. aws 네트워크
 
- 실제 트랜젝션을 발생시키고, 거래를 블록에 기입하기 위해서는 네트워크에 연결이 되어 있어야 합니다. 위의 4가지 네트워크의 유형 중 메인넷은 아이콘블록체인 네트워크의 메인 네트워크를 말하며, 테스트넷은 개발자들을 위해 오픈된 테스트 넷을 말합니다. 둘 다 현재는 오픈되어있지 않습니다. (2018/09/07기준) SDK 테스트는 앞선 1번에서 T-Bears 를 활용하여 구축한 로컬 네트워크와 연결하여 진행하겠습니다. 네트워크와의 연결은 트랜젝션을 작성하고 노드에 보낼때 반드시 필요한 부분 이기 때문에, 아래의 [트랜젝션 보내기](### 트랜젝션 보내기)에 포함하겠습니다. 
+ 실제 트랜젝션을 발생시키고, 거래를 블록에 기입하기 위해서는 네트워크에 연결이 되어 있어야 합니다. 위의 4가지 네트워크의 유형 중 메인넷은 아이콘블록체인 네트워크의 메인 네트워크를 말하며, 테스트넷은 개발자들을 위해 오픈된 테스트 넷을 말합니다. 둘 다 현재는 오픈되어있지 않습니다. (2018/09/07기준) SDK 테스트는 앞선 1번에서 T-Bears 를 활용하여 구축한 로컬 네트워크와 연결하여 진행하겠습니다. 네트워크와의 연결은 트랜젝션을 작성하고 노드에 보낼때 반드시 필요한 부분 이기 때문에, 아래의 [트랜젝션 만들어보기](#트랜젝션-만들어보기)에 포함하겠습니다. 
 
 <br></br>
 
@@ -1201,6 +1219,9 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 		4. SCORE를 Deploy 하는 트랜젝션
 
 각기 트랜젝션은 서버에 json 형식으로 전송이 되며, 서버는 해당 트랜젝션을 받아 블록에 트랜젝션 해시값을 기입함 으로서 사용자가 전송한 트랜젝션이 블록에 기입됩니다. 
+
+
+* ### 실습 해 볼 내용
 
 	1. 지갑만들기에서 만든 지갑을 불러와서 다른 지갑으로 ICX를 보내보고 결과 확인하기
 	2. SCORE의 함수를 호출하고, 결과를 받습니다.
@@ -1222,19 +1243,17 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 	    public final String URL = "http://[node ip]/api/v3"; 
     
 		// icx를 전송할때 필요한 객체를 선언합니다.
-	    private IconService iconService;
-	    private KeyWallet wallet;
-	    private KeyWallet keyStoreLoad;
+		IconService iconService;
+		KeyWallet keyStoreLoad;
 
-지갑을 로드할때 필요한 변수를 선언합니다.
- 
-	    public static final String 
-	    PRIVATE_KEY_STRING =  "----------";
-	    
-	    //프라이빗 키에 해당하는 지갑 Address 주소
-	    public static final String ADDRESS = "hx------------------";
-	    public static final String PASSWORD = "Password";
 
+지갑을 로드할때 필요한 변수를 선언하고, 개인키를 사용해서 지갑을 로드합니다. 
+
+	Bytes Private_Key = new Bytes("625de46fb951054330a58ab6f66c18849afc94797f0d37df6ff18cf8ed573981");
+    keyStoreLoad = KeyWallet.load(Private_Key);
+    Address fromAddress = keyStoreLoad.getAddress(); 
+    
+    
 노드와의 연결 및 상세한 로그를 표출하기 위한 logger를 선언합니다. logger는 옵션이기 때문에 생략하셔도 됩니다.**[option]이라고 주석처리된 코드는 생략하셔도 됩니다.**
 
 		HttpLoggingInterceptor logging = new HttpLoggingInterceptor();  //[option]
@@ -1247,13 +1266,7 @@ keyStore 파일을 생성할 때는 비밀번호가 필요합니다. 현재 아�
 
 		// iconService를 쓰기위해 객체를 선언합니다. 
      	iconService = new IconService(new HttpProvider(httpClient, URL)); 
-     	
-
-keyStore 파일을 저장한 경로를 정하고  그 경로에 저장되어있는 기존의 keyStore파일을 이용해 지갑을 로드 합니다. 
-
-   		File destinationDirectory = new File("./iconSDKfile"); 
-    	File file = new File(destinationDirectory, "keystore.json"); 
-    	keyStoreLoad = KeyWallet.load(PASSWORD, file);  
+ 
     
 
 ICX 송금 하기
@@ -1264,24 +1277,24 @@ ICX 송금 하기
 		BigInteger networkId = new BigInteger("3"); 
 		
 		Address fromAddress = keyStoreLoad.getAddress(); 
-		//돈을 보낼 주소 (keystore 파일로 불러들인 지갑의 주소를 말합니다.)
+		//ICX를 보낼 주소 (keystore 파일로 불러들인 지갑의 주소를 말합니다.)
 		
-		Address toAddress = new Address("hx----------------"); 
-		//돈을 받을 주소
+		Address toAddress = new Address("hx4644c1e45240d0aea7e6f457049c088419957ffe"); 
+		//ICX를 받을 주소(입력된 지갑 주소는 임의값입니다.)
 
 
-송금할 금액(ICX)을 정하고, stepLimit 과 timestamp, nonce 를 정해줍니다. 아이콘 네트워크의 전송은 내부적으로 Loop단위로 전송이 되게 됩니다. 따라서 전송될 때 에는 ICX를 Loop 로 계산하여 보내게 됩니다. ICX와 Loop의 비율은 아래와 같습니다. 
+송금할 금액(ICX)을 정하고, stepLimit 과 timestamp, nonce 를 정해줍니다. 아이콘 네트워크의 전송은 내부적으로 Loop단위로 전송이 되게 됩니다. 따라서 전송될 때 에는 ICX를 Loop와의 비율로 계산하여 보내게 됩니다. ICX가 아닌 다른 토큰들 또한, Loop와의 비율을 생성자가 결정합니다. ICX와 Loop의 비율은 아래와 같습니다. 
 	
-							1 ICX = 1*10^(18) Loop 
+			1 ICX = 1*10^(18) Loop 
 					
-		
-		//보낼 ICX의 양은 "1"이며, ICX를 Loop로 계산해 주는 코드입니다. 
-		BigInteger value = IconAmount.of("1", 18).toLoop(); 
+보낼 ICX의 양은 "1"이며, ICX를 Loop로 계산해 주는 코드입니다. 
+
+			BigInteger value = IconAmount.of("1", 18).toLoop(); 
 	   	
-stepLimit은 수수료의 한계치 입니다. 스마트컨트렉트를 사용할 경우, 잘못된 스마트컨트렉트의 결과로 모든 잔고가 소진되는것을 막아주기 위함 입니다. 
-ICX 전송시, 권장하는 stepLimit은 10,000입니다. 또한 IRC 2 기반 토큰을 전송할 경우, 권장 step limit 은 20,000 입니다. 
+stepLimit은 수수료의 한계치 입니다. 잘못된 스마트컨트렉트의 결과로 지갑내의 모든 잔고가 소진되는것을 막아주기 위함 입니다. 
+ICX 전송시, 권장하는 stepLimit은 10,000입니다. 또한 IRC 2 기반 토큰을 전송할 경우, 권장 step limit 은 20,000 입니다. (20180910기준입니다.) 수수료는 ICON의 정책에 따라서 달라질 수 있습니다. 
 	
-		BigInteger stepLimit = new BigInteger("75000"); 
+		BigInteger stepLimit = new BigInteger("7500000"); 
 	
 동일 트랜잭션을 막기 위해 타임스탬프 값을 사용합니다. timestamp는 꼭 현재 시간을 넣어야 합니다. 현재시간과 큰 격차가 있을 경우, 서버에서 트랜젝션을 거부합니다. 
 	
@@ -1290,26 +1303,70 @@ ICX 전송시, 권장하는 stepLimit은 10,000입니다. 또한 IRC 2 기반 �
 
 **Transaction 메세지 생성**
 	
-nonce 값은 입력하지 않아도 괜찮습니다. 
+nonce 값은 입력하지 않아도 됩니다.  
+    
+    Transaction transaction = TransactionBuilder.newBuilder() 
+            .from(fromAddress)    //보낼 지갑 주소 
+            .to(toAddress)        //받을 지갑 주소 
+            .value(value)         //보낼 금액
+            .stepLimit(stepLimit) //수수료 한계
+            .timestamp(new BigInteger(Long.toString(timestamp)))
+            .build();
 
-	    Transaction transaction = TransactionBuilder.of(networkId) 
-	    			.from(fromAddress)    //보낼 지갑 주소 
-	    			.to(toAddress)        //받을 지갑 주소 
-	    			.value(value)         //보낼 금액
-	    			.stepLimit(stepLimit) //수수료 한계
-	    			.timestamp(new BigInteger(Long.toString(timestamp)))
-	    			.nonce(nonce)  // 
-	    			.build();
-	    			
+
 Transaction 결과 확인
-트랜잭션 정보가 맞는지 확인하기 위한 signedTransaction을 생성하고, 트랜잭션으로 hash값을 확인합니다. 
+트랜잭션 정보를 보내는 사람의 주소로 Sign하여 SignedTransaction을 생성하고, 트랜잭션의 결과로 hash값을 확인합니다. 
+    
+    //빌드된 트랜젝션을 보내는사람 주소로 sign 합니다. 
+    SignedTransaction signedTransaction =new SignedTransaction(transaction, keyStoreLoad ); 
+    
+    // 트랜젝션을 보낸 후, 결과인 TX hash 값을 받아옵니다. 
+    Bytes hash = iconService.sendTransaction(signedTransaction).execute();
+    
+    
+    // 결과 종합 출력 
+    System.out.println( "from Addres : "+fromAddress);
+    System.out.println( "to Addres : "+toAddress);
+    System.out.println( "Amount : "+value);
+    System.out.println( "stepLimit : "+stepLimit);
+    //TX hash 값을 출력합니다. 
+    System.out.println("TX hash : "+hash);
 
-			SignedTransaction signedTransaction =new SignedTransaction(transaction, keyStoreLoad ); 
-			String hash = iconService.sendTransaction(signedTransaction).execute();
-			//트랜잭션 발생후 hash값 저장 
-			
+실행결과
 
-	 	    			
+~~~
+Sep 13, 2018 2:40:41 PM okhttp3.internal.platform.Platform log
+정보: --> POST http://127.0.0.1:9000/api/v3
+Sep 13, 2018 2:40:41 PM okhttp3.internal.platform.Platform log
+정보: Content-Type: application/json
+Sep 13, 2018 2:40:41 PM okhttp3.internal.platform.Platform log
+정보: 
+Sep 13, 2018 2:40:41 PM okhttp3.internal.platform.Platform log
+정보: {"jsonrpc":"2.0","id":1536817241316,"method":"icx_sendTransaction","params":{"stepLimit":"0x7270e0","signature":"sQGdawCxGxbLXvEHbk9pO/pQNiRMYtQBbXpES+aAAVVlc3MuLe+HdLtLkN48L7UFV6bEZJsbPumStVRZh/4nvAA=","nid":"0x3","from":"hxcc61e31ed6080926d6d6f7d0ac6e1b8b2ee5a9fa","to":"hx4644c1e45240d0aea7e6f457049c088419957ffe","version":"0x3","value":"0xde0b6b3a7640000","timestamp":"0x575ba25c04248"}}
+Sep 13, 2018 2:40:41 PM okhttp3.internal.platform.Platform log
+정보: --> END POST (-1-byte body)
+Sep 13, 2018 2:40:41 PM okhttp3.internal.platform.Platform log
+정보: <-- 200 OK http://127.0.0.1:9000/api/v3 (45ms)
+Sep 13, 2018 2:40:41 PM okhttp3.internal.platform.Platform log
+정보: Connection: close
+Sep 13, 2018 2:40:41 PM okhttp3.internal.platform.Platform log
+정보: access-control-allow-origin: *
+Sep 13, 2018 2:40:41 PM okhttp3.internal.platform.Platform log
+정보: Content-Length: 119
+Sep 13, 2018 2:40:41 PM okhttp3.internal.platform.Platform log
+정보: Content-Type: application/json
+Sep 13, 2018 2:40:41 PM okhttp3.internal.platform.Platform log
+정보: 
+Sep 13, 2018 2:40:41 PM okhttp3.internal.platform.Platform log
+정보: {"jsonrpc": "2.0", "result": "0x270f1cdc20d60f656868bb969c677b8f2948693dbaefe5250f1e047d072a62eb", "id": 1536817241316}
+Sep 13, 2018 2:40:41 PM okhttp3.internal.platform.Platform log
+정보: <-- END HTTP (119-byte body)
+from Addres : hxcc61e31ed6080926d6d6f7d0ac6e1b8b2ee5a9fa
+to Addres : hx4644c1e45240d0aea7e6f457049c088419957ffe
+Amount : 1000000000000000000
+stepLimit : 7500000
+TX hash : 0x270f1cdc20d60f656868bb969c677b8f2948693dbaefe5250f1e047d072a62eb
+~~~
 	   
 * ##### 파이썬 SDK로 실행
 
@@ -1356,27 +1413,67 @@ Transaction 결과 확인
 
 ## 2. SCORE의 함수를 호출하고, 결과를 받습니다.  
 
-* ##### 자바 SDK로 실행
-	**Transaction 메세지 생성**
-	파라미터를 call 에 삽입하여 SCORE 함수를 호출하여 결과를 불러옵니다. 
-	SCORE마다 지정한 함수를 실행하여 결과를 받아올 수 있습니다. 
-		
-		RpcObject params = new RpcObject.Builder()
-				.put("_owner", new RpcValue(fromAddress))
-				.build();
-	
-		IcxCall<RpcItem> call = new IcxCall.Builder()
-				.from(fromAddress)  
-				.to(scoreAddress)
-				.method("balanceOf")			##  메소드가 balanceOf이면, SCORE의 잔액을 조회합니다. 
-				.params(params)
-				.build();
-	
-	SCORE를 향하여 트랜젝션을 보내고, 결과를 받아옵니다. 
-	
-		RpcItem result = iconService.call(call).execute(); 
 
+* ##### 자바 SDK로 실행
 		
+	Transaction 메세지를 만들기 전에, 삽입될 파라미터를 정의합니다. 
+
+        Address address = new Address("hxcc61e31ed6080926d6d6f7d0ac6e1b8b2ee5a9fa");
+        Param params = new Param();
+        params._owner = address;
+        
+        class Param {
+        public Address _owner;}
+
+	**Transaction 메세지 생성**
+	파라미터를 삽입하여 SCORE api의 함수를 실행하고, 결과를 불러옵니다. 
+	
+        Call<RpcItem> call = new Call.Builder()
+                .from(address)
+                .to(scoreAddress)
+					//method가  balanceOf이면, 잔액조회만을 진행합니다. 
+                .method("balanceOf")
+                .params(params)
+                .build();
+
+	
+	SCORE를 향하여 트랜젝션을 보내고, 결과를 받아 출력합니다. 
+	
+        RpcItem result = iconService.call(call).execute();
+        System.out.println("balance:"+result);
+		
+		
+	실행결과
+	 
+~~~
+Sep 13, 2018 3:39:02 PM okhttp3.internal.platform.Platform log
+정보: --> POST http://localhost:9000/api/v3
+Sep 13, 2018 3:39:02 PM okhttp3.internal.platform.Platform log
+정보: Content-Type: application/json
+Sep 13, 2018 3:39:03 PM okhttp3.internal.platform.Platform log
+정보: 
+Sep 13, 2018 3:39:03 PM okhttp3.internal.platform.Platform log
+정보: {"jsonrpc":"2.0","id":1536820742630,"method":"icx_call","params":{"data":{"method":"balanceOf","params":{"_owner":"hxcc61e31ed6080926d6d6f7d0ac6e1b8b2ee5a9fa"}},"dataType":"call","from":"hxcc61e31ed6080926d6d6f7d0ac6e1b8b2ee5a9fa","to":"cx92dc41a0997aa367df301174485bd6cd579a5ce9"}}
+Sep 13, 2018 3:39:03 PM okhttp3.internal.platform.Platform log
+정보: --> END POST (-1-byte body)
+Sep 13, 2018 3:39:03 PM okhttp3.internal.platform.Platform log
+정보: <-- 200 OK http://localhost:9000/api/v3 (60ms)
+Sep 13, 2018 3:39:03 PM okhttp3.internal.platform.Platform log
+정보: Connection: close
+Sep 13, 2018 3:39:03 PM okhttp3.internal.platform.Platform log
+정보: access-control-allow-origin: *
+Sep 13, 2018 3:39:03 PM okhttp3.internal.platform.Platform log
+정보: Content-Length: 56
+Sep 13, 2018 3:39:03 PM okhttp3.internal.platform.Platform log
+정보: Content-Type: application/json
+Sep 13, 2018 3:39:03 PM okhttp3.internal.platform.Platform log
+정보: 
+Sep 13, 2018 3:39:03 PM okhttp3.internal.platform.Platform log
+정보: {"jsonrpc": "2.0", "result": "0x0", "id": 1536820742630}
+Sep 13, 2018 3:39:03 PM okhttp3.internal.platform.Platform log
+정보: <-- END HTTP (56-byte body)
+balance:0x0
+~~~
 
 * ##### 파이썬 SDK로 실행
 	**Transaction 메세지 생성**
@@ -1399,18 +1496,51 @@ Transaction 결과 확인
 	**Transaction 메세지 생성**
 	메세지를 transaction에 넣어 전송할 수 있습니다. 
 	
-		        String message = "Hello World";
-
-        Transaction transaction = TransactionBuilder.of(networkId)
-                .from(fromAddress)
-                .to(toAddress)
-                .stepLimit(stepLimit)
-                .timestamp(new BigInteger(Long.toString(timestamp)))		
-                //timestamp는 unix time을 삽입합니다. 시간은 1/1000000초 까지 기록됩니다. 
-                .nonce(nonce)
-                .message(message)
-                .build();
+		String message = "Hello World";
 	
+   			Transaction transaction = TransactionBuilder.newBuilder() 
+    			.from(fromAddress)
+    			.to(toAddress)
+    			.stepLimit(stepLimit)
+    			.timestamp(new BigInteger(Long.toString(timestamp)))        
+    			//timestamp는 unix time을 삽입합니다. 시간은 1/1000000초 까지 기록됩니다. 
+    			.message(message)
+    			.build();
+실행결과 
+
+~~~
+Sep 13, 2018 3:52:02 PM okhttp3.internal.platform.Platform log
+정보: --> POST http://127.0.0.1:9000/api/v3
+Sep 13, 2018 3:52:03 PM okhttp3.internal.platform.Platform log
+정보: Content-Type: application/json
+Sep 13, 2018 3:52:03 PM okhttp3.internal.platform.Platform log
+정보: 
+Sep 13, 2018 3:52:03 PM okhttp3.internal.platform.Platform log
+정보: {"jsonrpc":"2.0","id":1536821522958,"method":"icx_sendTransaction","params":{"data":"0x48656c6c6f20576f726c64","stepLimit":"0x7270e0","signature":"puooYE2nJc2coB2en+cgxrqUN6qa0EBk16e7AAnjBPUmkatCIffL8QySp69MBS1s87ilr5aNoE8lhaufYul8owA=","dataType":"message","nid":"0x1","from":"hxcc61e31ed6080926d6d6f7d0ac6e1b8b2ee5a9fa","to":"hx4644c1e45240d0aea7e6f457049c088419957ffe","version":"0x3","timestamp":"0x575bb24f4e688"}}
+Sep 13, 2018 3:52:03 PM okhttp3.internal.platform.Platform log
+정보: --> END POST (-1-byte body)
+Sep 13, 2018 3:52:03 PM okhttp3.internal.platform.Platform log
+정보: <-- 200 OK http://127.0.0.1:9000/api/v3 (47ms)
+Sep 13, 2018 3:52:03 PM okhttp3.internal.platform.Platform log
+정보: Connection: close
+Sep 13, 2018 3:52:03 PM okhttp3.internal.platform.Platform log
+정보: access-control-allow-origin: *
+Sep 13, 2018 3:52:03 PM okhttp3.internal.platform.Platform log
+정보: Content-Length: 119
+Sep 13, 2018 3:52:03 PM okhttp3.internal.platform.Platform log
+정보: Content-Type: application/json
+Sep 13, 2018 3:52:03 PM okhttp3.internal.platform.Platform log
+정보: 
+Sep 13, 2018 3:52:03 PM okhttp3.internal.platform.Platform log
+정보: {"jsonrpc": "2.0", "result": "0x8b7f9c28028abc4777114a0f0941e84710cbe46185f4fa8060dc85976e5cf373", "id": 1536821522958}
+Sep 13, 2018 3:52:03 PM okhttp3.internal.platform.Platform log
+정보: <-- END HTTP (119-byte body)
+from Addres : hxcc61e31ed6080926d6d6f7d0ac6e1b8b2ee5a9fa
+to Addres : hx4644c1e45240d0aea7e6f457049c088419957ffe
+Amount : 1000000000000000000
+stepLimit : 7500000
+TX hash : 0x8b7f9c28028abc4777114a0f0941e84710cbe46185f4fa8060dc85976e5cf373
+~~~
 	
 * ##### 파이썬 SDK로 실행
 	**Transaction 메세지 생성**
@@ -1527,30 +1657,28 @@ ICON네트워크와 정상적으로 연결되었다면, 조회 해 볼 수 있�
 
 주어진 주소의 Balance를 호출하여 출력합니다.
 
-* ##### 자바 SDK로 실행
+*  자바 SDK로 실행
 
 api 서버와 연결되는 URL 주소에 httpclient 를 활용하여, OkHttpClient 접속을 만들어내는 클래스입니다. 연결을 위해 선언되는 
 **iconService 객체는 RPC를 위한 연결을 수립합니다.**  여기서, URL은 연결코자 하는 ICON네트워크의 주소를 입력해 줍니다. 
 
-	public final String URL = "http://[node ip]/api/v3";    
-	private IconService iconService;
-    public BasicGetMethods() {
-        OkHttpClient httpClient = new OkHttpClient.Builder()
-                .build();
-        iconService = new IconService(new HttpProvider(httpClient, URL));
-    }
+검색할 주소와 아이콘서비스를 선언합니다. 
 
-지정된 Address 주소의 잔액을 출력합니다.
+		public final static String URL = "http://127.0.0.1:9000/api/v3";    
+		private static IconService iconService;
+		public static String walletaddress = "hx4644c1e45240d0aea7e6f457049c088419957ffe";
 
-~~~
-    public void getBalance(String Address) throws IOException {
-        Address address = new Address(Address);
-        BigInteger balance = iconService.getBalance(address).execute();
-        System.out.println("balance:" + balance);
-    }
-~~~
+네트워크와 연결을 수립하고, 조회하여 지정된 Address 주소의 잔액을 출력합니다.
 
-* ##### 파이썬 SDK로 실행
+    OkHttpClient httpClient = new OkHttpClient.Builder()
+            .build();
+    iconService = new IconService(new HttpProvider(httpClient, URL));
+    Address address = new Address(walletaddress);
+    BigInteger balance = iconService.getBalance(address).execute();
+    System.out.println("The Wallet address "+walletaddress+"'s balance : " + balance);
+    
+
+* 파이썬 SDK로 실행
 
 사용할 라이브러리를 import 합니다.
 
@@ -1572,17 +1700,23 @@ Balance를 조회할 Adress를 입력합니다.
 발행된 코인의 총 수를 구합니다. 처음부터 **icon_service 객체는 RPC를 위한 연결을 수립합니다.** 까지의 내용은 생략되었습니다. 
 
 
-* ##### 자바 SDK로 실행
+*  자바 SDK로 실행
 
 TotalSupply(현재 발행된 ICX의 총 수)를 출력합니다. 
 
-    public void getTotalSupply() throws IOException {
-        BigInteger totalSupply = iconService.getTotalSupply().execute();
-        System.out.println("totalSupply:" + totalSupply);
-    }
+	    OkHttpClient httpClient = new OkHttpClient.Builder()
+	            .build();
+	    iconService = new IconService(new HttpProvider(httpClient, URL));
+        BigInteger gettotalSupply = iconService.getTotalSupply().execute();
+        System.out.println("totalSupply : "+gettotalSupply);
+
+실행결과 
+
+	totalSupply:1600920000000000000000000000
 
 
-* ##### 파이썬 SDK로 실행
+
+*  파이썬 SDK로 실행
 
 TotalSupply(현재 발행된 ICX의 총 수)를 출력합니다. 
 	
@@ -1590,19 +1724,34 @@ TotalSupply(현재 발행된 ICX의 총 수)를 출력합니다.
 
 
 <br></br>
+
 ## 	3. SCORE주소를 통해서 SCORE API를 모두 호출하기. 
 
 SCORE의 주소를 입력하여 SCORE의 api 목록을 호출합니다. 
 
 #####  자바 SDK로 실행
 
-	   public void getScoreApi(String SCOREAddress) throws IOException {
-   	     	Address scoreAddress = new Address(SCOREAddress);
-   	     	List<ScoreApi> apis = iconService.getScoreApi(scoreAddress).execute();
-   	     	System.out.println("apis:" + apis);
-	   };
+~~~
+private static final String URL = "http://127.0.0.1:9000/api/v3";    
+private static final String SCOREaddress = "cx92dc41a0997aa367df301174485bd6cd579a5ce9";
 
+	public static void main(String[] args) throws IOException{
+	OkHttpClient httpClient = new OkHttpClient.Builder()
+											  .build();
+	IconService iconService = new IconService(new HttpProvider(httpClient, URL));
+	
+	Address scoreAddress = new Address(SCOREaddress);
+	List<ScoreApi> apis = iconService.getScoreApi(scoreAddress).execute();
+	System.out.println("apis:" + apis);
+
+~~~
+
+ 실행결과
  
+ ~~~
+ apis:[ScoreApi{properties=RpcObject(items={outputs=RpcArray(items=[RpcObject(items={type=int})]), readonly=0x1, inputs=RpcArray(items=[RpcObject(items={name=_owner, type=Address})]), name=balanceOf, type=function})}, ScoreApi{properties=RpcObject(items={outputs=RpcArray(items=[RpcObject(items={type=int})]), readonly=0x1, name=decimals, type=function})}, ScoreApi{properties=RpcObject(items={name=fallback, type=fallback})}, ScoreApi{properties=RpcObject(items={outputs=RpcArray(items=[RpcObject(items={type=str})]), readonly=0x1, name=name, type=function})}, ScoreApi{properties=RpcObject(items={outputs=RpcArray(items=[RpcObject(items={type=str})]), readonly=0x1, name=symbol, type=function})}, ScoreApi{properties=RpcObject(items={outputs=RpcArray(items=[RpcObject(items={type=int})]), readonly=0x1, name=totalSupply, type=function})}, ScoreApi{properties=RpcObject(items={inputs=RpcArray(items=[RpcObject(items={name=_to, type=Address}), RpcObject(items={name=_value, type=int}), RpcObject(items={default=null, name=_data, type=bytes})]), name=transfer, type=function})}, ScoreApi{properties=RpcObject(items={inputs=RpcArray(items=[RpcObject(items={indexed=0x1, name=_from, type=Address}), RpcObject(items={indexed=0x1, name=_to, type=Address}), RpcObject(items={indexed=0x1, name=_value, type=int}), RpcObject(items={name=_data, type=bytes})]), name=Transfer, type=eventlog})}]
+
+ ~~~
 
 
 #####  파이썬 SDK로 실행
