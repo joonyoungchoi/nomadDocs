@@ -11,10 +11,12 @@ wallet
 keystore는 private key(개인키), public key(공개키)로 정의되어있습니다 keystore는 JSON형식으로 만들어져 있어 텍스트 편집기를 이용하여
 확인할 수 있습니다 keystore는 암호화 되어 파일 생성시 등록한 암호로 이용할 수 있습니다.<br>정기적으로 keystore를 백업하는 행동이 크게 도움이 될 것입니다.<br>
 본인을 확인하는 방벙으로 keystore 사용합니다. keystore 생성할 때 입력했던 비밀번호를 통해 본인 확인을 하고 지갑에 접근할 수 있게 됩니다
-keystore를 생성시 등록한 비밀번호를 복호화 하여 Private Key를 알 수 있습니다.
+keystore를 생성시 등록한 비밀번호를 복호화 하여 Private Key를 알 수 있습니다. 만약 privatekey가 해킹당했을 경우, 당신의 지갑에 모든권한을 상대방이 얻을 수 있어 매우 위험합니다.
+따라서 privatekey 사용보단 keystore 사용을 추천합니다.
 <br>
 
 keystore를 만드는것은 지갑을 만드는 것과 같습니다.
+
 
 ## T-bears 사용하기
 
