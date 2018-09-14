@@ -20,14 +20,14 @@ ICON Dev Guide
 
 1. [T-Bears 설치하기](https://github.com/Life4honor/nomadDocs/blob/master/Icon_dev_Guide.md#1-t-bears-설치하기)
     * 공통
-	* MacOS
-	* Ubuntu Linux
+    	* MacOS
+    	* Ubuntu Linux
 
     * Git의 코드를 다운로드하여 설치하기
     
     * PyPI 통해 설치하기
-
-	* Docker 활용하기
+    
+    * Docker 활용하기
 
 2. [T-Bears 활용하기](https://github.com/Life4honor/nomadDocs/blob/master/Icon_dev_Guide.md#2-t-bears-활용하기)
     * 서비스
