@@ -21,11 +21,11 @@ def loop()
 ```
 반복문을 사용하실 경우에는 종료 조건을 확인하여야합니다
 반복문이 무한이 돌면 어느 순간 프로그램이 중단됩니다
-번복 횟수가 많을 경우 역시 위험할수있습니다.
+반복 횟수가 많을 경우 역시 위험할수있습니다.
 
 ### Example - from abc
 ```
-# iconservice만 임포트 하여 사용
+# abc import 없이 iconservice만 import 하여 사용
 from iconservice import *
 
 class ABC(ABC):
@@ -43,6 +43,5 @@ def sha3_256()
     data = create_tx_hash()
     hash_value = hashlib.sha3_256(data).digest()
     return hash_value
-
 ```
 sha3_256을 이용 암호화 예제입니다. data는 bytes형식입니다.
