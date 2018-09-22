@@ -301,15 +301,7 @@ fabric.properties
 # Editor-based Rest Client
 .idea/httpRequests
 
-.gitignore
 .idea/ICON_Dev_Guide.iml
 .idea/misc.xml
 .idea/modules.xml
 .idea/workspace.xml
-TestnetWithChromeExtension.md
-img/ETHTestnet.png
-img/ICXTestnet.png
-img/keyValue.png
-img/sample.png
-/.gitignore
-!/.gitignore
