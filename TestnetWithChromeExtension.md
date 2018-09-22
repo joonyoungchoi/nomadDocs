@@ -22,5 +22,5 @@ Press ⌥⌘ I to Open Developer Tools
 ---
 
 ## Opting Nertwork
-![Application panel](./img/IcxTestnet.png)
+![Application panel](./img/ICXTestnet.png)
 ![Application panel](./img/ETHTestnet.png)
