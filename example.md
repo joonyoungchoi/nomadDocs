@@ -3,21 +3,28 @@ Example
 
 ### Example - loop
 ```
-@external
-def loop(count: int):
-    rate = 10
-    num = 0
-    for i in range(count):
-        if offset >= rate:
-            count=count-offset
-            if count > 0:
-                loop(count)
-            break
-        num += 1
+class example
+
+    def __init__(self):
+        self.num = 10000
+        
+    @external
+    def loop(self):
+        count = self.num
+        rate = 100
+        num = 0
+        for i in range(count):
+            if num >= rate:
+                count=count-offset
+                if count > 0:
+                    self.num = count
+                    loop()
+                break
+            num += 1
+        
         
 ```
-반복문을 사용하실 경우에는 종료 조건을 확인하여야합니다
-반복문이 무한이 돌면 어느 순간 프로그램이 중단됩니다
+반복문이 길어질경우 끊어서 실행하시길 권합니다.
 
 ### Example - from abc, sha3
 ```
