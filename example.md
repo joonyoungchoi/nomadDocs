@@ -19,7 +19,7 @@ class example():
                 if count > 0:
                     self._count = count
                     self.loop()
-                    break
+                    
                 break
             num += 1
         
