@@ -3,22 +3,23 @@ Example
 
 ### Example - loop
 ```
-class example
+class example():
 
     def __init__(self):
-        self.num = 10000
+        self._count = 10000
         
     @external
     def loop(self):
-        count = self.num
+        count = self_count
         rate = 100
         num = 0
         for i in range(count):
             if num >= rate:
-                count=count-offset
+                count=count-num
                 if count > 0:
-                    self.num = count
-                    loop()
+                    self._count = count
+                    self.loop()
+                    break
                 break
             num += 1
         
