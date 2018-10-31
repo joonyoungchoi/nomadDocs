@@ -21,7 +21,7 @@ Decentralized Autonomous Organization 의 약자로 탈중앙화된 자율조직
 
 
 ## Vote proposal 
-   ![proposal](./img/proposal_001.png)
+   ![proposal](./img/proposal_01.png)
    
    * 사용자가 어떤 안건을 투표할지 제안한다.
    * 사용자가 투표를 제안하면 제안가능 여부를 확인한 후 제안을 DB에 등록한다.
@@ -44,7 +44,7 @@ Decentralized Autonomous Organization 의 약자로 탈중앙화된 자율조직
       
 
 ## Vote
-   ![vote](./img/vote_001.png)
+   ![vote](./img/vote_01.png)
    
    * 제안된 투표를 찬성,반대로 투표한다.
    * 유저추가, 유저제거, 제안된안건에 투표할 수 있다.
@@ -93,6 +93,9 @@ Decentralized Autonomous Organization 의 약자로 탈중앙화된 자율조직
 
 
        
+       var ㅓㅅ
+       dict
+       arraydb ...
     
     
     
