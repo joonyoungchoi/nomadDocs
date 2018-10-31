@@ -69,7 +69,7 @@ Decentralized Autonomous Organization 의 약자로 탈중앙화된 자율조직
    
        
 ## List
-   ![list](./img/list_001.png)
+   ![list](./img/list_01.png)
    
    * 투표 목록을 확인한다.
    * 투표등록 날짜, 투표 내용 확인가능
@@ -77,25 +77,16 @@ Decentralized Autonomous Organization 의 약자로 탈중앙화된 자율조직
         * `list` : 투표 목록을 확인한다.
    
    
-
-
-#
-#
-#
-1. DB 수정 및 삭제 가능 여부
-    * DB 수정 불가시 기존에 등록한 찬반 수정
-    * DB에 투표나 유저 삭제 가능한지
-2. 리스트 확인 가능 여부
-    * 조건 여부
-    * 투표 여부
-        * 중복 여부 확인
+## Issue
+   
+   * ArrayDB 사용할경우 데이터 제거에 문제가 생길 수 있다.
+   * DictDB 사용할경우 key 를 사용하여 조회가 가능하나 순서가 없어서 투표 리스트에 사용하기엔 다소 부적합해보인다.
+   * DB 수정은 가능하나 제거가 쉽지 않을 수 있다.
+   * ArrayDB 특징상 중간에 데이터를 제거할 수 없다.
 
 
 
-       
-       var ㅓㅅ
-       dict
-       arraydb ...
+
     
     
     
