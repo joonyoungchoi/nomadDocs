@@ -389,7 +389,7 @@ Transaction result: {
 > `status` : 트랜잭션 성공 시 1의 값을 가지며, 실패시 0의 값을 가집니다.
 
 <br></br>
-*2.2 samples로 생성한 SCORE 배포하기*
+*2.2 samples로 생성한 SCORE 배포하기*  **(수정요청)**
 
 `tbears samples` 명령을 통해 샘플을 생성합니다.
 ```
