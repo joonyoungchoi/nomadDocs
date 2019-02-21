@@ -472,7 +472,7 @@ transaction hash: 0xb6c94d6b05999bedcdbe45a162ea27d52e71797293f158dd0ef4ea519731
 ---
 ### *3. 배포한 SCORE의 메소드 호출하기*
 
-*3.1 init을 통해 생성한 SCORE의 'hello' 메소드 호출*
+*3.1 SCORE의 'hello' 메소드 호출*
 
 `tbears call`의 필수 요소인 json파일(call.json)을 다음과 같이 작성합니다
 ```json
@@ -506,7 +506,8 @@ SCORE API: [
     {
         "type": "fallback",
         "name": "fallback",
-        "inputs": []
+        "inputs": [],
+        "payable": "0x1"
     },
     {
         "type": "function",
@@ -518,6 +519,36 @@ SCORE API: [
             }
         ],
         "readonly": "0x1"
+    },
+    {
+        "type": "function",
+        "name": "name",
+        "inputs": [],
+        "outputs": [
+            {
+                "type": "str"
+            }
+        ],
+        "readonly": "0x1"
+    },
+    {
+        "type": "function",
+        "name": "tokenFallback",
+        "inputs": [
+            {
+                "name": "_from",
+                "type": "Address"
+            },
+            {
+                "name": "_value",
+                "type": "int"
+            },
+            {
+                "name": "_data",
+                "type": "bytes"
+            }
+        ],
+        "outputs": []
     }
 ]
 ```
@@ -529,7 +560,7 @@ tbears call call.json
 ```
 response : {
         "jsonrpc": "2.0",
-        "result": "hello",
+        "result": "Hello",
         "id": 1
     }
 ```
