@@ -408,7 +408,7 @@ __init__.py       package.json      hello_world.py
 > `hello_world.py` : 
 우리가 배포 해보려고 하는 SCORE 파일을 의미하며, HelloWorld 클래스가 정의되어 있습니다. 배포 후, 예제의 명령어를 따라 실행하면, HelloWorld 클래스의 메소드를 호출할 수 있습니다.
 
-samples/Hello_world 디렉토리로 이동하여 설정파일을 생성합니다.
+samples/hello_world 디렉토리로 이동하여 설정파일을 생성합니다.
 ```bash
 tbears genconf # tbears 명령어를 실행할 때 필요한 설정파일을 생성합니다.
 ```
@@ -460,7 +460,7 @@ tbears 명령어 실행 전, tbears_cli_config.json 파일을 수정합니다.
 
 생성한 프로젝트를 T-Bears 서비스에 배포합니다.('-c' 옵션을 통해 수정한 설정파일을 적용합니다.)
 ```
-tbears deploy Hello_world
+tbears deploy hello_world
 ```
 출력:
 ```
