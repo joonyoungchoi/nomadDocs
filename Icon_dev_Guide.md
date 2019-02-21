@@ -389,32 +389,30 @@ Transaction result: {
 > `status` : 트랜잭션 성공 시 1의 값을 가지며, 실패시 0의 값을 가집니다.
 
 <br></br>
-*2.2 samples로 생성한 SCORE 배포하기*  **(수정요청)**
+*2.2 hello_world 스코어 배포하기* 
 
-`tbears samples` 명령을 통해 샘플을 생성합니다.
-```
-tbears samples
-```
-`standard_token` 과 `standard_crowd_sale` 디렉토리가 생성되어 있어야 하며, 각각의 디렉토리 안에 있는 파일 목록은 다음과 같습니다. (예제는 `standard_token` 을 배포하는 것으로 진행하였습니다.)
-```
-standard_crowd_sale:
-__init__.py            package.json           standard_crowd_sale.py
+ICON 공식 깃허브에서 sample 파일을 다운받아 진행합니다.
+- https://github.com/icon-project/samples 
 
-standard_token:
-__init__.py       package.json      standard_token.py
+samples 디렉토리 내의 `hello_world` 디렉토리의 파일목록은 다음과 같습니다. 
 ```
-
-> `standard_crowd_sale.py` : 
-SCORE 파일을 의미하며, 예제의 명령어와 같이 실행 시 StandardCrowdSale 클래스가 정의되어 있습니다. StandardCrowdSale 클래스의 경우 호출 가능한 다양한 메소드(`total_joiner_count`, `check_goal_reached`, `safe_withdrawal` 등)를 가지고 있습니다.
-
-> `standard_token.py` : SCORE 파일을 의미하며, 예제의 명령어와 같이 실행 시 StandardToken 클래스가 정의되어 있습니다. StandardToken 클래스의 경우 호출 가능한 다양한 메소드(`name`, `symbol`, `decimals` 등)를 가지고 있습니다.
-
-생성된 standard_token 디렉토리로 이동하여 설정파일을 생성합니다.
+samples/hello_world:
+hello_world		tests
 ```
-cd standard_token
-tbears genconf (명령어 실행 후 생성된 설정 파일 중 tbears_cli_config.json을 수정합니다.)
+`hello_world`디렉토리 내, 또 하나의 `hello_world` 디렉토리의 파일목록은 다음과 같습니다.
+```
+hello_world/hello_world:
+__init__.py       package.json      hello_world.py
 ```
 
+> `hello_world.py` : 
+우리가 배포 해보려고 하는 SCORE 파일을 의미하며, HelloWorld 클래스가 정의되어 있습니다. 배포 후, 예제의 명령어를 따라 실행하면, HelloWorld 클래스의 메소드를 호출할 수 있습니다.
+
+samples/Hello_world 디렉토리로 이동하여 설정파일을 생성합니다.
+```bash
+tbears genconf # tbears 명령어를 실행할 때 필요한 설정파일을 생성합니다.
+```
+tbears 명령어 실행 전, tbears_cli_config.json 파일을 수정합니다.
 수정한 `tbears_cli_config.json`의 내용은 다음과 같습니다.
 ```json
 {
@@ -462,7 +460,7 @@ tbears genconf (명령어 실행 후 생성된 설정 파일 중 tbears_cli_conf
 
 생성한 프로젝트를 T-Bears 서비스에 배포합니다.('-c' 옵션을 통해 수정한 설정파일을 적용합니다.)
 ```
-tbears deploy -c ./tbears_cli_config.json .
+tbears deploy Hello_world
 ```
 출력:
 ```
