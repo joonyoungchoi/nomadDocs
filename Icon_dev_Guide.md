@@ -563,40 +563,8 @@ response : {
         "result": "Hello",
         "id": 1
     }
-```
-<br></br>
-*3.2 samples를 통해 생성한 SCORE("standard_token.py")의 'name' 메소드 호출*
-
-`tbears call`의 필수 요소인 json파일(call.json)을 다음과 같이 작성합니다
-```json
-{
-  "jsonrpc": "2.0",
-  "method": "icx_call",
-  "params": {
-    "from": "hxef73db5d0ad02eb1fadb37d0041be96bfa56d4e6",
-    "to": "cx02b13428a8aef265fbaeeb37394d3ae8727f7a19",
-    "dataType": "call",
-    "data": {
-      "method": "name"
-    }
-  },
-  "id": 1
-}
-```
-
-SCORE의 `name` 메소드를 호출합니다.
-
-```
-tbears call call.json
-```
-출력
-```
-response : {
-    "jsonrpc": "2.0",
-    "result": "SampleToken",
-    "id": 1
-}
-```
+``` 
+<br>
 ---
 ### *4. 트랜잭션*
 
@@ -615,7 +583,7 @@ response : {
     "timestamp": "0x573117f1d6568",
     "nid": "0x3",
     "nonce": "0x1",
-    "to": "hxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "to": "cxb276ff1b9bba73156d5352dca36bd7c630957da1",
     "dataType": "call",
     "data": {
       "method": "method to invoke",
@@ -631,7 +599,7 @@ response : {
 
 > `from` : 트랜잭션을 생성한 지갑의 주소를 의미합니다.
 
-> `to` : 코인을 받을 지갑의 주소, 또는 트랜잭션을 실행할 SCORE의 주소를 의미합니다.
+> `to` : 코인을 받을 지갑의 주소, 또는 트랜잭션을 실행할 SCORE의 주소를 의미합니다.  
 
 > `value` : 디폴트 값으로 0을 가지며, 송금할 ICX의 양을 의미합니다. (단위 : loop, 1 icx = 10 ^ 18 loop)
 
