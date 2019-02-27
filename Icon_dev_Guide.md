@@ -389,32 +389,30 @@ Transaction result: {
 > `status` : 트랜잭션 성공 시 1의 값을 가지며, 실패시 0의 값을 가집니다.
 
 <br></br>
-*2.2 samples로 생성한 SCORE 배포하기*
+*2.2 hello_world 스코어 배포하기* 
 
-`tbears samples` 명령을 통해 샘플을 생성합니다.
-```
-tbears samples
-```
-`standard_token` 과 `standard_crowd_sale` 디렉토리가 생성되어 있어야 하며, 각각의 디렉토리 안에 있는 파일 목록은 다음과 같습니다. (예제는 `standard_token` 을 배포하는 것으로 진행하였습니다.)
-```
-standard_crowd_sale:
-__init__.py            package.json           standard_crowd_sale.py
+ICON 공식 깃허브에서 sample 파일을 다운받아 진행합니다.
+- https://github.com/icon-project/samples 
 
-standard_token:
-__init__.py       package.json      standard_token.py
+samples 디렉토리 내의 `hello_world` 디렉토리의 파일목록은 다음과 같습니다. 
 ```
-
-> `standard_crowd_sale.py` : 
-SCORE 파일을 의미하며, 예제의 명령어와 같이 실행 시 StandardCrowdSale 클래스가 정의되어 있습니다. StandardCrowdSale 클래스의 경우 호출 가능한 다양한 메소드(`total_joiner_count`, `check_goal_reached`, `safe_withdrawal` 등)를 가지고 있습니다.
-
-> `standard_token.py` : SCORE 파일을 의미하며, 예제의 명령어와 같이 실행 시 StandardToken 클래스가 정의되어 있습니다. StandardToken 클래스의 경우 호출 가능한 다양한 메소드(`name`, `symbol`, `decimals` 등)를 가지고 있습니다.
-
-생성된 standard_token 디렉토리로 이동하여 설정파일을 생성합니다.
+samples/hello_world:
+hello_world		tests
 ```
-cd standard_token
-tbears genconf (명령어 실행 후 생성된 설정 파일 중 tbears_cli_config.json을 수정합니다.)
+`hello_world`디렉토리 내, 또 하나의 `hello_world` 디렉토리의 파일목록은 다음과 같습니다.
+```
+hello_world/hello_world:
+__init__.py       package.json      hello_world.py
 ```
 
+> `hello_world.py` : 
+우리가 배포 해보려고 하는 SCORE 파일을 의미하며, HelloWorld 클래스가 정의되어 있습니다. 배포 후, 예제의 명령어를 따라 실행하면, HelloWorld 클래스의 메소드를 호출할 수 있습니다.
+
+samples/hello_world 디렉토리로 이동하여 설정파일을 생성합니다.
+```bash
+tbears genconf # tbears 명령어를 실행할 때 필요한 설정파일을 생성합니다.
+```
+tbears 명령어 실행 전, tbears_cli_config.json 파일을 수정합니다.
 수정한 `tbears_cli_config.json`의 내용은 다음과 같습니다.
 ```json
 {
@@ -462,7 +460,7 @@ tbears genconf (명령어 실행 후 생성된 설정 파일 중 tbears_cli_conf
 
 생성한 프로젝트를 T-Bears 서비스에 배포합니다.('-c' 옵션을 통해 수정한 설정파일을 적용합니다.)
 ```
-tbears deploy -c ./tbears_cli_config.json .
+tbears deploy hello_world
 ```
 출력:
 ```
@@ -474,7 +472,7 @@ transaction hash: 0xb6c94d6b05999bedcdbe45a162ea27d52e71797293f158dd0ef4ea519731
 ---
 ### *3. 배포한 SCORE의 메소드 호출하기*
 
-*3.1 init을 통해 생성한 SCORE의 'hello' 메소드 호출*
+*3.1 SCORE의 'hello' 메소드 호출*
 
 `tbears call`의 필수 요소인 json파일(call.json)을 다음과 같이 작성합니다
 ```json
@@ -508,7 +506,8 @@ SCORE API: [
     {
         "type": "fallback",
         "name": "fallback",
-        "inputs": []
+        "inputs": [],
+        "payable": "0x1"
     },
     {
         "type": "function",
@@ -520,6 +519,36 @@ SCORE API: [
             }
         ],
         "readonly": "0x1"
+    },
+    {
+        "type": "function",
+        "name": "name",
+        "inputs": [],
+        "outputs": [
+            {
+                "type": "str"
+            }
+        ],
+        "readonly": "0x1"
+    },
+    {
+        "type": "function",
+        "name": "tokenFallback",
+        "inputs": [
+            {
+                "name": "_from",
+                "type": "Address"
+            },
+            {
+                "name": "_value",
+                "type": "int"
+            },
+            {
+                "name": "_data",
+                "type": "bytes"
+            }
+        ],
+        "outputs": []
     }
 ]
 ```
@@ -531,43 +560,11 @@ tbears call call.json
 ```
 response : {
         "jsonrpc": "2.0",
-        "result": "hello",
+        "result": "Hello",
         "id": 1
     }
-```
-<br></br>
-*3.2 samples를 통해 생성한 SCORE("standard_token.py")의 'name' 메소드 호출*
-
-`tbears call`의 필수 요소인 json파일(call.json)을 다음과 같이 작성합니다
-```json
-{
-  "jsonrpc": "2.0",
-  "method": "icx_call",
-  "params": {
-    "from": "hxef73db5d0ad02eb1fadb37d0041be96bfa56d4e6",
-    "to": "cx02b13428a8aef265fbaeeb37394d3ae8727f7a19",
-    "dataType": "call",
-    "data": {
-      "method": "name"
-    }
-  },
-  "id": 1
-}
-```
-
-SCORE의 `name` 메소드를 호출합니다.
-
-```
-tbears call call.json
-```
-출력
-```
-response : {
-    "jsonrpc": "2.0",
-    "result": "SampleToken",
-    "id": 1
-}
-```
+``` 
+<br>
 ---
 ### *4. 트랜잭션*
 
@@ -586,7 +583,7 @@ response : {
     "timestamp": "0x573117f1d6568",
     "nid": "0x3",
     "nonce": "0x1",
-    "to": "hxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "to": "cxb276ff1b9bba73156d5352dca36bd7c630957da1",
     "dataType": "call",
     "data": {
       "method": "method to invoke",
@@ -602,7 +599,7 @@ response : {
 
 > `from` : 트랜잭션을 생성한 지갑의 주소를 의미합니다.
 
-> `to` : 코인을 받을 지갑의 주소, 또는 트랜잭션을 실행할 SCORE의 주소를 의미합니다.
+> `to` : 코인을 받을 지갑의 주소, 또는 트랜잭션을 실행할 SCORE의 주소를 의미합니다.  
 
 > `value` : 디폴트 값으로 0을 가지며, 송금할 ICX의 양을 의미합니다. (단위 : loop, 1 icx = 10 ^ 18 loop)
 
